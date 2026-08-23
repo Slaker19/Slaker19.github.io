@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alvin Perez — Técnico IT · Backend Go · Homelab Proxmox</title>
+<meta name="description" content="Portfolio de Alvin Perez: técnico IT, entusiasta del hardware, homelab sobre Proxmox VE y creador de WebKVM." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070b14; --bg2:#0a101f; --card:rgba(20,29,51,.55); --border:rgba(120,150,220,.16);
+    --text:#eaf0ff; --muted:#9db0d6;
+    --a1:#22d3ee; --a2:#6366f1; --a3:#a78bfa;
+    --grad:linear-gradient(90deg,var(--a1),var(--a3));
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+  ::selection{background:rgba(34,211,238,.35)}
+  a{color:var(--a1);text-decoration:none}
+  h1,h2,h3,.logo,.stat b{font-family:'Space Grotesk',sans-serif}
+  code,pre,#typed{font-family:var(--mono)}
+
+  /* ── fondo aurora ── */
+  .sky{position:fixed;inset:0;z-index:-2;background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(99,102,241,.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(34,211,238,.10), transparent 60%),
+      var(--bg)}
+  .blob{position:fixed;border-radius:50%;filter:blur(110px);opacity:.35;z-index:-1;pointer-events:none}
+  .b1{width:520px;height:520px;background:#155e9e;top:-140px;left:-120px;animation:drift 26s ease-in-out infinite alternate}
+  .b2{width:460px;height:460px;background:#4338ca;top:30%;right:-160px;animation:drift 32s ease-in-out infinite alternate-reverse}
+  .b3{width:420px;height:420px;background:#0e7490;bottom:-160px;left:30%;animation:drift 38s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(70px,-50px) scale(1.15)}}
+
+  /* ── barra progreso scroll ── */
+  #bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;
+       background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));
+       box-shadow:0 0 12px rgba(56,189,248,.8)}
+
+  /* ── nav ── */
+  nav{position:sticky;top:0;z-index:50;background:rgba(7,11,20,.72);backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  nav .logo{font-weight:700;font-size:1.05rem;color:var(--text)}
+  nav .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  nav ul{display:flex;gap:26px;list-style:none}
+  nav a.link{color:var(--muted);font-size:.92rem;position:relative;padding:4px 0;transition:.25s}
+  nav a.link::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--grad);transition:.3s;border-radius:2px}
+  nav a.link:hover,nav a.link.active{color:var(--text)}
+  nav a.link:hover::after,nav a.link.active::after{width:100%}
+  @media(max-width:720px){nav ul{display:none}}
+
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  section{padding:84px 0}
+
+  h2{font-size:clamp(1.6rem,3.4vw,2.15rem);margin-bottom:36px;letter-spacing:-.02em}
+  h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ── hero ── */
+  header{padding:130px 0 100px;text-align:center;position:relative}
+  header::before{content:"";position:absolute;inset:0;z-index:-1;
+    background-image:linear-gradient(rgba(120,150,220,.06) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(120,150,220,.06) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 65% 65% at 50% 40%,black,transparent)}
+  h1{font-size:clamp(2.4rem,6vw,4rem);letter-spacing:-.03em;line-height:1.08}
+  h1 b{background:linear-gradient(90deg,var(--a1) 0%,#818cf8 50%,var(--a3) 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent}
+  #typed{display:block;margin-top:16px;color:var(--a1);font-size:clamp(.95rem,2.6vw,1.3rem);font-weight:600;min-height:1.9em;text-shadow:0 0 24px rgba(34,211,238,.45)}
+  .cursor{display:inline-block;width:10px;height:1.15em;vertical-align:text-bottom;background:var(--a1);animation:blink 1s steps(1) infinite;box-shadow:0 0 14px rgba(34,211,238,.9)}
+  @keyframes blink{50%{opacity:0}}
+  .lead{max-width:660px;margin:20px auto 0;color:var(--muted);font-size:1.02rem}
+  .hero-cta{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{padding:13px 28px;border-radius:12px;font-weight:600;border:1px solid var(--border);transition:.25s;font-size:.95rem}
+  .btn.primary{background:linear-gradient(90deg,var(--a1),var(--a2));color:#04121f;border:none;box-shadow:0 8px 28px rgba(34,211,238,.25)}
+  .btn.primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(34,211,238,.4)}
+  .btn.ghost{color:var(--text)}
+  .btn.ghost:hover{border-color:var(--a1);transform:translateY(-3px);box-shadow:0 8px 24px rgba(34,211,238,.15)}
+
+  /* ── tarjetas glass ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px}
+  .card{position:relative;background:var(--card);backdrop-filter:blur(10px);
+        border:1px solid var(--border);border-radius:18px;padding:28px;transition:.3s cubic-bezier(.2,.7,.3,1)}
+  .card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+        background:linear-gradient(135deg,rgba(34,211,238,.5),transparent 40%,rgba(167,139,250,.5));
+        -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+        -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:.35s;pointer-events:none}
+  .card:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(2,8,23,.55)}
+  .card:hover::before{opacity:1}
+  .card h3{margin-bottom:10px;font-size:1.08rem}
+  .card p{color:var(--muted);font-size:.94rem}
+  .icochip{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+           font-size:1.3rem;margin-bottom:14px;background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(167,139,250,.18));
+           border:1px solid var(--border)}
+
+  .featured{overflow:hidden}
+  .featured::before{opacity:1;animation:borderspin 6s linear infinite}
+  @keyframes borderspin{to{transform:rotate(360deg)}}
+  .featured .pill{display:inline-block;font-size:.7rem;letter-spacing:.14em;color:var(--a1);
+      border:1px solid rgba(34,211,238,.4);border-radius:999px;padding:3px 12px;margin-bottom:14px;
+      background:rgba(34,211,238,.07)}
+
+  .tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-size:.74rem;padding:4px 11px;border-radius:999px;border:1px solid var(--border);
+       background:rgba(10,16,31,.6);color:var(--muted);transition:.2s}
+  .tag:hover{color:var(--text);border-color:var(--a1);box-shadow:0 0 14px rgba(34,211,238,.25)}
+  .tag img{width:15px;height:15px;margin-right:6px;vertical-align:-3px;border-radius:3px}
+  .wall{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+  .wall img{height:30px;border-radius:5px;transition:.2s}
+  .wall img:hover{transform:translateY(-2px) scale(1.04)}
+  .icons{display:flex;flex-wrap:wrap;gap:11px;margin-top:14px;align-items:center}
+  .tico{width:34px;height:34px;border-radius:8px;padding:5px;background:rgba(10,16,31,.65);
+        border:1px solid var(--border);transition:.22s;display:block}
+  .tico:hover{transform:translateY(-4px) scale(1.12);border-color:var(--a1);
+              box-shadow:0 0 18px rgba(34,211,238,.4)}
+  .chip{display:inline-flex;align-items:center;gap:9px;padding:8px 14px;border-radius:11px;
+        border:1px solid var(--border);background:rgba(10,16,31,.65);
+        font-size:.84rem;font-weight:500;color:var(--text);transition:.22s}
+  .chip img{width:22px;height:22px;flex:none}
+  .chip svg{width:20px;height:20px;flex:none;color:var(--a1)}
+  .chip:hover{transform:translateY(-2px);border-color:var(--a1);
+              box-shadow:0 0 16px rgba(34,211,238,.3)}
+  .ttxt{font-size:.74rem;padding:4px 11px;border-radius:999px;border:1px solid var(--border);
+        background:rgba(10,16,31,.6);color:var(--muted)}
+  ul.feat{list-style:none;margin-top:14px}
+  ul.feat li{color:var(--muted);font-size:.93rem;padding-left:24px;position:relative;margin:8px 0}
+  ul.feat li::before{content:"▸";position:absolute;left:0;color:var(--a1)}
+  pre.inline,code.inline{background:rgba(5,9,18,.85);border:1px solid var(--border);border-radius:10px;
+      padding:13px 16px;display:block;font-size:.8rem;color:#8fe3ff;overflow-x:auto;margin-top:18px}
+
+  /* ── stats ── */
+  .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-top:30px}
+  .stat{text-align:center;background:var(--card);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:22px 14px;transition:.3s}
+  .stat:hover{border-color:rgba(34,211,238,.5);transform:translateY(-3px)}
+  .stat b{display:block;font-size:1.75rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{color:var(--muted);font-size:.83rem}
+
+  footer{border-top:1px solid var(--border);padding:38px 0;text-align:center;color:var(--muted);font-size:.88rem}
+  footer .heart{color:#f472b6}
+
+  /* back to top */
+  #top-btn{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;
+      background:linear-gradient(135deg,var(--a1),var(--a2));color:#04121f;border:none;font-size:1.2rem;
+      cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:60;box-shadow:0 8px 24px rgba(34,211,238,.4)}
+  #top-btn.show{opacity:1;pointer-events:auto}
+  #top-btn:hover{transform:translateY(-3px)}
+</style>
+</head>
+<body>
+
+<div class="sky"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<div id="bar"></div>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#top">Alvin<span>.homelab</span></a>
+    <ul>
+      <li><a class="link" href="#about">Sobre mí</a></li>
+      <li><a class="link" href="#projects">Proyectos</a></li>
+      <li><a class="link" href="#skills">Conocimientos</a></li>
+      <li><a class="link" href="#lab">Homelab</a></li>
+      <li><a class="link" href="#contact">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap">
+    <h1>Alvin <b>Perez</b></h1>
+    <span id="typed"></span><span class="cursor">&nbsp;</span>
+    <p class="lead">Técnico IT y entusiasta del hardware. Mi laboratorio corre sobre Proxmox VE
+      y de ahí nace WebKVM: gestión de VMs nativa, simple y sin dependencias innecesarias.</p>
+    <div class="hero-cta">
+      <a class="btn primary" href="#projects">Ver proyectos</a>
+      <a class="btn ghost" href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener">WebKVM en GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2>Sobre <em>mí</em></h2>
+    <div class="grid">
+      <div class="card"><div class="icochip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h3>Técnico IT</h3><p>Me dedico a la informática profesionalmente y también como afición: diagnóstico, infraestructura y soporte de sistemas.</p></div>
+      <div class="card"><div class="icochip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></div><h3>Entusiasta del hardware</h3><p>Montaje, benchmarks y exprimir cada componente al máximo. Me gusta entender qué pasa bajo el ventilador.</p></div>
+      <div class="card"><div class="icochip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg></div><h3>Homelab en Proxmox VE</h3><p>Todo mi laboratorio corre sobre Proxmox: VMs y LXC, passthrough, ZFS y experimentos constantes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background:rgba(10,16,31,.5)">
+  <div class="wrap">
+    <h2>Pro<em>yectos</em></h2>
+
+    <div class="card featured" style="margin-bottom:22px">
+      <span class="pill">PROYECTO PRINCIPAL</span>
+      <h3>WebKVM — Gestor de VMs nativo con UI web</h3>
+      <p>Gestor de máquinas virtuales sobre libvirt + QEMU/KVM. Un solo binario Go con el frontend Svelte embebido: sin Docker, sin reverse proxy obligatorio, sin base de datos externa.</p>
+      <ul class="feat">
+        <li>Instalador one-liner multi-distro: Debian/Ubuntu, Fedora/RHEL y Arch</li>
+        <li>HTTPS directo del backend con cert autofirmado (SAN IP + dominio)</li>
+        <li>Redes NAT y bridge macvlan, snapshots, backups programados</li>
+        <li>RBAC de 3 niveles, auditoría JSONL y CodeQL limpio</li>
+        <li>~14 MB de binario · ~7 MB de RAM en reposo</li>
+      </ul>
+      <pre class="inline">curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash</pre>
+<div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/go" alt="Go" />Go</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte 5" />Svelte 5</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>libvirt</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/qemu" alt="QEMU/KVM" />QEMU/KVM</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>systemd</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>nftables</span>
+        </div>
+      <p style="margin-top:18px"><a href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener">Código en GitHub ↗</a></p>
+    </div>
+
+    <div class="grid">
+      <div class="card"><div class="icochip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg></div><h3>Laboratorio Proxmox VE</h3><p>Infraestructura casera: clusters, passthrough de hardware, ZFS, contenedores LXC y pruebas de red con macvlan y firewalls por VM.</p>
+      <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/proxmox" alt="Proxmox VE" />Proxmox VE</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>ZFS</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>LXC</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="8" height="8" rx="2"/><path d="M10 22v-4a2 2 0 0 0-2-2H4"/><path d="m2 10 4-4 4 4"/><path d="M6 6h4a2 2 0 0 1 2 2v4"/></svg>Passthrough</span>
+        </div></div>
+      <div class="card"><div class="icochip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div><h3>Automatización de instalaciones</h3><p>Scripts bash idempotentes para desplegar servicios desde cero en cualquier distro: detección por gestor de paquetes, preflight de hardware y rollback automático.</p>
+      <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/gnubash" alt="Bash" />Bash</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1.1A7 7 0 1 0 4 14.9"/><path d="M9 19h8.5"/></svg>cloud-init</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>systemd</span>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Conoci<em>mientos</em></h2>
+
+    <div class="wall"><img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" /><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white" alt="JavaScript" /><img src="https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white" alt="Bash" /><img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell" /><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" /><img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS" /><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" /><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=white" alt="Linux" /><img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" alt="Ubuntu" /><img src="https://img.shields.io/badge/Fedora-51A2DA?style=for-the-badge&logo=fedora&logoColor=white" alt="Fedora" /><img src="https://img.shields.io/badge/Arch-1793D1?style=for-the-badge&logo=archlinux&logoColor=white" alt="Arch" /><img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white" alt="Debian" /><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /><img src="https://img.shields.io/badge/Proxmox%20VE-E57000?style=for-the-badge&logo=proxmox&logoColor=white" alt="Proxmox VE" /><img src="https://img.shields.io/badge/TrueNAS-0095D5?style=for-the-badge&logo=truenas&logoColor=white" alt="TrueNAS" /><img src="https://img.shields.io/badge/OMV-680FDC?style=for-the-badge&logo=openmediavault&logoColor=white" alt="OMV" /><img src="https://img.shields.io/badge/Unraid-F15A2C?style=for-the-badge&logo=unraid&logoColor=white" alt="Unraid" /><img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" alt="Nginx" /><img src="https://img.shields.io/badge/Apache-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="Apache" /><img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" alt="WordPress" /><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" /><img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white" alt="MariaDB" /><img src="https://img.shields.io/badge/Oracle DB-F80000?style=for-the-badge&logo=oracle&logoColor=white" alt="Oracle DB" /><img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" alt="Prometheus" /><img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white" alt="Grafana" /><img src="https://img.shields.io/badge/Netdata-00AB44?style=for-the-badge&logo=netdata&logoColor=white" alt="Netdata" /><img src="https://img.shields.io/badge/Zabbix-D40000?style=for-the-badge&logo=zabbix&logoColor=white" alt="Zabbix" /><img src="https://img.shields.io/badge/Glances-53A8C6?style=for-the-badge&logo=glances&logoColor=white" alt="Glances" /><img src="https://img.shields.io/badge/Cockpit-028A99?style=for-the-badge&logo=cockpitproject&logoColor=white" alt="Cockpit" /><img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Cloudflare" /><img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="AWS" /><img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" /><img src="https://img.shields.io/badge/WireGuard-88171A?style=for-the-badge&logo=wireguard&logoColor=white" alt="WireGuard" /><img src="https://img.shields.io/badge/Tailscale-4B70CC?style=for-the-badge&logo=tailscale&logoColor=white" alt="Tailscale" /><img src="https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama" /><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white" alt="Jira" /><img src="https://img.shields.io/badge/Zammad-EE4311?style=for-the-badge&logo=zammad&logoColor=white" alt="Zammad" /><img src="https://img.shields.io/badge/Beszel-43A31F?style=for-the-badge" alt="Beszel" /><img src="https://img.shields.io/badge/PowerDNS-9B00DA?style=for-the-badge&logo=powerdns&logoColor=white" alt="PowerDNS" /><img src="https://img.shields.io/badge/Pangolin-F97316?style=for-the-badge&logo=pangolin&logoColor=white" alt="Pangolin" /><img src="https://img.shields.io/badge/Entra ID-0078D4?style=for-the-badge&logo=microsoftentraid&logoColor=white" alt="Entra ID" /></div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Lenguajes y scripting</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/go" alt="Go" />Go</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" />JavaScript</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/gnubash" alt="Bash" />Bash</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg>PowerShell</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/html5" alt="HTML" />HTML</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/css" alt="CSS" />CSS</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/php" alt="PHP" />PHP</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Sistemas operativos</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/ubuntu" alt="Ubuntu" />Ubuntu</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/fedora" alt="Fedora" />Fedora</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch" />Arch</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/debian" alt="Debian" />Debian</span>
+          <span class="ttxt">y derivados (Mint, Manjaro…)</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>Windows Server</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Virtualización y NAS</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/proxmox" alt="Proxmox VE" />Proxmox VE</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/docker" alt="Docker" />Docker</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/truenas" alt="TrueNAS Scale" />TrueNAS Scale</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/openmediavault" alt="OpenMediaVault" />OpenMediaVault</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/unraid" alt="Unraid" />Unraid</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>ZimaOS</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Redes y acceso remoto</h3>
+        <div class="icons">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg>SSH</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>RDP</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/wireguard" alt="WireGuard" />WireGuard</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/tailscale" alt="Tailscale" />Tailscale</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M12 12V8"/></svg>DHCP</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>DNS · PowerDNS</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" />Cloudflare</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/pangolin" alt="Pangolin" />Pangolin</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Servidores web y correo</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx" />Nginx</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/apache" alt="Apache" />Apache</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>IMAP</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>POP3</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>SMTP</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Almacenamiento y protocolos</h3>
+        <div class="icons">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>SMB</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/><path d="M6 16h.01M10 16h.01"/></svg>NFS</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V9"/><path d="m21 8-4-4-4 4"/><path d="M17 4v11"/></svg>SFTP</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>ZFS</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Bases de datos</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" />MySQL</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/mariadb" alt="MariaDB" />MariaDB</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>Oracle Database</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Observabilidad</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/prometheus" alt="Prometheus" />Prometheus</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/grafana" alt="Grafana" />Grafana</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/netdata" alt="Netdata" />Netdata</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Glances</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>Zabbix</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/cockpit" alt="Cockpit" />Cockpit</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>Beszel</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Identidad, soporte y nube</h3>
+        <div class="icons">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><circle cx="9" cy="10" r="1.5"/><circle cx="15" cy="10" r="1.5"/><path d="M8.5 15a4 4 0 0 1 7 0"/></svg>Microsoft Entra ID</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/jira" alt="Jira" />Jira</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>Zammad</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm18 0h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-5Z"/><path d="M21 11a9 9 0 0 0-18 0"/><path d="M21 16v2a2 2 0 0 1-2 2h-4"/></svg>HelpDesk</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1.1A7 7 0 1 0 4 14.9"/><path d="M9 19h8.5"/></svg>AWS (nivel básico)</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Apps y otros</h3>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/wordpress" alt="WordPress" />WordPress</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/ollama" alt="Ollama · LLMs locales" />Ollama · LLMs locales</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>Nginx Proxy Manager</span>
+        </div>
+      </div>
+    </div></section>
+
+<section id="lab">
+  <div class="wrap">
+    <h2>Mi <em>Homelab</em></h2>
+    <p style="color:var(--muted);margin-bottom:28px">Un único nodo Proxmox VE donde vivo todo: del desarrollo de WebKVM a los servicios que mi casa usa a diario.</p>
+
+    <div class="strip">
+      <div class="stat"><b data-count="8" data-suffix="C">0C</b><span>Ryzen 7 5700U · 16T</span></div>
+      <div class="stat"><b data-count="32" data-suffix=" GB">0</b><span>RAM DDR4</span></div>
+      <div class="stat"><b data-count="43" data-prefix="~" data-decimal="1" data-suffix=" TB">~4,3</b><span>NVMe + SSD ×2 + HDD</span></div>
+      <div class="stat"><b>PVE 9</b><span>Proxmox VE</span></div>
+    </div>
+
+    <!-- Hardware: tarjeta ancha en horizontal, encima del resto -->
+    <div class="card" style="margin-top:26px">
+      <h3>Hardware: elegido para este trabajo</h3>
+      <div class="grid" style="gap:26px;margin-top:14px">
+        <div>
+          <strong>CPU · AMD Ryzen 7 5700U (8C/16T)</strong>
+          <p style="margin-top:6px">Los 16 hilos permiten levantar en paralelo los tres bancos de prueba de WebKVM (Ubuntu 8 GB + Fedora 4 GB + Arch 8 GB) sin que las 14 máquinas LXC se resientan. Y para un equipo que no se apaga nunca: su TDP de 15 W mantiene el nodo por debajo del consumo de una bombilla, con rendimiento sostenido multi-núcleo durante compilaciones Go y builds del frontend.</p>
+        </div>
+        <div>
+          <strong>RAM · 32 GB</strong>
+          <p style="margin-top:6px">No es un número redondo al azar: las tres VMs de prueba suman 20 GB asignados; el resto da holgura a los contenedores LXC y alimenta la caché Btrfs del NVMe, de modo que compilaciones y health-checks nunca tocan swap. El punto justo entre «se queda corto al segundo test» y «pagar por RAM que duerme».</p>
+        </div>
+      </div>
+      <div class="icons" style="margin-top:16px"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>15 W TDP · 24/7</span><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>16 hilos</span><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/><path d="M6 16h.01M10 16h.01"/></svg>NVMe</span><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>Btrfs</span></div>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <div class="card">
+        <h3>Máquinas virtuales (KVM)</h3>
+        <p>Bancos de prueba reales para WebKVM: nodos idénticos en Ubuntu, Fedora y Arch donde valido el instalador one-liner de punta a punta — purga, instalación, HTTPS, redes y health-check automático.</p>
+        <ul class="feat">
+          <li>fedora-webkvm — banco de pruebas dnf</li>
+          <li>ubuntu-server — pruebas apt + apps</li>
+          <li>arch-linux-webkvm — banco pacman</li>
+        </ul>
+        <div class="icons">
+          <span class="chip"><img src="https://cdn.simpleicons.org/ubuntu" alt="Ubuntu" />Ubuntu</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/fedora" alt="Fedora" />Fedora</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch" />Arch</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1.1A7 7 0 1 0 4 14.9"/><path d="M9 19h8.5"/></svg>cloud-init</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Servicios autoalojados (LXC)</h3>
+        <p>Catorce contenedores LXC ligeros mantienen la casa funcionando: DNS, almacenamiento de credenciales, fotos, multimedia y utilidades varias. Delante, un Nginx Proxy Manager expone los servicios con hosts proxidados y certificados Let's Encrypt emitidos mediante desafío DNS sobre la API de Cloudflare.</p>
+        <div class="icons">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>Nginx Proxy Manager</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare API" />Cloudflare API</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>DNS-01 Challenge</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Red</h3>
+        <p>Bridges Linux (vmbr) separando tráfico de gestión y laboratorio. Las VMs salen por NAT o por bridge según el caso — exactamente lo que WebKVM automatiza.</p>
+        <div class="icons">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M12 12V8"/></svg>Linux bridges</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>macvlan</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 3 4 4-4 4"/><path d="M21 7H9"/><path d="m7 21-4-4 4-4"/><path d="M3 17h12"/></svg>NAT</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>nftables</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" />Cloudflare</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <h3>Cómo trabajo</h3>
+      <p>Nada se instala a mano dos veces: pruebo en VMs efímeras antes de tocar nada real, las instalaciones son reproducibles con un solo comando y cada despliegue acaba con validación automática de salud. Lo simple que funciona gana — binarios únicos, configuración persistente y cero magia oculta.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="background:rgba(10,16,31,.5)">
+  <div class="wrap" style="text-align:center">
+    <h2 style="text-align:left">Conta<em>cto</em></h2>
+    <p style="color:var(--muted)">¿Quieres hablar de virtualización, homelabs o WebKVM?</p>
+    <div class="hero-cta">
+      <a class="btn primary" href="mailto:alvinpp1908@gmail.com">Email</a>
+      <a class="btn ghost" href="https://github.com/Slaker19" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Alvin Perez</div>
+</footer>
+
+<button id="top-btn" aria-label="Volver arriba">↑</button>
+
+<script>
+  // typing
+  const lines=["Técnico IT","Entusiasta del hardware","Homelab sobre Proxmox VE","Backend Go · libvirt / KVM","Creador de WebKVM"];
+  const tEl=document.getElementById('typed');let li=0,ci=0,del=false;
+  (function tick(){const t=lines[li];tEl.textContent=t.slice(0,ci);
+    if(!del){if(ci++===t.length){del=true;return setTimeout(tick,1600)}}
+    else{if(ci--===0){del=false;li=(li+1)%lines.length;return setTimeout(tick,350)}}
+    setTimeout(tick,del?40:80)})();
+
+  // scroll progress + back to top
+  const bar=document.getElementById('bar'),tb=document.getElementById('top-btn');
+  addEventListener('scroll',()=>{
+    const h=document.documentElement,p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+    bar.style.width=p+'%';
+    tb.classList.toggle('show',h.scrollTop>600);
+  },{passive:true});
+  tb.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+  // reveal cards
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';io.unobserve(e.target)}
+  }),{threshold:.1});
+  document.querySelectorAll('.card,.stat').forEach((c,i)=>{
+    c.style.opacity=0;c.style.transform='translateY(22px)';
+    c.style.transition=`opacity .55s ease ${i%4*.07}s, transform .55s ease ${i%4*.07}s`;
+    io.observe(c);
+  });
+
+  // count-up stats
+  const fmt=(v,d)=>d?v.toFixed(d).replace('.',','):Math.round(v);
+  const cio=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting)return;cio.unobserve(e.target);
+    const el=e.target,target=+el.dataset.count||0,dec=+(el.dataset.decimal||0);
+    const pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';const t0=performance.now();
+    (function step(now){
+      const p=Math.min((now-t0)/1200,1),v=target*(1-Math.pow(1-p,3));
+      el.textContent=pre+fmt(v,dec)+suf;
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+  }),{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+  // active nav
+  const secs=[...document.querySelectorAll('section[id],header[id]')];
+  const links=[...document.querySelectorAll('nav a.link')];
+  const nio=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+    }
+  }),{rootMargin:'-45% 0px -50%'});
+  secs.forEach(s=>nio.observe(s));
+</script>
+</body>
+</html>
