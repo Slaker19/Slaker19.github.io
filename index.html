@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Alvin Perez — Técnico IT · Backend Go · Homelab Proxmox</title>
-<meta name="description" content="Portfolio de Alvin Perez: técnico IT, entusiasta del hardware, homelab sobre Proxmox VE y creador de WebKVM." />
+<meta name="description" content="Portfolio de Alvin Perez: técnico IT, entusiasta del hardware, homelab sobre Proxmox VE y creador de WebKVM (gestor híbrido KVM + Incus/LXC)." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -172,7 +172,7 @@
     <h1>Alvin <b>Perez</b></h1>
     <span id="typed"></span><span class="cursor">&nbsp;</span>
     <p class="lead">Técnico IT y entusiasta del hardware. Mi laboratorio corre sobre Proxmox VE
-      y de ahí nace WebKVM: gestión de VMs nativa, simple y sin dependencias innecesarias.</p>
+      y de ahí nace WebKVM: gestión nativa de VMs (KVM) y contenedores (Incus/LXC), simple y sin dependencias innecesarias.</p>
     <div class="hero-cta">
       <a class="btn primary" href="#projects">Ver proyectos</a>
       <a class="btn ghost" href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener">WebKVM en GitHub ↗</a>
@@ -197,13 +197,15 @@
 
     <div class="card featured" style="margin-bottom:22px">
       <span class="pill">PROYECTO PRINCIPAL</span>
-      <h3>WebKVM — Gestor de VMs nativo con UI web</h3>
-      <p>Gestor de máquinas virtuales sobre libvirt + QEMU/KVM. Un solo binario Go con el frontend Svelte embebido: sin Docker, sin reverse proxy obligatorio, sin base de datos externa.</p>
+      <h3>WebKVM — Gestor nativo híbrido: VMs KVM + contenedores Incus/LXC</h3>
+      <p>Gestor híbrido sobre libvirt + QEMU/KVM y el fork comunitario <strong>Incus</strong> (compatible con LXD). un solo binario Go con el frontend Svelte embebido: sin reverse proxy obligatorio, sin base de datos externa y con Docker como alternativa opcional.</p>
       <ul class="feat">
-        <li>Instalador one-liner multi-distro: Debian/Ubuntu, Fedora/RHEL y Arch</li>
+        <li>Instalador one-liner multi-distro: Debian/Ubuntu, Fedora/RHEL y Arch (paquetes nativos, cero snap)</li>
         <li>HTTPS directo del backend con cert autofirmado (SAN IP + dominio)</li>
-        <li>Redes NAT y bridge macvlan, snapshots, backups programados</li>
-        <li>RBAC de 3 niveles, auditoría JSONL y CodeQL limpio</li>
+        <li>Creación de contenedores desde imágenes oficiales (dropdown amigable) + cloud-init / credenciales LXC (usuario opcional → root)</li>
+        <li>Redes unificadas (bridges de libvirt), redimensionar disco raíz, interfaces de red y métricas CPU/RAM en vivo</li>
+        <li>Vista unificada con badge KVM/Incus, filtro por tipo, backups en streaming y snapshots</li>
+        <li>RBAC de 3 niveles, firewall nftables por VM, auditoría JSONL y CodeQL limpio</li>
         <li>~14 MB de binario · ~7 MB de RAM en reposo</li>
       </ul>
       <pre class="inline">curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash</pre>
@@ -212,6 +214,7 @@
           <span class="chip"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte 5" />Svelte 5</span>
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>libvirt</span>
           <span class="chip"><img src="https://cdn.simpleicons.org/qemu" alt="QEMU/KVM" />QEMU/KVM</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11a5 5 0 0 1 5 5v4h10v-4a5 5 0 0 1 5-5Z"/><path d="M8 20v-2M16 20v-2"/></svg>Incus / LXC</span>
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>systemd</span>
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>nftables</span>
         </div>
@@ -271,6 +274,7 @@
         <div class="icons">
           <span class="chip"><img src="https://cdn.simpleicons.org/proxmox" alt="Proxmox VE" />Proxmox VE</span>
           <span class="chip"><img src="https://cdn.simpleicons.org/docker" alt="Docker" />Docker</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11a5 5 0 0 1 5 5v4h10v-4a5 5 0 0 1 5-5Z"/><path d="M8 20v-2M16 20v-2"/></svg>Incus / LXC</span>
           <span class="chip"><img src="https://cdn.simpleicons.org/truenas" alt="TrueNAS Scale" />TrueNAS Scale</span>
           <span class="chip"><img src="https://cdn.simpleicons.org/openmediavault" alt="OpenMediaVault" />OpenMediaVault</span>
           <span class="chip"><img src="https://cdn.simpleicons.org/unraid" alt="Unraid" />Unraid</span>
@@ -441,7 +445,7 @@
 
 <script>
   // typing
-  const lines=["Técnico IT","Entusiasta del hardware","Homelab sobre Proxmox VE","Backend Go · libvirt / KVM","Creador de WebKVM"];
+  const lines=["Técnico IT","Entusiasta del hardware","Homelab sobre Proxmox VE","Backend Go · KVM / Incus","Creador de WebKVM"];
   const tEl=document.getElementById('typed');let li=0,ci=0,del=false;
   (function tick(){const t=lines[li];tEl.textContent=t.slice(0,ci);
     if(!del){if(ci++===t.length){del=true;return setTimeout(tick,1600)}}
