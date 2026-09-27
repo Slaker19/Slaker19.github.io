@@ -197,16 +197,18 @@
 
     <div class="card featured" style="margin-bottom:22px">
       <span class="pill">PROYECTO PRINCIPAL</span>
-      <h3>WebKVM — Gestor nativo híbrido: VMs KVM + contenedores Incus/LXC</h3>
-      <p>Gestor híbrido sobre libvirt + QEMU/KVM y el fork comunitario <strong>Incus</strong> (compatible con LXD). un solo binario Go con el frontend Svelte embebido: sin reverse proxy obligatorio, sin base de datos externa y con Docker como alternativa opcional.</p>
+      <h3>WebKVM — Gestor web híbrido: VMs KVM/QEMU + contenedores Incus/LXC</h3>
+      <p>Panel web autoalojado sobre libvirt + QEMU/KVM y el backend de contenedores <strong>Incus</strong> (compatible con LXD). Un único binario compilado en Go con el frontend Svelte 5 incrustado: sin dependencias externas, sin base de datos pesada, con HTTPS automático y alternativas de despliegue mediante Docker, paquetes nativos (.deb/.rpm) o instalador directo.</p>
       <ul class="feat">
-        <li>Instalador one-liner multi-distro: Debian/Ubuntu, Fedora/RHEL y Arch (paquetes nativos, cero snap)</li>
-        <li>HTTPS directo del backend con cert autofirmado (SAN IP + dominio)</li>
-        <li>Creación de contenedores desde imágenes oficiales (dropdown amigable) + cloud-init / credenciales LXC (usuario opcional → root)</li>
-        <li>Redes unificadas (bridges de libvirt), redimensionar disco raíz, interfaces de red y métricas CPU/RAM en vivo</li>
-        <li>Vista unificada con badge KVM/Incus, filtro por tipo, backups en streaming y snapshots</li>
-        <li>RBAC de 3 niveles, firewall nftables por VM, auditoría JSONL y CodeQL limpio</li>
-        <li>~14 MB de binario · ~7 MB de RAM en reposo</li>
+        <li>Instalador one-liner multi-distro: Debian/Ubuntu, Fedora/RHEL y Arch con paquetes nativos, rollback automático y cero snap</li>
+        <li>HTTPS nativo directo en el binario con certificado autofirmado automático (SAN IP + dominio), sin reverse proxy obligatorio</li>
+        <li>Consola web completa: acceso VNC (noVNC) y terminal serie interactiva integradas directamente en el navegador</li>
+        <li>Híbrido real: KVM y contenedores Incus/LXC en la misma interfaz, con cloud-init studio y migración nativa entre pools</li>
+        <li>Almacenamiento unificado: soporte de pools locales, NFS y SMB con migración de discos en caliente, importación OVA y vzdump</li>
+        <li>Passthrough de hardware: asignación de GPUs/dispositivos PCI y USB con verificación previa de grupos IOMMU/VFIO</li>
+        <li>Redes y seguridad: puentes Linux unificados, cortafuegos nftables por VM, RBAC granular con ACL, 2FA/TOTP y auditoría JSONL</li>
+        <li>Catálogo de apps listas para desplegar, snapshots instantáneos, backups en streaming y métricas CPU/RAM en vivo</li>
+        <li>Ultra ligero: ~14 MB de binario único en Go · ~7 MB de RAM en reposo · CLI complementaria (<code>webkvm-cli</code>)</li>
       </ul>
       <pre class="inline">curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash</pre>
 <div class="icons">
@@ -215,6 +217,7 @@
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>libvirt</span>
           <span class="chip"><img src="https://cdn.simpleicons.org/qemu" alt="QEMU/KVM" />QEMU/KVM</span>
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11a5 5 0 0 1 5 5v4h10v-4a5 5 0 0 1 5-5Z"/><path d="M8 20v-2M16 20v-2"/></svg>Incus / LXC</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/docker" alt="Docker" />Docker</span>
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>systemd</span>
           <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>nftables</span>
         </div>
