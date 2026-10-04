@@ -1,705 +1,475 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alvin Perez — IT Infrastructure & Go Backend Engineer</title>
-    <meta name="description" content="Portfolio de Alvin Perez: Ingeniero IT, infraestructura Linux, Homelab Proxmox VE, KVM/Incus hibridación y backend Go (Creador de WebKVM)." />
-    <meta name="theme-color" content="#11111b" />
-    
-    <meta property="og:title" content="Alvin Perez — Infrastructura & Backend" />
-    <meta property="og:description" content="Conoce mis proyectos (WebKVM), arquitectura PVE Homelab y skills técnicos." />
-    <meta property="og:type" content="website" />
-    
-    <!-- Fuentes Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons (Lucide via cdn) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- SEO Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Person",
-          "@id": "https://slaker19.github.io/#person",
-          "name": "Alvin Perez",
-          "jobTitle": "Técnico IT & Creador de WebKVM",
-          "url": "https://slaker19.github.io",
-          "sameAs": ["https://github.com/Slaker19", "mailto:alvinpp1908@gmail.com"],
-          "knowsAbout": ["Linux System Administration", "Go", "KVM/QEMU", "Proxmox", "Incus/LXC", "Catppuccin"]
-        }
-      ]
-    }
-    </script>
-    <style>
-        
-:root {
-  /* Catppuccin Mocha por defecto */
-  --bg: #11111b; --bg-card: rgba(30, 30, 46, 0.65);
-  --text: #cdd6f4; --subtext: #a6adc8; --muted: #585b70;
-  --border: rgba(180, 190, 254, 0.1); --border-hover: rgba(137, 220, 235, 0.35);
-  --a-blue: #89b4fa; --a-sky: #89dceb; --a-mauve: #cba6f7; 
-  --a-green: #a6e3a1; --a-peach: #fab387; --a-red: #f38ba8;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alvin Perez — IT Infrastructure & Go Backend Engineer</title>
+  <meta name="description" content="Portfolio de Alvin Perez: Ingeniero IT, infraestructura Linux, Homelab Proxmox VE, KVM/Incus hibridación y backend Go (WebKVM)." />
+  <meta name="theme-color" content="#11111b" />
   
-  --f-inter: 'Inter', sans-serif;
-  --f-display: 'Space Grotesk', sans-serif;
-  --f-mono: 'JetBrains Mono', monospace;
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-  --trans-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+  <style>
+    :root {
+      /* Catppuccin Mocha palette */
+      --base: #11111b;       /* darker mantle/crust */
+      --surface0: #1e1e2e;
+      --surface1: #313244;
+      --surface2: #45475a;
+      
+      --text: #cdd6f4;
+      --subtext: #a6adc8;
+      --muted: #6c7086;
+      
+      --blue: #89b4fa;
+      --sapphire: #74c7ec;
+      --sky: #89dceb;
+      --green: #a6e3a1;
+      --peach: #fab387;
+      --mauve: #cba6f7;
+      --red: #f38ba8;
 
-[data-theme="tokyo"] {
-  --bg: #1a1b26; --bg-card: rgba(36, 40, 59, 0.65);
-  --text: #c0caf5; --subtext: #9aa5ce; --muted: #565f89;
-  --border: rgba(122, 162, 247, 0.15); --border-hover: rgba(122, 162, 247, 0.5);
-  --a-blue: #7aa2f7; --a-sky: #7dcfff; --a-mauve: #bb9af7;
-  --a-green: #9ece6a; --a-peach: #ff9e64; --a-red: #f7768e;
-}
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-full: 9999px;
+      
+      --max-w: 1000px;
+    }
 
-[data-theme="nord"] {
-  --bg: #2e3440; --bg-card: rgba(59, 66, 82, 0.7);
-  --text: #eceff4; --subtext: #d8dee9; --muted: #4c566a;
-  --border: rgba(136, 192, 208, 0.15); --border-hover: rgba(136, 192, 208, 0.4);
-  --a-blue: #5e81ac; --a-sky: #88c0d0; --a-mauve: #b48ead;
-  --a-green: #a3be8c; --a-peach: #ebcb8b; --a-red: #bf616a;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: var(--f-inter); overflow-x: hidden; min-height: 100vh; }
-ul { list-style: none; }
-a { text-decoration: none; color: inherit; }
+    body {
+      background: var(--base);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--a-sky); }
+    /* Layout & Navbar */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    header.top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(17, 17, 27, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface1);
+    }
+    .top-nav .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .brand {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .brand span { color: var(--mauve); }
+    
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a {
+      color: var(--subtext);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
 
-/* Selección text */
-::selection { background: var(--a-mauve); color: var(--bg); }
+    /* Section Spacing */
+    section { padding: 90px 0; border-bottom: 1px solid var(--surface0); }
+    section:last-child { border-bottom: none; }
+    
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title i { color: var(--sky); width: 28px; height: 28px; }
 
-/* Background Canvas */
-#aurora-bg { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; opacity: 0.6; pointer-events: none; }
+    /* Hero */
+    .hero { padding: 120px 0 80px 0; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(137, 180, 250, 0.1);
+      color: var(--blue);
+      padding: 6px 14px;
+      border-radius: var(--r-full);
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      margin-bottom: 24px;
+      border: 1px solid rgba(137, 180, 250, 0.2);
+    }
+    .hero-badge .pulse { width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--subtext);
+      max-width: 650px;
+      margin-bottom: 40px;
+    }
+    
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 24px;
+      border-radius: var(--r-md);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--text); color: var(--base); }
+    .btn-primary:hover { background: var(--subtext); }
+    .btn-secondary { background: var(--surface0); color: var(--text); border: 1px solid var(--surface1); }
+    .btn-secondary:hover { background: var(--surface1); border-color: var(--surface2); }
+    
+    /* Grid & Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+    
+    .card {
+      background: var(--surface0);
+      border: 1px solid var(--surface1);
+      border-radius: var(--r-lg);
+      padding: 28px;
+    }
+    .card-title {
+      font-size: 1.25rem; font-weight: 600; margin-bottom: 12px; color: var(--text);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-desc { color: var(--subtext); font-size: 0.95rem; margin-bottom: 20px; }
+    
+    /* Project: WebKVM specific */
+    .feat-card {
+      background: var(--surface0);
+      border: 1px solid var(--surface1);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .feat-header {
+      padding: 30px;
+      border-bottom: 1px solid var(--surface1);
+    }
+    .feat-header p { color: var(--subtext); font-size: 1.05rem; margin-top: 12px; max-width: 800px; }
+    
+    .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .tag {
+      background: var(--surface1);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      border: 1px solid var(--surface2);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .tag i { width: 14px; height: 14px; color: var(--sky); }
 
-/* Mac-like Floating Dock */
-.fl-dock {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100;
-  display: flex; gap: 8px; align-items: center; padding: 10px; border-radius: 24px;
-  background: rgba(17, 17, 27, 0.6); backdrop-filter: blur(16px);
-  border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  transition: all 0.3s;
-}
-.dock-item {
-  width: 44px; height: 44px; border-radius: 14px; display: flex; justify-content: center; align-items: center;
-  color: var(--subtext); cursor: pointer; transition: var(--trans-bounce); position: relative;
-  background: rgba(255,255,255,0.03);
-}
-.dock-item:hover, .dock-item.active {
-  background: var(--a-blue); color: var(--bg); transform: translateY(-6px) scale(1.1);
-  box-shadow: 0 10px 20px -5px var(--a-blue);
-}
-.dock-item.active { background: var(--a-mauve); box-shadow: 0 10px 20px -5px var(--a-mauve); }
-.dock-divider { width: 2px; height: 24px; background: var(--border); margin: 0 4px; }
+    /* WebKVM Terminal Window */
+    .window {
+      background: var(--base);
+      margin: 30px;
+      border-radius: var(--r-md);
+      border: 1px solid var(--surface1);
+      overflow: hidden;
+    }
+    @media (max-width: 640px) { .window { margin: 15px; } }
+    
+    .win-header {
+      background: var(--surface0); padding: 12px 16px;
+      display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--surface1);
+    }
+    .win-dots div { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+    .w-red { background: #ff5f56; } .w-yel { background: #ffbd2e; } .w-grn { background: #27c93f; }
+    .win-title { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); margin-left: 10px; }
+    
+    .win-body { padding: 20px; font-family: var(--font-mono); font-size: 0.85rem; overflow-x: auto; color: var(--text); }
+    .cmd-line { display: flex; gap: 12px; margin-bottom: 12px; }
+    .cmd-host { color: var(--blue); }
+    .cmd-text { color: var(--text); }
+    
+    .sys-table { width: 100%; border-collapse: collapse; min-width: 600px; margin-top: 10px; }
+    .sys-table th, .sys-table td { text-align: left; padding: 10px; border-bottom: 1px solid var(--surface1); }
+    .sys-table th { color: var(--muted); font-weight: normal; font-size: 0.75rem; text-transform: uppercase; }
+    .sys-table td { color: var(--subtext); }
+    .status-ok { color: var(--green); }
+    .status-warn { color: var(--peach); }
+    .status-err { color: var(--red); }
 
-/* Tooltips del Dock */
-.dock-item::before {
-  content: attr(data-tooltip); position: absolute; top: -45px; left: 50%; transform: translateX(-50%) scale(0.6);
-  opacity: 0; background: var(--bg); color: var(--text); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem;
-  font-family: var(--f-mono); white-space: nowrap; transition: var(--trans-bounce); border: 1px solid var(--border);
-  pointer-events: none;
-}
-.dock-item:hover::before { opacity: 1; transform: translateX(-50%) scale(1); }
+    /* Tech Stack Lists */
+    .stack-list { margin-top: 16px; list-style: none; display: flex; flex-direction: column; gap: 10px;}
+    .stack-list li { display: flex; align-items: center; gap: 10px; color: var(--subtext); font-size: 0.95rem; }
+    .stack-list li i { width: 16px; height: 16px; color: var(--mauve); }
 
-/* BENTO GRID */
-.bento-container {
-  max-width: 1380px; margin: 40px auto 120px; padding: 0 20px;
-  display: grid; gap: 20px;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(100px, auto);
-}
+    /* Homelab Blocks */
+    .lab-box { border-left: 3px solid var(--surface2); padding-left: 20px; margin-bottom: 24px;}
+    .lab-title { font-family: var(--font-mono); font-size: 0.9rem; color: var(--sapphire); margin-bottom: 6px; display:flex; align-items:center; gap:8px;}
+    .lab-text { color: var(--subtext); font-size: 0.95rem; line-height: 1.5; }
 
-.bCard {
-  background: var(--bg-card); backdrop-filter: blur(12px); border-radius: 24px;
-  border: 1px solid var(--border); overflow: hidden; position: relative;
-  display: flex; flex-direction: column; padding: 26px;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
-}
-.bCard::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
-  padding: 1.5px;
-  background: radial-gradient(400px circle at var(--ms-x, 0) var(--ms-y, 0), rgba(255,255,255,0.18), transparent 40%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude; z-index: 2; opacity: 0; transition: opacity 0.3s;
-}
-.bCard:hover::before { opacity: 1; }
-.bCard:hover { transform: translateY(-4px) scale(1.005); border-color: var(--border-hover); box-shadow: 0 12px 35px -10px rgba(0,0,0,0.6); }
-
-/* Spans para las celdas del Bento Grid */
-.sp-12 { grid-column: span 12; }
-.sp-8 { grid-column: span 8; }
-.sp-7 { grid-column: span 7; }
-.sp-6 { grid-column: span 6; }
-.sp-5 { grid-column: span 5; }
-.sp-4 { grid-column: span 4; }
-.sp-3 { grid-column: span 3; }
-.row-2 { grid-row: span 2; }
-.row-3 { grid-row: span 3; }
-
-@media (max-width: 1024px) {
-  .sp-8, .sp-7, .sp-6, .sp-5, .sp-4, .sp-3 { grid-column: span 12; }
-  .row-2, .row-3 { grid-row: auto; }
-}
-
-/* Typography Generics */
-.bTitle { font-family: var(--f-display); font-size: 1.6rem; color: var(--text); font-weight: 700; line-height: 1.1; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-.bSub { color: var(--subtext); font-size: 0.95rem; line-height: 1.6; }
-.bLabel { text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; color: var(--a-sky); font-family: var(--f-mono); margin-bottom: 8px; display:inline-block;}
-
-/* Hero Module (Avatar, Live Target) */
-.hero-module { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
-.hero-avatar { width: 70px; height: 70px; background: linear-gradient(135deg, var(--a-mauve), var(--a-blue)); border-radius: 20px; display: flex; justify-content: center; align-items: center; font-size: 2rem; color: var(--bg); transform: rotate(-5deg); transition: 0.4s; }
-.hero-avatar:hover { transform: rotate(10deg) scale(1.1); }
-.hero-stats { display: flex; gap: 14px; font-family: var(--f-mono); font-size: 0.8rem; }
-.stat-badge { background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 6px 12px; border-radius: 99px; display:flex; align-items:center; gap:6px; color:var(--a-green); }
-.dot-flashing { width: 8px; height: 8px; border-radius: 50%; background: var(--a-green); animation: flash 1.5s infinite alternate; }
-@keyframes flash { from { box-shadow: 0 0 10px var(--a-green); opacity: 1; } to { box-shadow: none; opacity: 0.4; } }
-
-/* Live Terminal Emulation in Bento */
-.term-box { background: #0c0e14; border-radius: 12px; border: 1px solid var(--border); flex: 1; display:flex; flex-direction: column; overflow: hidden; margin-top: 14px; font-family: var(--f-mono); font-size: 0.85rem;}
-.term-header { background: #151822; padding: 8px 14px; display:flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-.term-mac-btns { display:flex; gap: 6px; }
-.term-mac-btns div { width: 12px; height: 12px; border-radius: 50%; }
-.mac-close { background: #ff5f56; } .mac-min { background: #ffbd2e; } .mac-max { background: #27c93f; }
-.term-body { padding: 14px; flex: 1; overflow-y: auto; color: #a2aabc; line-height: 1.5; white-space: pre-wrap; height: 260px;}
-.cmd-prompt { color: var(--a-green); margin-right: 6px; }
-.term-input-line { display: flex; align-items: center; margin-top: 8px;}
-.term-input { background: transparent; border: none; outline: none; color: var(--text); flex: 1; font-family: var(--f-mono); font-size: 0.85rem;}
-
-/* PVE Homelab CPU Vis */
-.cpu-donut-container { display: flex; gap: 16px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
-.cpu-bars { flex: 1; display: grid; grid-template-columns: repeat(16, 1fr); gap: 4px; height: 60px; align-items: flex-end; }
-.cpu-bar { width: 100%; background: var(--a-sky); border-radius: 2px 2px 0 0; transition: height 0.6s ease, background 0.6s ease; }
-/* Storage Racks */
-.strp-rack { display:flex; flex-direction: column; gap: 10px; margin-top: 16px; }
-.strp-drive { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 12px; border-radius: 12px; display:flex; justify-content:space-between; align-items:center; cursor: crosshair; transition:0.2s; position:relative; }
-.strp-drive:hover { background: rgba(0,0,0,0.5); border-color: var(--a-mauve); }
-.drive-info { display: flex; flex-direction: column; gap: 4px; }
-.drive-name { font-weight: 600; font-size: 0.9rem; font-family:var(--f-display); }
-.drive-meta { font-size: 0.75rem; font-family: var(--f-mono); color: var(--subtext); }
-.drive-health { display: flex; align-items:center; gap: 6px; font-size: 0.75rem; font-family:var(--f-mono); color: var(--a-green); background: rgba(166, 227, 161, 0.1); padding: 4px 8px; border-radius: 6px;}
-
-/* Tech Stack Radar/Chips */
-.tech-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.tech-chip { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; font-family: var(--f-mono); display:flex; align-items:center; gap: 8px; transition: 0.2s;}
-.tech-chip:hover { border-color: var(--a-sky); background: rgba(137,220,235,0.1); color: #fff; transform:translateY(-2px); }
-
-/* Interactive WebKVM App Window */
-.kvm-app { border: 1px solid var(--a-mauve); border-radius: 14px; margin-top:16px; overflow: hidden; display:flex; flex-direction:column; box-shadow: 0 10px 40px -15px rgba(203,166,247,0.4);  background: #090b14; flex: 1;}
-.kvm-nav { background: #111424; padding: 10px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(203,166,247,0.2);}
-.kvm-url { background: #04050a; padding: 4px 14px; border-radius: 8px; font-family:var(--f-mono); font-size:0.75rem; border:1px solid rgba(255,255,255,0.05); color: var(--subtext);}
-.kvm-body { display:flex; flex:1; }
-.kvm-side { width: 140px; background: #0c0f1c; border-right: 1px solid var(--border); display:flex; flex-direction:column; padding: 14px 10px; gap:8px;}
-.kvm-sitem { font-size: 0.8rem; padding: 8px; border-radius: 8px; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:8px; transition:0.2s;}
-.kvm-sitem:hover, .kvm-sitem.act { background: rgba(203,166,247,0.15); color:var(--a-mauve); }
-.kvm-content { flex: 1; padding: 16px; position:relative; overflow:hidden;}
-.kvm-table { width: 100%; border-collapse: collapse; font-family:var(--f-mono); font-size:0.75rem; text-align:left;}
-.kvm-table th { padding: 8px; color:var(--muted); border-bottom:1px solid #1a1c29; font-weight:normal;}
-.kvm-table td { padding: 12px 8px; border-bottom:1px solid #1a1c29;}
-.kbtn { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; cursor:pointer; padding:6px 10px; border-radius:6px; font-family:inherit; transition:0.2s; font-size:0.75rem;}
-.kbtn.prim { background: rgba(203,166,247,0.15); border-color: var(--a-mauve); color: var(--a-mauve);}
-.kbtn.prim:hover { background: var(--a-mauve); color: #000; }
-
-/* The WebKVM live animated drawer */
-.kvm-drawer { position: absolute; bottom: -120%; left:0; width:100%; padding:20px; background: rgba(12,15,28,0.95); backdrop-filter:blur(10px); border-top:1px solid var(--a-blue); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); display:flex; flex-direction:column; gap:10px; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);}
-.kvm-drawer.show { bottom: 0; }
-.drawer-prog-rail { width: 100%; height: 8px; background: rgba(0,0,0,0.5); border-radius:4px; overflow:hidden;}
-.drawer-prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--a-mauve), var(--a-blue)); transition: width 0.3s ease-out; }
-
-/* Live Network Sparkline Canvas */
-#spark-canvas { width: 100%; height: 50px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-top: 10px; mix-blend-mode: screen;}
-
-/* Command Palette Overlay */
-.palette-overlay { position: fixed; inset:0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 999; display:none; justify-content:center; align-items:flex-start; padding-top: 15vh; opacity:0; transition: opacity 0.2s;}
-.palette-overlay.open { display:flex; opacity:1;}
-.palette-box { width: 90%; max-width: 600px; background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 16px; overflow:hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); transform: translateY(-20px); transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
-.palette-overlay.open .palette-box { transform: translateY(0); }
-.pal-search { padding: 16px 20px; display:flex; align-items:center; gap: 14px; border-bottom: 1px solid var(--border); }
-.pal-search input { flex:1; background:transparent; border:none; outline:none; font-size: 1.1rem; color: var(--text); font-family: var(--f-inter); }
-.pal-search kbd { font-family: var(--f-mono); font-size: 0.7rem; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius:6px; color: var(--subtext);}
-.pal-results { max-height: 400px; overflow-y: auto; padding: 10px; display:flex; flex-direction:column; gap:4px; }
-.pal-item { display:flex; align-items:center; gap: 12px; padding: 12px 14px; cursor:pointer; border-radius: 10px; transition: 0.1s;}
-.pal-item:hover, .pal-item.focused { background: rgba(137,220,235,0.15); color: var(--a-sky); }
-.pal-item i { width: 18px; height: 18px; color: var(--subtext);}
-.pal-item:hover i { color: inherit;}
-
-/* Toast */
-.toast { position: fixed; bottom: 90px; right: 30px; background: rgba(166, 227, 161, 0.15); border: 1px solid #10b981; color: #a6e3a1; font-family: var(--f-mono); font-size: 0.85rem; display:flex; align-items:center; gap:10px; padding: 12px 20px; border-radius: 12px; transform: translateX(120%); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000; backdrop-filter: blur(10px);}
-.toast.show { transform: translateX(0); }
-
-/* Quick Contact buttons */
-.btn-solid { background: var(--text); color: var(--bg); padding: 12px 24px; border-radius: 12px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:0.2s; border:1px solid transparent; cursor:pointer; margin-top:20px;}
-.btn-solid:hover { background: transparent; border-color: var(--text); color: var(--text); }
-.btn-ghost { background: transparent; color: var(--text); border:1px solid var(--border); padding: 12px 24px; border-radius: 12px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:0.2s; cursor:pointer; margin-top:20px;}
-.btn-ghost:hover { border-color: var(--a-blue); background: rgba(137,180,250,0.1); }
-
-    </style>
+    /* Footer */
+    footer { padding: 40px 0; border-top: 1px solid var(--surface0); text-align: center; color: var(--muted); font-size: 0.9rem; }
+    
+    /* Utilities */
+    .highlight { color: var(--sky); font-weight: 500; }
+  </style>
 </head>
-<body data-theme="mocha">
-    <!-- Fondo Animado Canvas -->
-    <canvas id="aurora-bg"></canvas>
+<body>
 
-    <!-- Navbar Minimalista (Efecto Dock macOS) -->
-    <nav class="fl-dock">
-        <div class="dock-item" data-tooltip="Buscar / Comandos (⌘K)" onclick="togglePalette()">
-            <i data-lucide="search"></i>
-        </div>
-        <div class="dock-item" data-tooltip="Cambiar Tema" onclick="cycleTheme()">
-            <i data-lucide="palette"></i>
-        </div>
-        <div class="dock-divider"></div>
-        <a class="dock-item active" href="#dashboard" data-tooltip="Inicio / Console">
-            <i data-lucide="terminal"></i>
-        </a>
-        <a class="dock-item" href="#webkvm" data-tooltip="Proyecto WebKVM">
-            <i data-lucide="box"></i>
-        </a>
-        <a class="dock-item" href="#homelab" data-tooltip="Homelab / PVE Runtime">
-            <i data-lucide="server"></i>
-        </a>
-        <a class="dock-item" href="#stack" data-tooltip="Armería Técnica">
-            <i data-lucide="cpu"></i>
-        </a>
-        <a class="dock-item" href="https://github.com/Slaker19" target="_blank" data-tooltip="GitHub">
-            <i data-lucide="github"></i>
-        </a>
-        <a class="dock-item" href="mailto:alvinpp1908@gmail.com" data-tooltip="Contacto">
-            <i data-lucide="mail"></i>
-        </a>
-    </nav>
+  <header class="top-nav">
+    <div class="nav-content">
+      <div class="brand">Alvin<span>Perez</span></div>
+      <div class="nav-links">
+        <a href="#about">Sobre mí</a>
+        <a href="#projects">Proyectos</a>
+        <a href="#homelab">Homelab (PVE)</a>
+        <a href="#skills">Skills</a>
+      </div>
+    </div>
+  </header>
 
-    <main class="bento-container" id="dashboard">
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+      <div class="hero-badge">
+        <div class="pulse"></div> Backend & Infrastructure Engineer
+      </div>
+      <h1>Construyendo sistemas <br>robustos y eficientes.</h1>
+      <p class="hero-subtitle">
+        Soy técnico IT especializado en administración de servidores Linux. Optimizo recursos al máximo operando mi propio laboratorio en <span class="highlight">Proxmox VE a 15W TDP</span>. Escribo código backend limpio en <span class="highlight">Go</span> y desarrollo herramientas de virtualización de grado productivo.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary"><i data-lucide="folder-code"></i> Ver Proyectos</a>
+        <a href="https://github.com/Slaker19" target="_blank" class="btn btn-secondary"><i data-lucide="github"></i> GitHub Profile</a>
+        <a href="mailto:alvinpp1908@gmail.com" class="btn btn-secondary"><i data-lucide="mail"></i> Contacto</a>
+      </div>
+    </section>
+
+    <!-- Flagship Project: WebKVM -->
+    <section id="projects">
+      <div class="section-title">
+        <i data-lucide="server"></i> Proyecto Principal
+      </div>
+      
+      <div class="feat-card">
+        <div class="feat-header">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+            <div>
+              <h2 style="font-size: 1.8rem; color:var(--text); letter-spacing:-0.02em;">WebKVM v0.1.6</h2>
+              <p>Gestor web híbrido autoalojado de alto rendimiento para controlar máquinas virtuales (<b>KVM/QEMU</b>) y contenedores (<b>Incus/LXC</b>) de forma centralizada.</p>
+            </div>
+            <a href="https://github.com/Slaker19/webkvm" target="_blank" class="btn btn-secondary" style="padding: 8px 16px; font-size:0.85rem;"><i data-lucide="star"></i> Star Repo</a>
+          </div>
+          
+          <div class="tags">
+            <span class="tag"><i data-lucide="hexagon"></i> Go (Backend)</span>
+            <span class="tag"><i data-lucide="layout"></i> Svelte 5 (Frontend)</span>
+            <span class="tag"><i data-lucide="cpu"></i> libvirt API</span>
+            <span class="tag"><i data-lucide="layers"></i> Incus API</span>
+            <span class="tag"><i data-lucide="shield"></i> nftables Jail</span>
+          </div>
+        </div>
         
-        <!-- Card 1: Perfil Hero -->
-        <div class="bCard sp-8 row-2" id="hero" onmousemove="handleHover(event, this)">
-            <span class="bLabel">sysadmin / dev / architect</span>
-            <div class="hero-module">
-                <div>
-                    <h1 class="bTitle">Alvin Perez <div class="hero-avatar"><i data-lucide="terminal-square"></i></div></h1>
-                    <p class="bSub" style="max-width: 500px; font-size: 1.05rem;">
-                        Técnico IT y desarrollador Backend Go. Diseño infraestructuras ultra silenciosas a <strong>15W TDP</strong> y construyo software de grado productivo para virtualización, como <strong>WebKVM</strong>.
-                    </p>
-                </div>
-                <!-- Status en vivo simulado -->
-                <div class="hero-stats">
-                    <div class="stat-badge"><div class="dot-flashing"></div> PVE Node 99.98% UP</div>
-                    <div class="stat-badge" style="color:var(--a-sky); border-color:rgba(137,220,235,0.3); background:rgba(137,220,235,0.05);"><i data-lucide="git-commit" style="width:14px;height:14px;"></i> Commit a235271 (v0.1.6)</div>
-                </div>
+        <!-- App Demo CLI -->
+        <div class="window">
+          <div class="win-header">
+            <div class="win-dots"><div class="w-red"></div><div class="w-yel"></div><div class="w-grn"></div></div>
+            <div class="win-title">alvin@pve-node: ~  —  webkvm-cli status</div>
+          </div>
+          <div class="win-body">
+            <div class="cmd-line">
+              <span class="cmd-host">alvin@pve-node:~$</span>
+              <span class="cmd-text">webkvm status --tasks</span>
             </div>
-            <div style="display:flex; gap:12px; margin-top:auto;">
-                <a href="#projects" class="btn-solid">Explorar Armería <i data-lucide="arrow-right" style="width:18px;"></i></a>
-                <a href="https://github.com/Slaker19" target="_blank" class="btn-ghost"><i data-lucide="github" style="width:18px;"></i> GitHub</a>
-            </div>
-        </div>
-
-        <!-- Card 2: Interactive Console Sandbox -->
-        <div class="bCard sp-4 row-2" style="background:#090a10;" onmousemove="handleHover(event, this)">
-            <span class="bLabel" style="color:var(--a-mauve);">System Sandbox CLI</span>
-            <div class="term-box">
-                <div class="term-header">
-                    <div class="term-mac-btns"><div class="mac-close"></div><div class="mac-min"></div><div class="mac-max"></div></div>
-                    <span style="color:var(--muted); font-size:0.75rem;">alvin@alvinnas:~ (zsh)</span>
-                    <i data-lucide="shield-check" style="width:14px; color:var(--a-green);"></i>
-                </div>
-                <div class="term-body" id="term-out">Bienvenido al entorno CLI web.
-Ejecuta 'help', 'webkvm status' o 'neofetch'.
-</div>
-                <div class="term-header" style="background:#0c0e14; border-top:1px solid var(--border); border-bottom:none;">
-                    <div class="term-input-line" style="margin:0; width:100%;">
-                        <span class="cmd-prompt">➜</span><span style="color:var(--a-blue);margin-right:8px;">~</span>
-                        <input type="text" class="term-input" id="term-in" autocomplete="off" placeholder="Escribe un comando..." />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 3: Proyecto WebKVM v0.1.6 -->
-        <div class="bCard sp-7 row-3" id="webkvm" onmousemove="handleHover(event, this)">
-            <span class="bLabel" style="color:var(--a-red);">Proyecto Principal Estelar</span>
-            <h2 class="bTitle" style="font-size:1.8rem;">WebKVM v0.1.6</h2>
-            <p class="bSub" style="margin-bottom:8px;">
-                Gestor web autoalojado de alto rendimiento para <strong>KVM/QEMU</strong> e <strong>Incus/LXC</strong>. 
-                Todo en un único binario Go sin base de datos ni NodeJS. Task center asíncrono, Netplan y Security Jail integrados.
-            </p>
-            <div class="tech-grid" style="margin-bottom:16px;">
-                <span class="tech-chip" style="color:var(--a-sky); border-color:var(--border);"><i data-lucide="box" style="width:14px;"></i> Go backend</span>
-                <span class="tech-chip" style="color:#ff3e00; border-color:var(--border);"><i data-lucide="layout" style="width:14px;"></i> Svelte 5</span>
-                <span class="tech-chip" style="color:var(--a-mauve); border-color:var(--border);"><i data-lucide="shield-alert" style="width:14px;"></i> Passkeys / nftables</span>
-                <span class="tech-chip" style="cursor:pointer;" onclick="cmdPal('curl')"><i data-lucide="copy" style="width:14px;"></i> Instalar (Bash script)</span>
+            <div style="color:var(--text); margin-bottom: 15px;">
+              ● WebKVM Daemon v0.1.6: <span class="status-ok">Active (running)</span><br>
+              RAM Usage: 16.6 MB | Arch: amd64-linux<br>
+              Hypervisors: KVM/QEMU (libvirt 10.0), Incus/LXC (6.0 LTS)
             </div>
             
-            <!-- Live App Mock -->
-            <div class="kvm-app">
-                <div class="kvm-nav">
-                    <div class="kvm-url"><i data-lucide="lock" style="width:12px; display:inline-block; margin-right:4px;"></i> https://webkvm:8081</div>
-                    <div style="display:flex;gap:10px;">
-                        <button class="kbtn" onclick="fireTaskDrawer()"><i data-lucide="activity" style="width:14px; margin-right:4px; vertical-align:text-bottom;"></i> Tareas: <span id="kvm-task-c">0</span></button>
-                    </div>
-                </div>
-                <div class="kvm-body">
-                    <div class="kvm-side">
-                        <div class="kvm-sitem act"><i data-lucide="monitor"></i> Máquinas (3)</div>
-                        <div class="kvm-sitem"><i data-lucide="hard-drive"></i> Storage (2)</div>
-                        <div class="kvm-sitem"><i data-lucide="network"></i> Red / Bonds</div>
-                    </div>
-                    <div class="kvm-content">
-                        <table class="kvm-table">
-                            <tr><th>Name</th><th>Hypervisor</th><th>Status</th><th>Acción</th></tr>
-                            <tr>
-                                <td><strong style="color:var(--text);">ubuntu-cloud</strong></td>
-                                <td>KVM</td>
-                                <td><span style="color:var(--a-green);">● RUNNING</span></td>
-                                <td><button class="kbtn prim" onclick="fireTaskDrawer('ubuntu-cloud')">⚡ Clonar</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong style="color:var(--text);">adguard-dns</strong></td>
-                                <td>Incus LXC</td>
-                                <td><span style="color:var(--a-green);">● RUNNING</span></td>
-                                <td><button class="kbtn prim" onclick="fireTaskDrawer('adguard-dns')">⚡ Clonar</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong style="color:var(--text);">win11-vfio</strong></td>
-                                <td>KVM</td>
-                                <td><span style="color:var(--a-red);">○ STOPPED</span></td>
-                                <td><button class="kbtn" onclick="sysToast('Arrancando con passthrough IOMMU...')">▶ Iniciar</button></td>
-                            </tr>
-                        </table>
+            <table class="sys-table">
+              <thead>
+                <tr>
+                  <th>Job ID</th>
+                  <th>Type</th>
+                  <th>Target</th>
+                  <th>Status</th>
+                  <th>Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>job-a8f1</td>
+                  <td>vm.clone</td>
+                  <td>ubuntu-server-01</td>
+                  <td class="status-ok">SUCCESS</td>
+                  <td class="status-ok">[██████████] 100%</td>
+                </tr>
+                <tr>
+                  <td>job-b2c9</td>
+                  <td>disk.move</td>
+                  <td>fedora-dev</td>
+                  <td class="status-ok">SUCCESS</td>
+                  <td class="status-ok">[██████████] 100%</td>
+                </tr>
+                <tr>
+                  <td>job-c9d3</td>
+                  <td>lxc.create</td>
+                  <td>adguard-dns</td>
+                  <td class="status-warn">RUNNING</td>
+                  <td style="color:var(--blue);">[████░░░░░░] 45%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Otros proyectos -->
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 class="card-title"><i data-lucide="monitor-smartphone" style="color:var(--mauve);"></i> Dotfiles (Catppuccin)</h3>
+          <p class="card-desc">Mi configuración hiper optimizada de Hyprland (Wayland), Waybar, Kitty y Neovim usando temas Catppuccin Mocha. Estéticamente agradable y funcional.</p>
+          <a href="https://github.com/Slaker19/dotfiles-slaker" target="_blank" class="tag"><i data-lucide="external-link"></i> Ver dotfiles</a>
+        </div>
+        <div class="card">
+          <h3 class="card-title"><i data-lucide="calculator" style="color:var(--peach);"></i> Just-Calculate</h3>
+          <p class="card-desc">Calculadora y herramienta matemática sumamente ligera, construida para uso rápido y resolución de conversiones de datos con cero dependencias pesadas.</p>
+          <a href="https://github.com/Slaker19/just-calculate" target="_blank" class="tag"><i data-lucide="external-link"></i> Ver proyecto</a>
+        </div>
+      </div>
+    </section>
 
-                        <!-- Animated Drawer superpuesto -->
-                        <div class="kvm-drawer" id="kvm-drawer">
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <div style="font-family:var(--f-mono); font-size:0.8rem; color:#fff;" id="drw-title">Clonando: ubuntu-cloud -> clone-01</div>
-                                <div style="font-family:var(--f-mono); font-size:0.8rem; color:var(--a-sky);" id="drw-pct">12%</div>
-                            </div>
-                            <div class="drawer-prog-rail"><div class="drawer-prog-fill" id="drw-fill"></div></div>
-                            <div style="font-family:var(--f-mono); font-size:0.75rem; color:var(--subtext);" id="drw-step">Copiando diferencial qcow2 (~2.4 GB/s)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Homelab Section -->
+    <section id="homelab">
+      <div class="section-title">
+        <i data-lucide="hard-drive"></i> Homelab & Infraestructura
+      </div>
+      <p style="color:var(--subtext); margin-bottom:40px; font-size:1.05rem; max-width:800px;">
+        Gestiono mi propio cluster doméstico en un único nodo Proxmox VE altamente optimizado. Evito el hardware ruidoso empresarial a favor de silicio eficiente con 15W de TDP, operando a alta disponibilidad 24/7 sin impacto térmico en la red de casa.
+      </p>
+      
+      <div class="grid grid-2">
+        <div class="card">
+          <h4 style="color:var(--text); margin-bottom:20px; font-size:1.1rem;">Especificaciones del Nodo Físico</h4>
+          <div class="lab-box">
+            <div class="lab-title"><i data-lucide="cpu" style="width:16px;"></i> Computación (Ryzen 7)</div>
+            <div class="lab-text">CPU AMD Ryzen 7 5700U (8C/16T, 15W TDP). Desempeño suficiente para compilar Go, levantar KVMs efímeros en paralelo y correr contenedores sin cuello de botella. 32 GB RAM DDR4.</div>
+          </div>
+          <div class="lab-box">
+            <div class="lab-title"><i data-lucide="network" style="width:16px;"></i> Networking (LACP)</div>
+            <div class="lab-text">Enlace troncal L2 <code>bond0</code> (IEEE 802.3ad) unido a un bridge nativo de Linux (<code>vmbr0</code>). Tráfico enrutado tras Cloudflare WAF y túneles WireGuard. Firewall por defecto vía nftables.</div>
+          </div>
         </div>
 
-        <!-- Card 4: Hardware & Telemetry -->
-        <div class="bCard sp-5 row-2" id="homelab" onmousemove="handleHover(event, this)">
-            <span class="bLabel" style="color:var(--a-green);">Homelab Engine / Telemetría VIVA</span>
-            <h3 class="bTitle" style="font-size:1.3rem;">Proxmox VE 9.0 (15W TDP)</h3>
-            <p class="bSub" style="font-size:0.85rem;">Nodo Baremetal donde todo nace. AMD Ryzen 7 5700U (8C/16T) con 32 GB RAM DDR4. Diseñado para extrema eficiencia energética.</p>
-            
-            <div class="cpu-donut-container">
-                <div style="font-family:var(--f-mono); font-size:0.75rem; color:var(--a-sky);">CPU Hilos<br><span style="font-size:1.4rem;color:#fff;font-weight:700;" id="cpu-load-val">12%</span></div>
-                <div class="cpu-bars" id="cpu-bars">
-                    <!-- generadas en JS -->
-                </div>
-            </div>
-
-            <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:16px;">
-                <div style="display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:0.75rem;">
-                    <span style="color:var(--a-blue);">Red Host: bond0 (LACP)</span>
-                    <span id="net-txt">RX 12 MB/s</span>
-                </div>
-                <canvas id="spark-canvas"></canvas>
-            </div>
+        <div class="card">
+          <h4 style="color:var(--text); margin-bottom:20px; font-size:1.1rem;">Ecosistema de Almacenamiento</h4>
+          <div class="lab-box">
+            <div class="lab-title" style="color:var(--peach);"><i data-lucide="database" style="width:16px;"></i> Almacenamiento Híbrido (~4.3 TB)</div>
+            <ul style="color:var(--subtext); font-size:0.95rem; margin-top:8px; line-height:1.7; padding-left:16px;">
+              <li><strong style="color:var(--text);">1 TB NVMe (Btrfs)</strong>: Discos de alta velocidad COW y snapshots para sistemas base virtuales (/, /var/lib/vz, Incus).</li>
+              <li><strong style="color:var(--text);">2x 1 TB SSD ZFS Mirror</strong>: Pool tolerante a fallos para microservicios críticos (Vaultwarden, AdGuard, Grafana, Logs).</li>
+              <li><strong style="color:var(--text);">2 TB HDD XFS</strong>: Destino frío para copias de seguridad de largo plazo y backups remotos (VZDump / Borg).</li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Card 5: Storage Architecture -->
-        <div class="bCard sp-5 row-1" onmousemove="handleHover(event, this)">
-            <span class="bLabel" style="color:var(--a-peach);">Arquitectura de Almacenamiento</span>
-            <div class="strp-rack">
-                <div class="strp-drive" onmouseenter="sysToast('NVMe Btrfs con soporte para snapshots instantáneas COW. Subvolúmenes activos.')">
-                    <div class="drive-info">
-                        <span class="drive-name">Micron 2400 (NVMe)</span>
-                        <span class="drive-meta">1 TB / Btrfs (VMs Raíz)</span>
-                    </div>
-                    <div class="drive-health"><i data-lucide="thermometer" style="width:14px;"></i> 39°C</div>
-                </div>
-                <div class="strp-drive" onmouseenter="sysToast('Pool ZFS tolerante a fallos. Sin errores detectados en la suma de comprobación.')">
-                    <div class="drive-info">
-                        <span class="drive-name">2x SSDs Kingston en Mirror</span>
-                        <span class="drive-meta">2x 1 TB / ZFS (Microservicios)</span>
-                    </div>
-                    <div class="drive-health"><i data-lucide="check-circle" style="width:14px;"></i> SMART OK</div>
-                </div>
-            </div>
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="section-title">
+        <i data-lucide="terminal-square"></i> Herramientas de Trabajo
+      </div>
+      
+      <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div class="card">
+          <h3 class="card-title">Backend & Lenguajes</h3>
+          <ul class="stack-list">
+            <li><i data-lucide="check"></i> Go (Golang) moderno</li>
+            <li><i data-lucide="check"></i> Svelte 5 / Frontend UI</li>
+            <li><i data-lucide="check"></i> Bash / Zsh Scripting</li>
+            <li><i data-lucide="check"></i> Python básico a intermedio</li>
+          </ul>
         </div>
-
-        <!-- Card 6: Skills Arsenal Bento -->
-        <div class="bCard sp-12 row-1" id="stack" onmousemove="handleHover(event, this)">
-            <span class="bLabel" style="color:var(--a-mauve);">Skills & Technologies Arsenal</span>
-            <div class="tech-grid" style="gap: 12px; justify-content: center; margin-top:20px;">
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/linux" width="16" /> Linux Core / bash / zsh</span>
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/go" width="16" /> Golang / concurrency</span>
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/svelte" width="16" /> Svelte 5 / Frontend</span>
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/proxmox" width="16" /> Proxmox / libvirt KVM</span>
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/docker" width="16" /> Docker / Incus LXC</span>
-                <span class="tech-chip"><i data-lucide="shield" style="width:16px;"></i> nftables / Zero-Trust</span>
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/archlinux" width="16" /> Arch / Fedora / Ubuntu</span>
-                <span class="tech-chip"><img src="https://cdn.simpleicons.org/cloudflare" width="16" /> Cloudflare WAF / DNS</span>
-                <span class="tech-chip"><i data-lucide="database" style="width:16px;"></i> ZFS / Btrfs / XFS / LVM</span>
-            </div>
+        <div class="card">
+          <h3 class="card-title">Virtualización / Cloud</h3>
+          <ul class="stack-list">
+            <li><i data-lucide="check"></i> Proxmox VE / QEMU / KVM</li>
+            <li><i data-lucide="check"></i> Incus / LXC Containers</li>
+            <li><i data-lucide="check"></i> Docker / Podman</li>
+            <li><i data-lucide="check"></i> libvirt API management</li>
+          </ul>
         </div>
-
-    </main>
-
-    <!-- Command Palette Modal -->
-    <div class="palette-overlay" id="cmd-palette" onclick="if(event.target===this) togglePalette()">
-        <div class="palette-box">
-            <div class="pal-search">
-                <i data-lucide="search"></i>
-                <input type="text" id="pal-input" placeholder="Buscar comando, proyecto, o ejecuta 'neofetch'..." autocomplete="off">
-                <kbd>ESC</kbd>
-            </div>
-            <div class="pal-results" id="pal-results">
-                <!-- Inyectado por JS -->
-            </div>
+        <div class="card">
+          <h3 class="card-title">SysAdmin & Redes</h3>
+          <ul class="stack-list">
+            <li><i data-lucide="check"></i> Arch, Fedora, Debian/Ubuntu</li>
+            <li><i data-lucide="check"></i> ZFS, Btrfs, LVM & XFS</li>
+            <li><i data-lucide="check"></i> Netplan, Systemd, SSH, LACP</li>
+            <li><i data-lucide="check"></i> WireGuard, Cloudflare Tunnel</li>
+          </ul>
         </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      Alvin Perez © 2026. Construido con estándares web planos, minimalistas y sin distracciones.<br>
+      Optimizado con estética Catppuccin Mocha.
     </div>
+  </footer>
 
-    <!-- Live Toast -->
-    <div class="toast" id="sys-toast">
-        <i data-lucide="check-circle-2" id="toast-icon"></i>
-        <span id="toast-msg">Mensaje temporal</span>
-    </div>
-
-    <script>
-        lucide.createIcons();
-        
-// Audio Context (Low overhead sci-fi clicks)
-const actx = new (window.AudioContext || window.webkitAudioContext)();
-function playBloop(freq, type='sine', dur=0.04) {
-    if(actx.state==='suspended') actx.resume();
-    let osc = actx.createOscillator(), g = actx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, actx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, actx.currentTime + dur);
-    g.gain.setValueAtTime(0.04, actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
-    osc.connect(g); g.connect(actx.destination);
-    osc.start(); osc.stop(actx.currentTime + dur);
-}
-
-// Interacciones Hover (Spotlight effect)
-function handleHover(e, el) {
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--ms-x', (e.clientX - r.left)+'px');
-    el.style.setProperty('--ms-y', (e.clientY - r.top)+'px');
-}
-
-// Background Animado (Aurora Boreal simulada muy liviana)
-const bgC = document.getElementById('aurora-bg');
-const ctxbg = bgC.getContext('2d');
-let bgData = [], W, H;
-function resize() { W = bgC.width = window.innerWidth; H = bgC.height = window.innerHeight; }
-window.addEventListener('resize', resize); resize();
-for(let i=0; i<3; i++) {
-    bgData.push({x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5, r: 800+Math.random()*400, c: i});
-}
-const colors = ['rgba(137,180,250,0.08)', 'rgba(203,166,247,0.06)', 'rgba(137,220,235,0.07)'];
-function animBg() {
-    ctxbg.clearRect(0,0,W,H);
-    bgData.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if(p.x< -p.r || p.x > W+p.r) p.vx*=-1;
-        if(p.y< -p.r || p.y > H+p.r) p.vy*=-1;
-        let grad = ctxbg.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-        grad.addColorStop(0, colors[p.c]); grad.addColorStop(1, 'transparent');
-        ctxbg.fillStyle = grad;
-        ctxbg.fillRect(0,0,W,H);
-    });
-    requestAnimationFrame(animBg);
-}
-animBg();
-
-// Toast Global System
-let toastTo;
-function sysToast(msg, icon='check-circle-2', c='var(--a-green)', bg='rgba(166,227,161,0.15)') {
-    const t = document.getElementById('sys-toast');
-    const ti = document.getElementById('toast-icon');
-    document.getElementById('toast-msg').innerText = msg;
-    t.style.borderColor = c; t.style.color = c; t.style.background = bg;
-    ti.setAttribute('data-lucide', icon); lucide.createIcons();
-    t.classList.add('show');
-    clearTimeout(toastTo);
-    toastTo = setTimeout(()=> t.classList.remove('show'), 3500);
-}
-
-// Live CPUs
-const cbox = document.getElementById('cpu-bars');
-for(let i=0; i<16; i++) {
-    let b = document.createElement('div'); b.className='cpu-bar'; b.id='cpb'+i;
-    cbox.appendChild(b);
-}
-setInterval(()=>{
-    let sum = 0;
-    for(let i=0; i<16; i++) {
-        let val = Math.random() * 50 + (i<4?20:5);
-        sum+=val;
-        document.getElementById('cpb'+i).style.height = val + '%';
-        let cc = 'var(--a-sky)';
-        if(val>60) cc='var(--a-peach)'; if(val>85) cc='var(--a-red)';
-        document.getElementById('cpb'+i).style.background = cc;
-    }
-    document.getElementById('cpu-load-val').innerText = (sum/16).toFixed(1)+'%';
-}, 1200);
-
-// Live Network Sparkline
-const spanv = document.getElementById('spark-canvas');
-const sctx = spanv.getContext('2d');
-let points = []; for(let i=0; i<40; i++) points.push(10);
-setInterval(()=>{
-    points.shift(); points.push(Math.random()*25 + 5);
-    let sw = spanv.width = spanv.offsetWidth; let sh = spanv.height = spanv.offsetHeight;
-    sctx.clearRect(0,0,sw,sh);
-    sctx.beginPath(); sctx.moveTo(0, sh - (points[0]/40*sh));
-    for(let i=1; i<points.length; i++) sctx.lineTo(sw*(i/(points.length-1)), sh - (points[i]/40*sh));
-    sctx.strokeStyle = 'rgba(137,220,235,0.8)'; sctx.lineWidth=2; sctx.stroke();
-    
-    document.getElementById('net-txt').innerText = `RX ${(points[points.length-1]).toFixed(1)} MB/s · TX ${(points[points.length-1]*0.6).toFixed(1)} MB/s`;
-}, 800);
-
-// Cambiador de Tema
-const ts = ['mocha', 'tokyo', 'nord'];
-let tidx = 0;
-function cycleTheme() {
-    playBloop(600);
-    tidx = (tidx+1)%ts.length;
-    document.body.setAttribute('data-theme', ts[tidx]);
-    sysToast(`🎨 Tema ajustado a: ${ts[tidx].toUpperCase()}`, 'palette', 'var(--a-mauve)', 'rgba(203,166,247,0.15)');
-}
-
-// Terminal CLI Custom Logic
-const tIn = document.getElementById('term-in');
-const tOut = document.getElementById('term-out');
-const hist = []; let hidx = 0;
-tIn.addEventListener('keydown', e => {
-    if(e.key === 'Enter') {
-        playBloop(450, 'square');
-        const v = tIn.value.trim();
-        if(v) { hist.push(v); hidx = hist.length; }
-        parseCmd(v); tIn.value = '';
-    }
-    else if(e.key === 'ArrowUp') { e.preventDefault(); if(hidx>0){ hidx--; tIn.value=hist[hidx];} }
-    else if(e.key === 'ArrowDown') { e.preventDefault(); if(hidx<hist.length-1){ hidx++; tIn.value=hist[hidx];} else {hidx=hist.length; tIn.value='';} }
-});
-
-function parseCmd(c) {
-    let r = ""; c = c.toLowerCase();
-    if(c === 'clear') { tOut.innerHTML = ''; return; }
-    else if(c === 'neofetch' || c === 'fastfetch') {
-        r = `<span style="color:var(--a-sky);">
-       _.._        alvin@alvinnas
-     .' .-'`       -------------
-    /  /           OS: Proxmox VE 9.0 (Debian 13)
-    |  |           Host: Custom Mini-Server (15W TDP)
-    \  '.          Kernel: Linux 6.8.12-pve
-     '._ `'-._     Packages: 1,428 (dpkg)
-        `'---'     CPU: AMD Ryzen 7 5700U (16) @ 4.37GHz
-                   Memory: 20.4 GiB / 31.2 GiB (65%)
-                   Engine: WebKVM v0.1.6</span>`;
-    }
-    else if(c === 'webkvm status' || c === 'status') {
-        r = `● WebKVM Daemon: Active (running)
-Endpoints: https://127.0.0.1:8081 | Unix: /run/webkvm.sock
-Hypervisors: QEMU/KVM (libvirt) + Incus/LXC
-Security Jail: Active (0 banned IPs)`;
-    }
-    else if(c === 'help') {
-        r = `Comandos: neofetch, webkvm status, whoami, clear, date`;
-    }
-    else if(c === 'whoami') r = `Ingeniero en continua evolución. Apasionado por Linux y el silicio.`;
-    else if(c === 'date') r = new Date().toString();
-    else if(c !== "") r = `zsh: command not found: ${c}`;
-    
-    tOut.innerHTML += `\n<span class="cmd-prompt">➜</span><span style="color:var(--a-blue);">~</span> ${c}\n${r}`;
-    tOut.scrollTop = tOut.scrollHeight;
-}
-
-// WebKVM App Live Drawer Demo
-let drInterval;
-function fireTaskDrawer(target='ubuntu-cloud') {
-    playBloop(800, 'triangle');
-    const dr = document.getElementById('kvm-drawer');
-    const fl = document.getElementById('drw-fill');
-    const pct = document.getElementById('drw-pct');
-    const step = document.getElementById('drw-step');
-    
-    document.getElementById('drw-title').innerText = `Clonando: ${target} -> ${target}-clone`;
-    dr.classList.add('show');
-    clearInterval(drInterval);
-    
-    let p = 0; fl.style.width='0%'; fl.style.background='linear-gradient(90deg, var(--a-mauve), var(--a-blue))';
-    drInterval = setInterval(()=>{
-        p += Math.floor(Math.random()*8)+3;
-        if(p>=100) p=100;
-        pct.innerText = p+'%'; fl.style.width = p+'%';
-        
-        if(p<30) step.innerText = "Fase 1: Snapshot atómico y validando pools...";
-        else if(p<70) step.innerText = "Fase 2: Copiando COW / delta layers (~2.4 GB/s)";
-        else if(p<95) step.innerText = "Fase 3: Cloud-init override e inyección de red";
-        else step.innerText = "Hecho: VM registrada en libvirt daemon.";
-        
-        if(p>=100) {
-            clearInterval(drInterval);
-            pct.innerText = "SUCCESS"; pct.style.color = "var(--a-green)";
-            fl.style.background = "var(--a-green)";
-            sysToast(`Operación de clonación para ${target} completada!`);
-            setTimeout(()=> { dr.classList.remove('show'); pct.style.color="var(--a-sky)"; }, 3000);
-        }
-    }, 250);
-}
-
-// Command Palette
-const pal = document.getElementById('cmd-palette');
-const pin = document.getElementById('pal-input');
-const res = document.getElementById('pal-results');
-const cmds = [
-    {n: 'Ejecutar Neofetch', s: 'Ver specs en terminal', i: 'terminal', a: () => { window.location.hash='#dashboard'; parseCmd('neofetch'); }},
-    {n: 'Temas: Alternar', s: 'Ciclar paletas', i: 'palette', a: cycleTheme},
-    {n: 'GitHub: Slaker19', s: 'Ir al perfil', i: 'github', a: () => window.open('https://github.com/Slaker19')},
-    {n: 'Copiar One-liner WebKVM', s: 'curl install script', i: 'copy', a: () => { navigator.clipboard.writeText('curl -fsSL https://raw.github... | bash'); sysToast('Script de instalación bash copiado.'); }},
-    {n: 'Mail de contacto', s: 'Copiar correo a clipboard', i: 'mail', a: () => { navigator.clipboard.writeText('alvinpp1908@gmail.com'); sysToast('alvinpp1908@gmail.com copiado!'); }}
-];
-
-function togglePalette() {
-    playBloop(500, 'triangle');
-    const open = pal.classList.contains('open');
-    if(open) { pal.classList.remove('open'); pin.blur(); }
-    else { pal.classList.add('open'); pin.value=''; randerPal(); setTimeout(()=>pin.focus(),100); }
-}
-
-function randerPal(f='') {
-    let h = ''; f = f.toLowerCase();
-    cmds.filter(c => c.n.toLowerCase().includes(f) || c.s.toLowerCase().includes(f)).forEach((c, idx) => {
-        h += `<div class="pal-item" onclick="palAction(${idx})"><i data-lucide="${c.i}"></i><div><div style="font-size:0.9rem; font-weight:600; color:var(--text);">${c.n}</div><div style="font-size:0.75rem; color:var(--subtext); font-family:var(--f-mono);">${c.s}</div></div></div>`;
-    });
-    res.innerHTML = h; lucide.createIcons();
-}
-window.palAction = idx => { togglePalette(); cmds[idx].a(); }
-pin.addEventListener('input', e => randerPal(e.target.value));
-
-document.addEventListener('keydown', e => {
-    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k') { e.preventDefault(); togglePalette(); }
-    else if(e.key==='Escape' && pal.classList.contains('open')) togglePalette();
-});
-
-// Alias helper para cards y tools
-function cmdPal(c) {
-    if(c==='curl') { navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash'); sysToast("Instalador (Bash) copiado al portapapeles.", "copy"); playBloop(800); }
-}
-
-    </script>
+  <script>
+    // Inicializar iconos de Lucide
+    lucide.createIcons();
+  </script>
 </body>
 </html>
