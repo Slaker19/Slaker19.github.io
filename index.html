@@ -17,6 +17,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- Structured Data (JSON-LD) for IT Profile & Projects -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://slaker19.github.io/#person",
+      "name": "Alvin Perez",
+      "jobTitle": "Técnico IT & Creador de WebKVM",
+      "url": "https://slaker19.github.io",
+      "sameAs": [
+        "https://github.com/Slaker19",
+        "https://github.com/Slaker19/webkvm"
+      ],
+      "knowsAbout": [
+        "Linux Systems Administration",
+        "KVM/QEMU Virtualization",
+        "Incus / LXC Containers",
+        "Go Backend Development",
+        "Proxmox VE 9 Homelab",
+        "Computer Hardware & Diagnostics",
+        "ZFS & Network Bonding L2",
+        "Security & Firewalls (nftables)"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "WebKVM",
+      "applicationCategory": "SystemAdministrationApplication",
+      "operatingSystem": "Linux (Debian/Ubuntu, Fedora/RHEL, Arch)",
+      "url": "https://github.com/Slaker19/webkvm",
+      "author": { "@id": "https://slaker19.github.io/#person" },
+      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "softwareVersion": "v0.1.6",
+      "description": "High-performance hybrid web manager for KVM/QEMU virtual machines and Incus/LXC containers in a single Go binary with embedded Svelte 5 frontend."
+    }
+  ]
+}
+</script>
+
 <style>
   :root {
     --bg: #060913;
@@ -460,6 +501,74 @@
     transition: 0.2s;
   }
   .mock-btn:hover { border-color: var(--a1); background: rgba(34, 211, 238, 0.15); }
+  .mock-btn.accent { border-color: var(--a1); color: var(--a1); }
+  .mock-btn.accent:hover { background: var(--a1); color: #050a16; }
+
+  /* WebKVM v0.1.6 Interactive Task Center Drawer */
+  .mock-task-drawer {
+    border-top: 1px solid var(--border); background: #070c18; padding: 14px 18px;
+    display: none; animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mock-task-drawer.open { display: block; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .drawer-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    font-size: 0.78rem; font-family: var(--mono);
+  }
+  .drawer-job {
+    background: rgba(14, 21, 38, 0.75); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px;
+  }
+  .job-meta {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.8rem;
+  }
+  .job-badge {
+    padding: 2px 7px; border-radius: 4px; font-size: 0.68rem; font-family: var(--mono); font-weight: 700;
+  }
+  .job-badge.running { background: rgba(34, 211, 238, 0.2); color: var(--a1); border: 1px solid var(--a1); }
+  .job-badge.success { background: rgba(16, 185, 129, 0.2); color: #a6e3a1; border: 1px solid #10b981; }
+  .job-id { color: var(--muted); font-size: 0.72rem; font-family: var(--mono); margin-left: 6px; }
+  .job-progress-bar {
+    height: 8px; background: rgba(0, 0, 0, 0.45); border-radius: 999px; overflow: hidden; margin: 8px 0;
+  }
+  .job-progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--a1), var(--a3)); border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+  .job-step {
+    font-size: 0.74rem; color: var(--muted); font-family: var(--mono); display: flex; justify-content: space-between;
+  }
+
+  /* Homelab Network Sparkline Canvas */
+  #net-sparkline {
+    width: 100%; height: 38px; display: block; margin-top: 8px; border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  /* Homelab Storage Popover & Breakdown */
+  .storage-detail-box {
+    margin-top: 14px; display: none; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;
+    animation: fadeIn 0.25s ease;
+  }
+  .storage-disk-card {
+    background: rgba(10, 16, 31, 0.85); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; font-size: 0.78rem; font-family: var(--mono);
+  }
+  .storage-disk-card strong { color: #fff; font-size: 0.84rem; display: block; margin-bottom: 4px; }
+
+  /* Homelab Service Health Bar */
+  .services-status-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-top: 18px;
+  }
+  .svc-chip {
+    background: rgba(14, 21, 38, 0.6); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: var(--mono);
+    transition: 0.2s;
+  }
+  .svc-chip:hover { border-color: var(--a1); background: rgba(20, 30, 54, 0.8); }
 
   .feat-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
   .feat-list li { color: var(--muted); font-size: 0.92rem; padding-left: 22px; position: relative; }
@@ -746,9 +855,10 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
           <div class="cli-quick-actions">
             <span style="font-size:0.75rem; color:var(--muted); align-self:center;">Comandos rápidos:</span>
             <button class="cli-pill" onclick="runCli('webkvm status')">webkvm status</button>
+            <button class="cli-pill" onclick="runCli('webkvm jobs')">⚡ webkvm jobs</button>
             <button class="cli-pill" onclick="runCli('webkvm vm list')">webkvm vm list</button>
             <button class="cli-pill" onclick="runCli('webkvm host bonds')">webkvm host bonds</button>
-            <button class="cli-pill" onclick="runCli('sysinfo')">sysinfo</button>
+            <button class="cli-pill" onclick="runCli('fastfetch')">fastfetch</button>
             <button class="cli-pill" onclick="runCli('clear')">clear</button>
           </div>
         </div>
@@ -873,7 +983,7 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
             <div class="mock-urlbar">🔒 https://webkvm.alvinnas.local:8081 &nbsp;·&nbsp; <span style="color:var(--green)">Passkeys Ready</span></div>
           </div>
           <div style="display:flex; align-items:center; gap:8px;">
-            <span class="mock-task-pill" onclick="showToast('Task Center: 1 migración en curso (78%)')">⚡ Tareas: 1 (78%)</span>
+            <button class="mock-task-pill" id="mock-task-trigger" onclick="toggleMockTaskDrawer()">⚡ Task Center (1 en curso) ▼</button>
             <span style="color:var(--muted); font-family:var(--mono);">v0.1.6</span>
           </div>
         </div>
@@ -886,7 +996,7 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
                 <th>Estado</th>
                 <th>vCPU / RAM</th>
                 <th>IP</th>
-                <th>Acción Rápida</th>
+                <th>Acciones Rápidas</th>
               </tr>
             </thead>
             <tbody>
@@ -896,7 +1006,12 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
                 <td><span class="status-badge running" id="vm-badge-1">RUNNING</span></td>
                 <td>4 vCPU · 8192 MB</td>
                 <td>10.0.0.101</td>
-                <td><button class="mock-btn" onclick="toggleMockVM(1, event)">⏹ Detener</button></td>
+                <td>
+                  <div style="display:flex; gap:6px;">
+                    <button class="mock-btn" onclick="toggleMockVM(1, event)">⏹ Detener</button>
+                    <button class="mock-btn accent" onclick="triggerCloneDemo('ubuntu-server')">⚡ Clonar</button>
+                  </div>
+                </td>
               </tr>
               <tr id="vm-row-2">
                 <td><strong>fedora-webkvm</strong></td>
@@ -904,7 +1019,12 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
                 <td><span class="status-badge running" id="vm-badge-2">RUNNING</span></td>
                 <td>2 vCPU · 4096 MB</td>
                 <td>10.0.0.102</td>
-                <td><button class="mock-btn" onclick="toggleMockVM(2, event)">⏹ Detener</button></td>
+                <td>
+                  <div style="display:flex; gap:6px;">
+                    <button class="mock-btn" onclick="toggleMockVM(2, event)">⏹ Detener</button>
+                    <button class="mock-btn accent" onclick="triggerCloneDemo('fedora-webkvm')">⚡ Clonar</button>
+                  </div>
+                </td>
               </tr>
               <tr id="vm-row-3">
                 <td><strong>arch-linux-webkvm</strong></td>
@@ -912,10 +1032,46 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
                 <td><span class="status-badge stopped" id="vm-badge-3">STOPPED</span></td>
                 <td>4 vCPU · 8192 MB</td>
                 <td>—</td>
-                <td><button class="mock-btn" onclick="toggleMockVM(3, event)">▶ Iniciar</button></td>
+                <td>
+                  <div style="display:flex; gap:6px;">
+                    <button class="mock-btn" onclick="toggleMockVM(3, event)">▶ Iniciar</button>
+                    <button class="mock-btn accent" onclick="triggerCloneDemo('arch-linux-webkvm')">⚡ Clonar</button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- WebKVM v0.1.6 Live Task Center Drawer -->
+        <div class="mock-task-drawer" id="mock-task-drawer">
+          <div class="drawer-header">
+            <span style="display:flex; align-items:center; gap:8px;">
+              <span class="pulse-dot"></span>
+              <strong style="color:#fff;">Task Center en Tiempo Real (WebKVM v0.1.6)</strong>
+            </span>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button class="mock-btn accent" onclick="startSimulatedJob()">+ Clonación de prueba</button>
+              <button class="mock-btn" onclick="toggleMockTaskDrawer()">✕ Ocultar</button>
+            </div>
+          </div>
+          <div class="drawer-job" id="active-mock-job">
+            <div class="job-meta">
+              <div>
+                <span class="job-badge running" id="job-badge">RUNNING</span>
+                <strong id="job-title" style="margin-left:6px; color:#fff;">Clonando disco VM ubuntu-server -> nvme0n1</strong>
+                <span class="job-id" id="job-id">#job-c812a</span>
+              </div>
+              <div class="job-percent" id="job-pct" style="font-family:var(--mono); color:var(--a1); font-weight:700;">78%</div>
+            </div>
+            <div class="job-progress-bar">
+              <div class="job-progress-fill" id="job-fill" style="width: 78%;"></div>
+            </div>
+            <div class="job-step">
+              <span id="job-step">Fase 3/4: Copiando capa diferencial COW QCOW2 (~3.2 GB/s)</span>
+              <span style="color:var(--muted);" id="job-elapsed">Transcurrido: 4.8s</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1035,19 +1191,79 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
 
         <!-- Network L2 Bond -->
         <div class="telem-card">
-          <span class="label">Red: bond0 (LACP)</span>
-          <div class="val" style="color:var(--a1)" id="telem-net">RX 14.8 MB/s</div>
-          <div style="font-size:0.74rem; color:var(--muted); margin-top:8px; font-family:var(--mono);">
-            TX 9.2 MB/s · vmbr0 activo
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="label">Red: bond0 (LACP)</span>
+            <span style="font-size:0.7rem; color:var(--green); font-family:var(--mono);">● vmbr0</span>
           </div>
+          <div class="val" style="color:var(--a1)" id="telem-net">RX 14.8 MB/s</div>
+          <canvas id="net-sparkline" width="240" height="38" title="Tráfico en tiempo real bond0 (LACP)"></canvas>
         </div>
 
         <!-- Storage Pools -->
-        <div class="telem-card">
-          <span class="label">Almacenamiento (~4.3 TB)</span>
-          <div class="val" style="color:var(--peach)">SMART OK</div>
+        <div class="telem-card" style="cursor:pointer;" onclick="toggleStorageDetails()" title="Haz clic para ver el desglose SMART y pools físicos">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="label">Almacenamiento (~4.3 TB)</span>
+            <span style="font-size:0.7rem; color:var(--a1); font-family:var(--mono);">SMART 🔍</span>
+          </div>
+          <div class="val" style="color:var(--peach)">SMART OK · 0 Errs</div>
           <div style="font-size:0.74rem; color:var(--muted); margin-top:8px; font-family:var(--mono);">
-            ZFS Mirror + Btrfs NVMe + XFS
+            ZFS Mirror + Btrfs NVMe + XFS ▼
+          </div>
+        </div>
+      </div>
+
+      <!-- Storage Breakdown Modal/Drawer -->
+      <div class="storage-detail-box" id="storage-detail-box">
+        <div class="storage-disk-card">
+          <strong>1. Micron NVMe 2400 (1 TB M.2)</strong>
+          <div>Formato: Btrfs (subvolúmenes de VMs y raíz)</div>
+          <div style="color:var(--green);">Salud: 100% · Temp: 38°C · TBW: 14.2 TB</div>
+          <div style="color:var(--muted); font-size:0.72rem; margin-top:4px;">Puntos de montaje: / · /var/lib/vz · /var/lib/incus</div>
+        </div>
+        <div class="storage-disk-card">
+          <strong>2. 2x SSDs Kingston (2x 1 TB SATA)</strong>
+          <div>Pool ZFS: tank-zfs en Mirror (RAID1)</div>
+          <div style="color:var(--green);">Salud: Passed · 0 Checksum Errs · Temp: 32°C</div>
+          <div style="color:var(--muted); font-size:0.72rem; margin-top:4px;">Servicios: Vaultwarden, AdGuard, bases de datos</div>
+        </div>
+        <div class="storage-disk-card">
+          <strong>3. Seagate Barracuda (2 TB 3.5" HDD)</strong>
+          <div>Formato: XFS con montaje 'nofail'</div>
+          <div style="color:var(--green);">SMART: OK · Temp: 30°C · 0 sectores reubicados</div>
+          <div style="color:var(--muted); font-size:0.72rem; margin-top:4px;">Destino backups: /mnt/Seagate (snapshots diarios)</div>
+        </div>
+      </div>
+
+      <!-- Homelab Live Services Health & Latency -->
+      <div style="margin-top:22px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-size:0.75rem; color:var(--a1); font-family:var(--mono); text-transform:uppercase;">MONITOREO DE SERVICIOS EN VIVO (HOMELAB)</span>
+          <span style="font-size:0.72rem; color:var(--muted); font-family:var(--mono);" id="live-ping-time">Polling cada 2s</span>
+        </div>
+        <div class="services-status-grid">
+          <div class="svc-chip">
+            <span style="color:#fff;">⚡ WebKVM (v0.1.6)</span>
+            <span style="color:var(--green); font-weight:600;" id="lat-webkvm">0.2 ms</span>
+          </div>
+          <div class="svc-chip">
+            <span style="color:#fff;">🛡️ Security Jail (nftables)</span>
+            <span style="color:var(--green); font-weight:600;">0 BANS</span>
+          </div>
+          <div class="svc-chip">
+            <span style="color:#fff;">🛡️ AdGuard Home DNS</span>
+            <span style="color:var(--green); font-weight:600;" id="lat-adguard">0.8 ms</span>
+          </div>
+          <div class="svc-chip">
+            <span style="color:#fff;">🌐 Cloudflare WAF Ingress</span>
+            <span style="color:var(--green); font-weight:600;" id="lat-cf">11.4 ms</span>
+          </div>
+          <div class="svc-chip">
+            <span style="color:#fff;">🔑 Vaultwarden LXC</span>
+            <span style="color:var(--green); font-weight:600;" id="lat-vault">1.2 ms</span>
+          </div>
+          <div class="svc-chip">
+            <span style="color:#fff;">🎬 Immich & Jellyfin</span>
+            <span style="color:var(--green); font-weight:600;" id="lat-jelly">1.8 ms</span>
           </div>
         </div>
       </div>
@@ -1358,6 +1574,14 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
       <div class="cmd-item" onclick="cycleTheme(); closeCmdModal()">
         <div class="cmd-item-icon"><span>🎨</span> Alternar Tema Catppuccin</div>
         <kbd>Mauve/Sapphire/Emerald</kbd>
+      </div>
+      <div class="cmd-item" onclick="navTo('#projects'); toggleMockTaskDrawer(); closeCmdModal()">
+        <div class="cmd-item-icon"><span>⚡</span> Abrir Task Center de WebKVM (v0.1.6)</div>
+        <kbd>#task-center</kbd>
+      </div>
+      <div class="cmd-item" onclick="navTo('#lab'); toggleStorageDetails(); closeCmdModal()">
+        <div class="cmd-item-icon"><span>💾</span> Inspeccionar Discos & SMART del Homelab</div>
+        <kbd>#smart-disks</kbd>
       </div>
 
       <div class="cmd-group-label">Repositorios Externos</div>
@@ -1697,6 +1921,172 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
     }
   }
 
+  // WebKVM v0.1.6 Interactive Task Drawer & Job Simulation
+  var jobSimInterval = null;
+  var jobPct = 78;
+
+  function toggleMockTaskDrawer() {
+    playUiClick(600);
+    var drawer = document.getElementById('mock-task-drawer');
+    var trigger = document.getElementById('mock-task-trigger');
+    if (!drawer) return;
+    drawer.classList.toggle('open');
+    if (trigger) {
+      trigger.textContent = drawer.classList.contains('open') ? '⚡ Task Center (Abierto) ▲' : '⚡ Task Center (1 en curso) ▼';
+    }
+  }
+
+  function triggerCloneDemo(vmName) {
+    playUiClick(750);
+    var drawer = document.getElementById('mock-task-drawer');
+    if (drawer && !drawer.classList.contains('open')) {
+      drawer.classList.add('open');
+    }
+    startSimulatedJob('Clonando ' + vmName + ' -> ' + vmName + '-clone');
+    showToast('Iniciando tarea de clonación en segundo plano...');
+  }
+
+  function startSimulatedJob(customTitle) {
+    playUiClick(700);
+    if (jobSimInterval) clearInterval(jobSimInterval);
+    jobPct = 0;
+    var titleEl = document.getElementById('job-title');
+    var badgeEl = document.getElementById('job-badge');
+    var pctEl = document.getElementById('job-pct');
+    var fillEl = document.getElementById('job-fill');
+    var stepEl = document.getElementById('job-step');
+    var elapsedEl = document.getElementById('job-elapsed');
+    var trigger = document.getElementById('mock-task-trigger');
+
+    if (customTitle && titleEl) titleEl.textContent = customTitle;
+    if (badgeEl) {
+      badgeEl.textContent = 'RUNNING';
+      badgeEl.className = 'job-badge running';
+    }
+    if (trigger) trigger.textContent = '⚡ Task Center (Ejecutando...) ▲';
+
+    var steps = [
+      { p: 15, msg: 'Fase 1/4: Validando pool de destino en /var/lib/vz...', t: '0.9s' },
+      { p: 45, msg: 'Fase 2/4: Creando snapshot atómico qcow2...', t: '2.1s' },
+      { p: 80, msg: 'Fase 3/4: Copiando capa diferencial COW (~3.4 GB/s)...', t: '4.5s' },
+      { p: 96, msg: 'Fase 4/4: Inyectando metadatos Cloud-Init y red...', t: '5.8s' },
+      { p: 100, msg: 'Completado: Disco y VM registrados con éxito en libvirt', t: '6.4s' }
+    ];
+
+    var curStepIdx = 0;
+    jobSimInterval = setInterval(function() {
+      jobPct += Math.floor(Math.random() * 8) + 4;
+      if (jobPct > 100) jobPct = 100;
+
+      while (curStepIdx < steps.length - 1 && jobPct >= steps[curStepIdx + 1].p) {
+        curStepIdx++;
+      }
+
+      if (pctEl) pctEl.textContent = jobPct + '%';
+      if (fillEl) fillEl.style.width = jobPct + '%';
+      if (stepEl) stepEl.textContent = steps[curStepIdx].msg;
+      if (elapsedEl) elapsedEl.textContent = 'Transcurrido: ' + steps[curStepIdx].t;
+
+      if (jobPct >= 100) {
+        clearInterval(jobSimInterval);
+        if (badgeEl) {
+          badgeEl.textContent = 'SUCCESS';
+          badgeEl.className = 'job-badge success';
+        }
+        if (trigger) trigger.textContent = '⚡ Task Center (Completado) ▼';
+        showToast('✓ Tarea completada con éxito (v0.1.6)');
+      }
+    }, 280);
+  }
+
+  // Homelab Storage Details Toggle
+  function toggleStorageDetails() {
+    playUiClick(550);
+    var box = document.getElementById('storage-detail-box');
+    if (!box) return;
+    var isOpen = box.style.display === 'grid';
+    box.style.display = isOpen ? 'none' : 'grid';
+    showToast(isOpen ? 'Ocultando desglose de almacenamiento' : 'Mostrando detalles de discos físicos & SMART');
+  }
+
+  // Network Sparkline Real-time Graph (Canvas 2D)
+  var sparkCanvas = document.getElementById('net-sparkline');
+  if (sparkCanvas) {
+    var sCtx = sparkCanvas.getContext('2d');
+    var sW = sparkCanvas.width = 240;
+    var sH = sparkCanvas.height = 38;
+    var netData = [];
+    for (var i = 0; i < 30; i++) netData.push(Math.random() * 15 + 10);
+
+    function drawSparkline() {
+      sCtx.clearRect(0, 0, sW, sH);
+      // Gradient fill
+      var grad = sCtx.createLinearGradient(0, 0, 0, sH);
+      grad.addColorStop(0, 'rgba(137, 220, 235, 0.45)');
+      grad.addColorStop(1, 'rgba(137, 220, 235, 0.0)');
+
+      sCtx.beginPath();
+      var step = sW / (netData.length - 1);
+      sCtx.moveTo(0, sH - (netData[0] / 35) * sH);
+      for (var i = 1; i < netData.length; i++) {
+        var x = i * step;
+        var y = sH - (netData[i] / 35) * sH;
+        sCtx.lineTo(x, y);
+      }
+      sCtx.strokeStyle = '#89dceb';
+      sCtx.lineWidth = 2;
+      sCtx.stroke();
+
+      // Complete path for fill
+      sCtx.lineTo(sW, sH);
+      sCtx.lineTo(0, sH);
+      sCtx.closePath();
+      sCtx.fillStyle = grad;
+      sCtx.fill();
+    }
+
+    drawSparkline();
+
+    setInterval(function() {
+      var nextVal = Math.random() * 16 + 12;
+      netData.shift();
+      netData.push(nextVal);
+      drawSparkline();
+      var netValEl = document.getElementById('telem-net');
+      if (netValEl) {
+        netValEl.textContent = 'RX ' + nextVal.toFixed(1) + ' MB/s · TX ' + (nextVal * 0.65).toFixed(1) + ' MB/s';
+      }
+    }, 900);
+  }
+
+  // Service Latency Jitter Simulation
+  setInterval(function() {
+    var lW = document.getElementById('lat-webkvm');
+    var lA = document.getElementById('lat-adguard');
+    var lC = document.getElementById('lat-cf');
+    var lV = document.getElementById('lat-vault');
+    var lJ = document.getElementById('lat-jelly');
+    if (lW) lW.textContent = (Math.random() * 0.15 + 0.15).toFixed(2) + ' ms';
+    if (lA) lA.textContent = (Math.random() * 0.3 + 0.7).toFixed(1) + ' ms';
+    if (lC) lC.textContent = (Math.random() * 2.2 + 10.8).toFixed(1) + ' ms';
+    if (lV) lV.textContent = (Math.random() * 0.4 + 1.1).toFixed(1) + ' ms';
+    if (lJ) lJ.textContent = (Math.random() * 0.5 + 1.6).toFixed(1) + ' ms';
+  }, 2200);
+
+  // Live GitHub Stars API Fetch with Safe Fallback
+  fetch('https://api.github.com/repos/Slaker19/webkvm')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (data && typeof data.stargazers_count === 'number') {
+        var starEl = document.querySelector('.stat b[data-suffix="+"]');
+        if (starEl) {
+          starEl.dataset.count = data.stargazers_count;
+          starEl.textContent = data.stargazers_count + '+';
+        }
+      }
+    })
+    .catch(function() {});
+
   // Node Inspector for Topology
   function inspectNode(name, description) {
     playUiClick(720);
@@ -1751,9 +2141,26 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
     if (el) el.textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
   }, 1000);
 
-  // Terminal CLI interactive logic
+  // Terminal CLI interactive logic with History and Tab Completion
   var cliIn = document.getElementById('cli-in');
   var cliOut = document.getElementById('cli-out');
+  var cliHistory = ['webkvm status'];
+  var historyIdx = cliHistory.length;
+  var knownCommands = [
+    'webkvm status',
+    'webkvm jobs',
+    'webkvm vm list',
+    'webkvm host bonds',
+    'webkvm jail',
+    'fastfetch',
+    'neofetch',
+    'sysinfo',
+    'free -h',
+    'df -h',
+    'ping',
+    'help',
+    'clear'
+  ];
 
   function runCli(cmd) {
     playUiClick(500);
@@ -1766,8 +2173,33 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
       if (e.key === 'Enter') {
         playUiClick(500);
         var cmd = cliIn.value.trim();
+        if (cmd) {
+          cliHistory.push(cmd);
+          historyIdx = cliHistory.length;
+        }
         handleCliCommand(cmd);
         cliIn.value = '';
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIdx > 0) {
+          historyIdx--;
+          cliIn.value = cliHistory[historyIdx] || '';
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIdx < cliHistory.length - 1) {
+          historyIdx++;
+          cliIn.value = cliHistory[historyIdx] || '';
+        } else {
+          historyIdx = cliHistory.length;
+          cliIn.value = '';
+        }
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        var val = cliIn.value.toLowerCase().trim();
+        if (!val) return;
+        var match = knownCommands.find(function(c) { return c.startsWith(val); });
+        if (match) cliIn.value = match;
       }
     });
   }
@@ -1782,8 +2214,19 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
       res = "● WebKVM Daemon: Active (running) since Sun 2026-10-04 12:08:18 UTC\n" +
             "Version: v0.1.6 · Memory: 16.6 MB / 32 GB · CPU: 0.1%\n" +
             "Endpoints: https://10.0.0.10:8081 | Unix: /run/webkvm.sock\n" +
-            "Hypervisor: QEMU/KVM (libvirt 10.0) + Incus/LXC (v6.0 LTS)\n" +
+            "Hypervisors: QEMU/KVM (libvirt 10.0) + Incus/LXC (v6.0 LTS)\n" +
             "Active Tasks: 0 in progress | Security Jail: 0 banned IPs";
+    } else if (c === "webkvm jobs" || c === "jobs" || c === "tasks") {
+      res = "ID        TYPE          TARGET             STATUS    PROGRESS               ELAPSED\n" +
+            "job-c812  vm.clone      ubuntu-server      SUCCESS   [██████████████] 100%   6.2s\n" +
+            "job-d401  disk.move     fedora-webkvm      SUCCESS   [██████████████] 100%   14.8s\n" +
+            "job-e923  lxc.create    adguard-home       SUCCESS   [██████████████] 100%   2.4s\n" +
+            "Total: 3 jobs registrados · Task center poller: SSE/WebSocket activo (v0.1.6)";
+    } else if (c === "webkvm jail" || c === "jail") {
+      res = "SECURITY JAIL (nftables table inet webkvm_jail)\n" +
+            "Monitor: journalctl -u ssh -u sshd -f -n 0 -o cat\n" +
+            "Estado: Activo (Max retries: 5 | Ban duration: 3600s)\n" +
+            "IPs baneadas activas: 0 | Reglas nftables sincronizadas: OK";
     } else if (c === "webkvm vm list" || c === "vms" || c === "vm list") {
       res = "ID   NAME                 STATE     VCPU   RAM      IP ADDRESS        UPTIME\n" +
             "1    ubuntu-server        RUNNING   4      8192MB   10.0.0.101/24     42d 14h\n" +
@@ -1791,8 +2234,38 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
             "3    arch-linux-webkvm    RUNNING   4      8192MB   10.0.0.103/24     12d 21h";
     } else if (c === "webkvm host bonds" || c === "bonds" || c === "net") {
       res = "BOND     MODE              SLAVES        MASTER   STATUS   NETPLAN CONFIG\n" +
-            "bond0    802.3ad (LACP)    eno1, eno2    vmbr0    UP       /etc/netplan/60-webkvm-bonds.yaml\n" +
-            "[Netplan guard: active - rollback protection ready]";
+            "bond0    802.3ad (LACP)    eno1, eno2    vmbr0    UP       /etc/netplan/zz-webkvm-vmbr0.yaml\n" +
+            "[Netplan atomic persistence: OK · Rollback guard: ACTIVE]";
+    } else if (c === "fastfetch" || c === "neofetch") {
+      res = "       _.._        alvin@alvinnas\n" +
+            "     .' .-'`       -------------\n" +
+            "    /  /           OS: Proxmox VE 9.0 (Debian 13 Bookworm x86_64)\n" +
+            "    |  |           Host: Custom Mini-Server (15W TDP)\n" +
+            "    \\  '.          Kernel: Linux 6.8.12-pve\n" +
+            "     '._ `'-._     Uptime: 48 days, 14 hours, 25 mins\n" +
+            "        `'---'     Packages: 1,428 (dpkg), 14 (incus/lxc)\n" +
+            "                   Shell: zsh 5.9 + Starship (Catppuccin Mocha)\n" +
+            "                   CPU: AMD Ryzen 7 5700U with Radeon Graphics (16) @ 4.37GHz\n" +
+            "                   GPU: AMD ATI Lucienne (VA-API Passthrough)\n" +
+            "                   Memory: 20.4 GiB / 31.2 GiB (65%)\n" +
+            "                   Disk (/): 410G / 953G (Btrfs NVMe)\n" +
+            "                   Engine: WebKVM v0.1.6 (Single Go binary + Svelte 5)";
+    } else if (c === "free -h" || c === "free") {
+      res = "               total        used        free      shared  buff/cache   available\n" +
+            "Mem:            31Gi        20Gi       3.8Gi       240Mi       7.2Gi        11Gi\n" +
+            "Swap:          8.0Gi          0B       8.0Gi";
+    } else if (c === "df -h" || c === "df") {
+      res = "Filesystem      Size  Used Avail Use% Mounted on\n" +
+            "/dev/nvme0n1p2  953G  410G  543G  43% /\n" +
+            "tank-zfs        910G  280G  630G  31% /mnt/tank-zfs\n" +
+            "/dev/sda1       1.8T  820G  1.0T  45% /mnt/Seagate\n" +
+            "efivarfs        128K   42K   82K  34% /sys/firmware/efi/efivars";
+    } else if (c === "ping") {
+      res = "PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.\n" +
+            "64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.184 ms\n" +
+            "64 bytes from 10.0.0.1: icmp_seq=2 ttl=64 time=0.179 ms\n" +
+            "--- 10.0.0.1 ping statistics ---\n" +
+            "2 packets transmitted, 2 received, 0% packet loss, rtt avg 0.181 ms";
     } else if (c === "sysinfo" || c === "uname -a") {
       res = "Host: alvinnas (Proxmox VE 9.0 · Linux 6.8.12-pve x86_64)\n" +
             "CPU: AMD Ryzen 7 5700U with Radeon Graphics (8 Cores, 16 Threads @ 15W TDP)\n" +
@@ -1801,8 +2274,12 @@ Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
     } else if (c === "help") {
       res = "Comandos disponibles:\n" +
             "  webkvm status      - Estado del demonio WebKVM y recursos\n" +
+            "  webkvm jobs        - Lista de tareas en segundo plano (v0.1.6)\n" +
             "  webkvm vm list    - Lista de máquinas virtuales y estado\n" +
             "  webkvm host bonds - Configuración de bonding L2 y Netplan\n" +
+            "  webkvm jail       - Estado del monitor SSH y nftables jail\n" +
+            "  fastfetch / neo   - Resumen del sistema con banner ASCII\n" +
+            "  free -h / df -h   - Memoria RAM y almacenamiento montado\n" +
             "  sysinfo           - Especificaciones de hardware del nodo\n" +
             "  clear             - Limpiar la pantalla del terminal";
     } else if (c === "") {
