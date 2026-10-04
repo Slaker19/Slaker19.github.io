@@ -1,2360 +1,705 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Alvin Perez — Técnico IT · Backend Go · Virtualización KVM / Incus · Homelab PVE 9</title>
-<meta name="description" content="Portfolio de Alvin Perez: técnico IT, especialista en Linux, homelab Proxmox VE 9, hardware y creador de WebKVM (gestor web híbrido KVM + Incus/LXC)." />
-<meta name="theme-color" content="#070b14" />
-
-<!-- OpenGraph / Social -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Alvin Perez — Técnico IT & Creador de WebKVM" />
-<meta property="og:description" content="Infraestructura Linux, homelab Proxmox VE 9, backend Go, virtualización KVM + Incus/LXC y Catppuccin Mocha rice." />
-<meta property="og:url" content="https://slaker19.github.io" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Structured Data (JSON-LD) for IT Profile & Projects -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://slaker19.github.io/#person",
-      "name": "Alvin Perez",
-      "jobTitle": "Técnico IT & Creador de WebKVM",
-      "url": "https://slaker19.github.io",
-      "sameAs": [
-        "https://github.com/Slaker19",
-        "https://github.com/Slaker19/webkvm"
-      ],
-      "knowsAbout": [
-        "Linux Systems Administration",
-        "KVM/QEMU Virtualization",
-        "Incus / LXC Containers",
-        "Go Backend Development",
-        "Proxmox VE 9 Homelab",
-        "Computer Hardware & Diagnostics",
-        "ZFS & Network Bonding L2",
-        "Security & Firewalls (nftables)"
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "WebKVM",
-      "applicationCategory": "SystemAdministrationApplication",
-      "operatingSystem": "Linux (Debian/Ubuntu, Fedora/RHEL, Arch)",
-      "url": "https://github.com/Slaker19/webkvm",
-      "author": { "@id": "https://slaker19.github.io/#person" },
-      "license": "https://www.gnu.org/licenses/agpl-3.0.html",
-      "softwareVersion": "v0.1.6",
-      "description": "High-performance hybrid web manager for KVM/QEMU virtual machines and Incus/LXC containers in a single Go binary with embedded Svelte 5 frontend."
-    }
-  ]
-}
-</script>
-
-<style>
-  :root {
-    --bg: #060913;
-    --bg2: #0b1122;
-    --card: rgba(14, 21, 38, 0.72);
-    --card-hover: rgba(20, 30, 54, 0.88);
-    --border: rgba(138, 170, 240, 0.14);
-    --border-hover: rgba(137, 220, 235, 0.45);
-    --text: #eaf0ff;
-    --muted: #94a3b8;
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alvin Perez — IT Infrastructure & Go Backend Engineer</title>
+    <meta name="description" content="Portfolio de Alvin Perez: Ingeniero IT, infraestructura Linux, Homelab Proxmox VE, KVM/Incus hibridación y backend Go (Creador de WebKVM)." />
+    <meta name="theme-color" content="#11111b" />
     
-    /* Default Catppuccin Mocha Mauve Theme */
-    --a1: #89dceb;
-    --a2: #818cf8;
-    --a3: #cba6f7;
-    --accent: #cba6f7;
-    --mauve: #cba6f7;
-    --sapphire: #74c7ec;
-    --green: #a6e3a1;
-    --peach: #fab387;
-    --red: #f38ba8;
-    --grad: linear-gradient(135deg, var(--a1), var(--a2), var(--a3));
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
-    --radius-lg: 18px;
-    --radius-md: 12px;
-  }
+    <meta property="og:title" content="Alvin Perez — Infrastructura & Backend" />
+    <meta property="og:description" content="Conoce mis proyectos (WebKVM), arquitectura PVE Homelab y skills técnicos." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Lucide via cdn) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-  /* Theme Presets */
-  body[data-theme="sapphire"] {
-    --a1: #89dceb; --a2: #74c7ec; --a3: #b4befe;
-    --accent: #74c7ec;
-    --grad: linear-gradient(135deg, #89dceb, #74c7ec, #b4befe);
-  }
-  body[data-theme="emerald"] {
-    --a1: #94e2d5; --a2: #a6e3a1; --a3: #89b4fa;
-    --accent: #a6e3a1;
-    --grad: linear-gradient(135deg, #94e2d5, #a6e3a1, #89b4fa);
-  }
-  body[data-theme="peach"] {
-    --a1: #f9e2af; --a2: #fab387; --a3: #eba0ac;
-    --accent: #fab387;
-    --grad: linear-gradient(135deg, #f9e2af, #fab387, #eba0ac);
-  }
-  body[data-theme="crimson"] {
-    --a1: #f38ba8; --a2: #eba0ac; --a3: #cba6f7;
-    --accent: #f38ba8;
-    --grad: linear-gradient(135deg, #f38ba8, #eba0ac, #cba6f7);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, sans-serif;
-    line-height: 1.7;
-    overflow-x: hidden;
-    position: relative;
-    transition: background-color 0.4s ease;
-  }
-
-  ::selection { background: rgba(34, 211, 238, 0.35); color: #fff; }
-
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(138, 170, 240, 0.25); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--a1); }
-
-  a { color: var(--a1); text-decoration: none; transition: 0.2s; }
-  a:hover { color: var(--a3); }
-  h1, h2, h3, .logo, .stat b { font-family: 'Space Grotesk', sans-serif; }
-  code, pre, #typed, .terminal-body, .telemetry-val, .kbd-tag { font-family: var(--mono); }
-
-  /* Interactive Background Canvas & Aurora Blobs */
-  #bg-canvas {
-    position: fixed; inset: 0; z-index: -3;
-    pointer-events: none; opacity: 0.4;
-  }
-  .sky {
-    position: fixed; inset: 0; z-index: -2;
-    background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(99, 102, 241, 0.16), transparent 60%),
-      radial-gradient(900px 500px at -10% 30%, rgba(34, 211, 238, 0.12), transparent 60%),
-      radial-gradient(800px 600px at 50% 100%, rgba(203, 166, 247, 0.1), transparent 60%),
-      var(--bg);
-  }
-  .blob { position: fixed; border-radius: 50%; filter: blur(130px); opacity: 0.35; z-index: -1; pointer-events: none; }
-  .b1 { width: 560px; height: 560px; background: #155e9e; top: -140px; left: -120px; animation: drift 26s ease-in-out infinite alternate; }
-  .b2 { width: 500px; height: 500px; background: #4338ca; top: 35%; right: -160px; animation: drift 32s ease-in-out infinite alternate-reverse; }
-  .b3 { width: 460px; height: 460px; background: #7c3aed; bottom: -160px; left: 30%; animation: drift 38s ease-in-out infinite alternate; }
-  @keyframes drift {
-    from { transform: translate(0, 0) scale(1); }
-    to { transform: translate(70px, -50px) scale(1.15); }
-  }
-
-  /* Scroll Progress Bar */
-  #bar {
-    position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 100;
-    background: var(--grad);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
-  }
-
-  /* Navigation Bar */
-  nav {
-    position: sticky; top: 0; z-index: 80;
-    background: rgba(6, 9, 19, 0.82);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    transition: all 0.3s;
-  }
-  nav .wrap {
-    display: flex; align-items: center; justify-content: space-between; height: 64px;
-  }
-  nav .logo {
-    font-weight: 700; font-size: 1.15rem; color: var(--text);
-    display: flex; align-items: center; gap: 10px;
-  }
-  nav .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    <!-- SEO Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://slaker19.github.io/#person",
+          "name": "Alvin Perez",
+          "jobTitle": "Técnico IT & Creador de WebKVM",
+          "url": "https://slaker19.github.io",
+          "sameAs": ["https://github.com/Slaker19", "mailto:alvinpp1908@gmail.com"],
+          "knowsAbout": ["Linux System Administration", "Go", "KVM/QEMU", "Proxmox", "Incus/LXC", "Catppuccin"]
+        }
+      ]
+    }
+    </script>
+    <style>
+        
+:root {
+  /* Catppuccin Mocha por defecto */
+  --bg: #11111b; --bg-card: rgba(30, 30, 46, 0.65);
+  --text: #cdd6f4; --subtext: #a6adc8; --muted: #585b70;
+  --border: rgba(180, 190, 254, 0.1); --border-hover: rgba(137, 220, 235, 0.35);
+  --a-blue: #89b4fa; --a-sky: #89dceb; --a-mauve: #cba6f7; 
+  --a-green: #a6e3a1; --a-peach: #fab387; --a-red: #f38ba8;
   
-  .status-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    padding: 3px 10px; border-radius: 999px;
-    font-size: 0.72rem; font-weight: 600; color: #a6e3a1;
-    font-family: var(--mono);
-  }
-  .pulse-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: #10b981;
-    box-shadow: 0 0 8px #10b981;
-    animation: pulseGlow 2s infinite;
-  }
-  @keyframes pulseGlow {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.35); opacity: 0.7; }
-  }
+  --f-inter: 'Inter', sans-serif;
+  --f-display: 'Space Grotesk', sans-serif;
+  --f-mono: 'JetBrains Mono', monospace;
 
-  nav ul { display: flex; gap: 24px; list-style: none; align-items: center; }
-  nav a.link { color: var(--muted); font-size: 0.92rem; position: relative; padding: 4px 0; transition: 0.25s; }
-  nav a.link::after {
-    content: ""; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px;
-    background: var(--grad); transition: 0.3s; border-radius: 2px;
-  }
-  nav a.link:hover, nav a.link.active { color: var(--text); }
-  nav a.link:hover::after, nav a.link.active::after { width: 100%; }
+  --trans-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-  .nav-actions { display: flex; align-items: center; gap: 10px; }
+[data-theme="tokyo"] {
+  --bg: #1a1b26; --bg-card: rgba(36, 40, 59, 0.65);
+  --text: #c0caf5; --subtext: #9aa5ce; --muted: #565f89;
+  --border: rgba(122, 162, 247, 0.15); --border-hover: rgba(122, 162, 247, 0.5);
+  --a-blue: #7aa2f7; --a-sky: #7dcfff; --a-mauve: #bb9af7;
+  --a-green: #9ece6a; --a-peach: #ff9e64; --a-red: #f7768e;
+}
 
-  /* Theme Button */
-  .theme-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 6px 12px; border-radius: 8px;
-    font-size: 0.78rem; font-family: var(--mono);
-    cursor: pointer; display: flex; align-items: center; gap: 8px;
-    transition: 0.2s;
-  }
-  .theme-btn:hover { border-color: var(--a1); background: rgba(255, 255, 255, 0.08); }
-  .color-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+[data-theme="nord"] {
+  --bg: #2e3440; --bg-card: rgba(59, 66, 82, 0.7);
+  --text: #eceff4; --subtext: #d8dee9; --muted: #4c566a;
+  --border: rgba(136, 192, 208, 0.15); --border-hover: rgba(136, 192, 208, 0.4);
+  --a-blue: #5e81ac; --a-sky: #88c0d0; --a-mauve: #b48ead;
+  --a-green: #a3be8c; --a-peach: #ebcb8b; --a-red: #bf616a;
+}
 
-  /* Command Palette Trigger */
-  .cmd-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 6px 12px; border-radius: 8px;
-    font-size: 0.78rem; font-family: var(--mono);
-    cursor: pointer; display: flex; align-items: center; gap: 6px;
-    transition: 0.2s;
-  }
-  .cmd-btn:hover { border-color: var(--a1); color: var(--text); transform: translateY(-1px); }
-  .cmd-btn kbd {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2px 5px; border-radius: 4px; font-size: 0.7rem;
-  }
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--f-inter); overflow-x: hidden; min-height: 100vh; }
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
 
-  .mobile-toggle {
-    display: none; background: transparent; border: none; color: var(--text);
-    font-size: 1.4rem; cursor: pointer; padding: 6px;
-  }
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--a-sky); }
 
-  @media(max-width: 860px) {
-    nav ul { display: none; }
-    .mobile-toggle { display: block; }
-  }
+/* Selección text */
+::selection { background: var(--a-mauve); color: var(--bg); }
 
-  /* Mobile Drawer Menu */
-  .mobile-menu {
-    position: fixed; top: 65px; left: 0; right: 0; bottom: 0;
-    background: rgba(6, 9, 19, 0.98); backdrop-filter: blur(20px);
-    z-index: 79; display: flex; flex-direction: column; padding: 30px 24px; gap: 16px;
-    transform: translateY(-100%); opacity: 0; pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .mobile-menu.open {
-    transform: translateY(0); opacity: 1; pointer-events: auto;
-  }
-  .mobile-menu a {
-    font-size: 1.25rem; font-weight: 600; color: var(--text);
-    padding: 12px 0; border-bottom: 1px solid var(--border);
-  }
+/* Background Canvas */
+#aurora-bg { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; opacity: 0.6; pointer-events: none; }
 
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-  section { padding: 90px 0; }
+/* Mac-like Floating Dock */
+.fl-dock {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100;
+  display: flex; gap: 8px; align-items: center; padding: 10px; border-radius: 24px;
+  background: rgba(17, 17, 27, 0.6); backdrop-filter: blur(16px);
+  border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  transition: all 0.3s;
+}
+.dock-item {
+  width: 44px; height: 44px; border-radius: 14px; display: flex; justify-content: center; align-items: center;
+  color: var(--subtext); cursor: pointer; transition: var(--trans-bounce); position: relative;
+  background: rgba(255,255,255,0.03);
+}
+.dock-item:hover, .dock-item.active {
+  background: var(--a-blue); color: var(--bg); transform: translateY(-6px) scale(1.1);
+  box-shadow: 0 10px 20px -5px var(--a-blue);
+}
+.dock-item.active { background: var(--a-mauve); box-shadow: 0 10px 20px -5px var(--a-mauve); }
+.dock-divider { width: 2px; height: 24px; background: var(--border); margin: 0 4px; }
 
-  h2 {
-    font-size: clamp(1.8rem, 3.8vw, 2.4rem);
-    margin-bottom: 34px; letter-spacing: -0.02em;
-    display: flex; align-items: center; gap: 12px;
-  }
-  h2 em {
-    font-style: normal;
-    background: var(--grad);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
+/* Tooltips del Dock */
+.dock-item::before {
+  content: attr(data-tooltip); position: absolute; top: -45px; left: 50%; transform: translateX(-50%) scale(0.6);
+  opacity: 0; background: var(--bg); color: var(--text); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem;
+  font-family: var(--f-mono); white-space: nowrap; transition: var(--trans-bounce); border: 1px solid var(--border);
+  pointer-events: none;
+}
+.dock-item:hover::before { opacity: 1; transform: translateX(-50%) scale(1); }
 
-  /* Hero Section */
-  header {
-    padding: 110px 0 80px; text-align: center; position: relative;
-  }
-  header::before {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    background-image:
-      linear-gradient(rgba(120, 150, 220, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(120, 150, 220, 0.05) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse 65% 65% at 50% 40%, black, transparent);
-  }
-  
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(34, 211, 238, 0.08);
-    border: 1px solid rgba(34, 211, 238, 0.3);
-    padding: 6px 16px; border-radius: 999px;
-    font-size: 0.8rem; font-family: var(--mono); color: var(--a1);
-    margin-bottom: 22px;
-  }
-  
-  h1 {
-    font-size: clamp(2.8rem, 7vw, 4.4rem);
-    letter-spacing: -0.035em; line-height: 1.05;
-  }
-  h1 b {
-    background: var(--grad);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  #typed {
-    display: block; margin-top: 16px; color: var(--a1);
-    font-size: clamp(1.05rem, 2.8vw, 1.4rem); font-weight: 600;
-    min-height: 1.9em; text-shadow: 0 0 24px rgba(34, 211, 238, 0.45);
-  }
-  .cursor {
-    display: inline-block; width: 10px; height: 1.15em; vertical-align: text-bottom;
-    background: var(--a1); animation: blink 1s steps(1) infinite;
-    box-shadow: 0 0 14px rgba(34, 211, 238, 0.9);
-  }
-  @keyframes blink { 50% { opacity: 0; } }
+/* BENTO GRID */
+.bento-container {
+  max-width: 1380px; margin: 40px auto 120px; padding: 0 20px;
+  display: grid; gap: 20px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+}
 
-  .lead {
-    max-width: 720px; margin: 20px auto 0;
-    color: var(--muted); font-size: 1.08rem; line-height: 1.8;
-  }
-  .hero-cta {
-    margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-  }
-  .btn {
-    padding: 12px 26px; border-radius: 12px; font-weight: 600;
-    border: 1px solid var(--border); transition: 0.25s; font-size: 0.95rem;
-    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-  }
-  .btn.primary {
-    background: linear-gradient(135deg, var(--a1), var(--a2));
-    color: #04121f; border: none;
-    box-shadow: 0 8px 28px rgba(34, 211, 238, 0.25);
-  }
-  .btn.primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(34, 211, 238, 0.4); }
-  .btn.ghost { color: var(--text); background: rgba(14, 21, 38, 0.6); }
-  .btn.ghost:hover { border-color: var(--a1); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.15); }
+.bCard {
+  background: var(--bg-card); backdrop-filter: blur(12px); border-radius: 24px;
+  border: 1px solid var(--border); overflow: hidden; position: relative;
+  display: flex; flex-direction: column; padding: 26px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+}
+.bCard::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(400px circle at var(--ms-x, 0) var(--ms-y, 0), rgba(255,255,255,0.18), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; z-index: 2; opacity: 0; transition: opacity 0.3s;
+}
+.bCard:hover::before { opacity: 1; }
+.bCard:hover { transform: translateY(-4px) scale(1.005); border-color: var(--border-hover); box-shadow: 0 12px 35px -10px rgba(0,0,0,0.6); }
 
-  /* Interactive Terminal Emulator in Hero */
-  .terminal-box {
-    max-width: 900px; margin: 46px auto 0;
-    background: rgba(10, 15, 29, 0.9);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(138, 170, 240, 0.25);
-    border-radius: 16px; overflow: hidden;
-    text-align: left; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
-    transition: border-color 0.3s;
-  }
-  .terminal-box:hover { border-color: rgba(34, 211, 238, 0.45); }
-  .terminal-header {
-    background: rgba(15, 22, 42, 0.95);
-    padding: 12px 18px; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .terminal-dots { display: flex; gap: 8px; }
-  .tdot { width: 12px; height: 12px; border-radius: 50%; }
-  .tdot.red { background: #f38ba8; }
-  .tdot.yellow { background: #f9e2af; }
-  .tdot.green { background: #a6e3a1; }
-  .terminal-title { font-size: 0.8rem; color: var(--muted); font-family: var(--mono); }
-  
-  .terminal-tabs {
-    display: flex; background: rgba(6, 9, 19, 0.92);
-    border-bottom: 1px solid var(--border); overflow-x: auto;
-  }
-  .ttab {
-    padding: 10px 18px; font-size: 0.8rem; font-family: var(--mono);
-    color: var(--muted); cursor: pointer; border: none; background: transparent;
-    border-right: 1px solid var(--border); transition: 0.2s; white-space: nowrap;
-  }
-  .ttab:hover { color: var(--text); background: rgba(255, 255, 255, 0.03); }
-  .ttab.active {
-    color: var(--a1); background: rgba(34, 211, 238, 0.08);
-    border-bottom: 2px solid var(--a1);
-  }
+/* Spans para las celdas del Bento Grid */
+.sp-12 { grid-column: span 12; }
+.sp-8 { grid-column: span 8; }
+.sp-7 { grid-column: span 7; }
+.sp-6 { grid-column: span 6; }
+.sp-5 { grid-column: span 5; }
+.sp-4 { grid-column: span 4; }
+.sp-3 { grid-column: span 3; }
+.row-2 { grid-row: span 2; }
+.row-3 { grid-row: span 3; }
 
-  .terminal-body {
-    padding: 20px; font-size: 0.86rem; line-height: 1.6;
-    color: #e2e8f0; min-height: 190px; position: relative;
-  }
-  .terminal-pane { display: none; }
-  .terminal-pane.active { display: block; }
+@media (max-width: 1024px) {
+  .sp-8, .sp-7, .sp-6, .sp-5, .sp-4, .sp-3 { grid-column: span 12; }
+  .row-2, .row-3 { grid-row: auto; }
+}
 
-  .term-copy-btn {
-    position: absolute; top: 16px; right: 16px;
-    background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border);
-    color: var(--muted); padding: 5px 12px; border-radius: 6px;
-    font-size: 0.74rem; font-family: var(--mono); cursor: pointer; transition: 0.2s;
-  }
-  .term-copy-btn:hover { background: var(--a1); color: #04121f; border-color: var(--a1); }
+/* Typography Generics */
+.bTitle { font-family: var(--f-display); font-size: 1.6rem; color: var(--text); font-weight: 700; line-height: 1.1; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.bSub { color: var(--subtext); font-size: 0.95rem; line-height: 1.6; }
+.bLabel { text-transform: uppercase; font-size: 0.72rem; letter-spacing: 1px; color: var(--a-sky); font-family: var(--f-mono); margin-bottom: 8px; display:inline-block;}
 
-  .cli-output {
-    max-height: 230px; overflow-y: auto; margin-bottom: 12px;
-    white-space: pre-wrap; font-size: 0.82rem;
-  }
-  .cli-prompt-line {
-    display: flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 0.84rem;
-  }
-  .cli-user { color: var(--a1); font-weight: 600; }
-  .cli-path { color: var(--a2); }
-  .cli-input {
-    background: transparent; border: none; outline: none;
-    color: #fff; font-family: var(--mono); font-size: 0.84rem; flex: 1;
-  }
-  .cli-quick-actions {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px;
-    border-top: 1px dashed rgba(255, 255, 255, 0.1);
-  }
-  .cli-pill {
-    background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border);
-    color: var(--sapphire); font-size: 0.72rem; padding: 3px 10px;
-    border-radius: 6px; cursor: pointer; font-family: var(--mono); transition: 0.2s;
-  }
-  .cli-pill:hover { background: rgba(34, 211, 238, 0.15); color: #fff; border-color: var(--a1); }
+/* Hero Module (Avatar, Live Target) */
+.hero-module { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; }
+.hero-avatar { width: 70px; height: 70px; background: linear-gradient(135deg, var(--a-mauve), var(--a-blue)); border-radius: 20px; display: flex; justify-content: center; align-items: center; font-size: 2rem; color: var(--bg); transform: rotate(-5deg); transition: 0.4s; }
+.hero-avatar:hover { transform: rotate(10deg) scale(1.1); }
+.hero-stats { display: flex; gap: 14px; font-family: var(--f-mono); font-size: 0.8rem; }
+.stat-badge { background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 6px 12px; border-radius: 99px; display:flex; align-items:center; gap:6px; color:var(--a-green); }
+.dot-flashing { width: 8px; height: 8px; border-radius: 50%; background: var(--a-green); animation: flash 1.5s infinite alternate; }
+@keyframes flash { from { box-shadow: 0 0 10px var(--a-green); opacity: 1; } to { box-shadow: none; opacity: 0.4; } }
 
-  /* Spotlight Cards */
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
-  .card {
-    position: relative; background: var(--card); backdrop-filter: blur(14px);
-    border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px;
-    transition: 0.3s cubic-bezier(0.2, 0.7, 0.3, 1);
-    overflow: hidden;
-  }
-  .card::after {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(203, 166, 247, 0.12), transparent 40%);
-    pointer-events: none; opacity: 0; transition: opacity 0.3s; border-radius: inherit;
-  }
-  .card:hover::after { opacity: 1; }
-  .card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(2, 8, 23, 0.6); border-color: var(--border-hover); }
-  .card h3 { margin-bottom: 10px; font-size: 1.18rem; }
-  .card p { color: var(--muted); font-size: 0.94rem; }
-  .icochip {
-    width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem; margin-bottom: 16px;
-    background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(167, 139, 250, 0.18));
-    border: 1px solid var(--border);
-  }
+/* Live Terminal Emulation in Bento */
+.term-box { background: #0c0e14; border-radius: 12px; border: 1px solid var(--border); flex: 1; display:flex; flex-direction: column; overflow: hidden; margin-top: 14px; font-family: var(--f-mono); font-size: 0.85rem;}
+.term-header { background: #151822; padding: 8px 14px; display:flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+.term-mac-btns { display:flex; gap: 6px; }
+.term-mac-btns div { width: 12px; height: 12px; border-radius: 50%; }
+.mac-close { background: #ff5f56; } .mac-min { background: #ffbd2e; } .mac-max { background: #27c93f; }
+.term-body { padding: 14px; flex: 1; overflow-y: auto; color: #a2aabc; line-height: 1.5; white-space: pre-wrap; height: 260px;}
+.cmd-prompt { color: var(--a-green); margin-right: 6px; }
+.term-input-line { display: flex; align-items: center; margin-top: 8px;}
+.term-input { background: transparent; border: none; outline: none; color: var(--text); flex: 1; font-family: var(--f-mono); font-size: 0.85rem;}
 
-  /* Featured Project: WebKVM */
-  .featured {
-    background: linear-gradient(135deg, rgba(16, 24, 48, 0.9) 0%, rgba(10, 16, 32, 0.94) 100%);
-    border: 1px solid rgba(34, 211, 238, 0.35); position: relative; overflow: hidden;
-  }
-  .featured-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.4);
-    padding: 4px 14px; border-radius: 999px; font-size: 0.75rem; font-family: var(--mono);
-    color: var(--a1); font-weight: 600;
-  }
+/* PVE Homelab CPU Vis */
+.cpu-donut-container { display: flex; gap: 16px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+.cpu-bars { flex: 1; display: grid; grid-template-columns: repeat(16, 1fr); gap: 4px; height: 60px; align-items: flex-end; }
+.cpu-bar { width: 100%; background: var(--a-sky); border-radius: 2px 2px 0 0; transition: height 0.6s ease, background 0.6s ease; }
+/* Storage Racks */
+.strp-rack { display:flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.strp-drive { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 12px; border-radius: 12px; display:flex; justify-content:space-between; align-items:center; cursor: crosshair; transition:0.2s; position:relative; }
+.strp-drive:hover { background: rgba(0,0,0,0.5); border-color: var(--a-mauve); }
+.drive-info { display: flex; flex-direction: column; gap: 4px; }
+.drive-name { font-weight: 600; font-size: 0.9rem; font-family:var(--f-display); }
+.drive-meta { font-size: 0.75rem; font-family: var(--f-mono); color: var(--subtext); }
+.drive-health { display: flex; align-items:center; gap: 6px; font-size: 0.75rem; font-family:var(--f-mono); color: var(--a-green); background: rgba(166, 227, 161, 0.1); padding: 4px 8px; border-radius: 6px;}
 
-  .feat-tabs {
-    display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap;
-  }
-  .feat-tab {
-    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
-    padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; color: var(--muted);
-    cursor: pointer; transition: 0.2s; font-family: var(--mono);
-  }
-  .feat-tab.active, .feat-tab:hover {
-    background: rgba(34, 211, 238, 0.15); color: #fff; border-color: var(--a1);
-  }
-  .feat-panel { display: none; margin-top: 14px; padding: 14px; background: rgba(5, 9, 18, 0.65); border-radius: 10px; border: 1px solid var(--border); font-size: 0.9rem; color: var(--muted); }
-  .feat-panel.active { display: block; }
+/* Tech Stack Radar/Chips */
+.tech-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tech-chip { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; font-family: var(--f-mono); display:flex; align-items:center; gap: 8px; transition: 0.2s;}
+.tech-chip:hover { border-color: var(--a-sky); background: rgba(137,220,235,0.1); color: #fff; transform:translateY(-2px); }
 
-  /* Interactive WebKVM Live Mock UI Window */
-  .webkvm-mock-window {
-    margin-top: 24px; background: #090e1c; border: 1px solid rgba(138, 170, 240, 0.25);
-    border-radius: 12px; overflow: hidden; font-family: 'Inter', sans-serif;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
-  }
-  .mock-header {
-    background: #111a2f; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border); font-size: 0.78rem;
-  }
-  .mock-urlbar {
-    background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border); border-radius: 6px;
-    padding: 4px 14px; color: var(--muted); font-family: var(--mono); font-size: 0.72rem;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .mock-task-pill {
-    background: rgba(34, 211, 238, 0.15); border: 1px solid var(--a1); color: var(--a1);
-    padding: 3px 10px; border-radius: 4px; font-family: var(--mono); font-size: 0.72rem; cursor: pointer;
-  }
-  .mock-body { padding: 18px; overflow-x: auto; }
-  .mock-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; text-align: left; }
-  .mock-table th { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; padding: 8px; border-bottom: 1px solid var(--border); font-family: var(--mono); }
-  .mock-table td { padding: 10px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-  .status-badge {
-    padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; font-family: var(--mono); font-weight: 600;
-  }
-  .status-badge.running { background: rgba(16, 185, 129, 0.15); color: #a6e3a1; border: 1px solid rgba(16, 185, 129, 0.3); }
-  .status-badge.stopped { background: rgba(239, 68, 68, 0.15); color: #f38ba8; border: 1px solid rgba(239, 68, 68, 0.3); }
-  .mock-btn {
-    background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border); color: #fff;
-    padding: 5px 12px; border-radius: 6px; font-size: 0.72rem; cursor: pointer; font-family: var(--mono);
-    transition: 0.2s;
-  }
-  .mock-btn:hover { border-color: var(--a1); background: rgba(34, 211, 238, 0.15); }
-  .mock-btn.accent { border-color: var(--a1); color: var(--a1); }
-  .mock-btn.accent:hover { background: var(--a1); color: #050a16; }
+/* Interactive WebKVM App Window */
+.kvm-app { border: 1px solid var(--a-mauve); border-radius: 14px; margin-top:16px; overflow: hidden; display:flex; flex-direction:column; box-shadow: 0 10px 40px -15px rgba(203,166,247,0.4);  background: #090b14; flex: 1;}
+.kvm-nav { background: #111424; padding: 10px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(203,166,247,0.2);}
+.kvm-url { background: #04050a; padding: 4px 14px; border-radius: 8px; font-family:var(--f-mono); font-size:0.75rem; border:1px solid rgba(255,255,255,0.05); color: var(--subtext);}
+.kvm-body { display:flex; flex:1; }
+.kvm-side { width: 140px; background: #0c0f1c; border-right: 1px solid var(--border); display:flex; flex-direction:column; padding: 14px 10px; gap:8px;}
+.kvm-sitem { font-size: 0.8rem; padding: 8px; border-radius: 8px; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:8px; transition:0.2s;}
+.kvm-sitem:hover, .kvm-sitem.act { background: rgba(203,166,247,0.15); color:var(--a-mauve); }
+.kvm-content { flex: 1; padding: 16px; position:relative; overflow:hidden;}
+.kvm-table { width: 100%; border-collapse: collapse; font-family:var(--f-mono); font-size:0.75rem; text-align:left;}
+.kvm-table th { padding: 8px; color:var(--muted); border-bottom:1px solid #1a1c29; font-weight:normal;}
+.kvm-table td { padding: 12px 8px; border-bottom:1px solid #1a1c29;}
+.kbtn { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; cursor:pointer; padding:6px 10px; border-radius:6px; font-family:inherit; transition:0.2s; font-size:0.75rem;}
+.kbtn.prim { background: rgba(203,166,247,0.15); border-color: var(--a-mauve); color: var(--a-mauve);}
+.kbtn.prim:hover { background: var(--a-mauve); color: #000; }
 
-  /* WebKVM v0.1.6 Interactive Task Center Drawer */
-  .mock-task-drawer {
-    border-top: 1px solid var(--border); background: #070c18; padding: 14px 18px;
-    display: none; animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .mock-task-drawer.open { display: block; }
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .drawer-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
-    font-size: 0.78rem; font-family: var(--mono);
-  }
-  .drawer-job {
-    background: rgba(14, 21, 38, 0.75); border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px 14px;
-  }
-  .job-meta {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.8rem;
-  }
-  .job-badge {
-    padding: 2px 7px; border-radius: 4px; font-size: 0.68rem; font-family: var(--mono); font-weight: 700;
-  }
-  .job-badge.running { background: rgba(34, 211, 238, 0.2); color: var(--a1); border: 1px solid var(--a1); }
-  .job-badge.success { background: rgba(16, 185, 129, 0.2); color: #a6e3a1; border: 1px solid #10b981; }
-  .job-id { color: var(--muted); font-size: 0.72rem; font-family: var(--mono); margin-left: 6px; }
-  .job-progress-bar {
-    height: 8px; background: rgba(0, 0, 0, 0.45); border-radius: 999px; overflow: hidden; margin: 8px 0;
-  }
-  .job-progress-fill {
-    height: 100%; background: linear-gradient(90deg, var(--a1), var(--a3)); border-radius: 999px;
-    transition: width 0.35s ease;
-  }
-  .job-step {
-    font-size: 0.74rem; color: var(--muted); font-family: var(--mono); display: flex; justify-content: space-between;
-  }
+/* The WebKVM live animated drawer */
+.kvm-drawer { position: absolute; bottom: -120%; left:0; width:100%; padding:20px; background: rgba(12,15,28,0.95); backdrop-filter:blur(10px); border-top:1px solid var(--a-blue); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); display:flex; flex-direction:column; gap:10px; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);}
+.kvm-drawer.show { bottom: 0; }
+.drawer-prog-rail { width: 100%; height: 8px; background: rgba(0,0,0,0.5); border-radius:4px; overflow:hidden;}
+.drawer-prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--a-mauve), var(--a-blue)); transition: width 0.3s ease-out; }
 
-  /* Homelab Network Sparkline Canvas */
-  #net-sparkline {
-    width: 100%; height: 38px; display: block; margin-top: 8px; border-radius: 4px;
-    background: rgba(0, 0, 0, 0.35);
-  }
+/* Live Network Sparkline Canvas */
+#spark-canvas { width: 100%; height: 50px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-top: 10px; mix-blend-mode: screen;}
 
-  /* Homelab Storage Popover & Breakdown */
-  .storage-detail-box {
-    margin-top: 14px; display: none; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;
-    animation: fadeIn 0.25s ease;
-  }
-  .storage-disk-card {
-    background: rgba(10, 16, 31, 0.85); border: 1px solid var(--border); border-radius: 8px;
-    padding: 10px 14px; font-size: 0.78rem; font-family: var(--mono);
-  }
-  .storage-disk-card strong { color: #fff; font-size: 0.84rem; display: block; margin-bottom: 4px; }
+/* Command Palette Overlay */
+.palette-overlay { position: fixed; inset:0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 999; display:none; justify-content:center; align-items:flex-start; padding-top: 15vh; opacity:0; transition: opacity 0.2s;}
+.palette-overlay.open { display:flex; opacity:1;}
+.palette-box { width: 90%; max-width: 600px; background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 16px; overflow:hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); transform: translateY(-20px); transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
+.palette-overlay.open .palette-box { transform: translateY(0); }
+.pal-search { padding: 16px 20px; display:flex; align-items:center; gap: 14px; border-bottom: 1px solid var(--border); }
+.pal-search input { flex:1; background:transparent; border:none; outline:none; font-size: 1.1rem; color: var(--text); font-family: var(--f-inter); }
+.pal-search kbd { font-family: var(--f-mono); font-size: 0.7rem; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius:6px; color: var(--subtext);}
+.pal-results { max-height: 400px; overflow-y: auto; padding: 10px; display:flex; flex-direction:column; gap:4px; }
+.pal-item { display:flex; align-items:center; gap: 12px; padding: 12px 14px; cursor:pointer; border-radius: 10px; transition: 0.1s;}
+.pal-item:hover, .pal-item.focused { background: rgba(137,220,235,0.15); color: var(--a-sky); }
+.pal-item i { width: 18px; height: 18px; color: var(--subtext);}
+.pal-item:hover i { color: inherit;}
 
-  /* Homelab Service Health Bar */
-  .services-status-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-top: 18px;
-  }
-  .svc-chip {
-    background: rgba(14, 21, 38, 0.6); border: 1px solid var(--border); border-radius: 8px;
-    padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; font-family: var(--mono);
-    transition: 0.2s;
-  }
-  .svc-chip:hover { border-color: var(--a1); background: rgba(20, 30, 54, 0.8); }
+/* Toast */
+.toast { position: fixed; bottom: 90px; right: 30px; background: rgba(166, 227, 161, 0.15); border: 1px solid #10b981; color: #a6e3a1; font-family: var(--f-mono); font-size: 0.85rem; display:flex; align-items:center; gap:10px; padding: 12px 20px; border-radius: 12px; transform: translateX(120%); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000; backdrop-filter: blur(10px);}
+.toast.show { transform: translateX(0); }
 
-  .feat-list { list-style: none; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
-  .feat-list li { color: var(--muted); font-size: 0.92rem; padding-left: 22px; position: relative; }
-  .feat-list li::before { content: "▸"; position: absolute; left: 0; color: var(--a1); }
+/* Quick Contact buttons */
+.btn-solid { background: var(--text); color: var(--bg); padding: 12px 24px; border-radius: 12px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:0.2s; border:1px solid transparent; cursor:pointer; margin-top:20px;}
+.btn-solid:hover { background: transparent; border-color: var(--text); color: var(--text); }
+.btn-ghost { background: transparent; color: var(--text); border:1px solid var(--border); padding: 12px 24px; border-radius: 12px; font-weight:600; display:inline-flex; align-items:center; gap:8px; transition:0.2s; cursor:pointer; margin-top:20px;}
+.btn-ghost:hover { border-color: var(--a-blue); background: rgba(137,180,250,0.1); }
 
-  /* Chips and Wall Badges */
-  .icons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; align-items: center; }
-  .chip {
-    display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 10px;
-    border: 1px solid var(--border); background: rgba(10, 16, 31, 0.65);
-    font-size: 0.83rem; font-weight: 500; color: var(--text); transition: 0.22s;
-  }
-  .chip img { width: 18px; height: 18px; flex: none; }
-  .chip svg { width: 18px; height: 18px; flex: none; color: var(--a1); }
-  .chip:hover { transform: translateY(-2px); border-color: var(--a1); box-shadow: 0 0 14px rgba(34, 211, 238, 0.3); }
-
-  .wall { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 26px; }
-  .wall img { height: 28px; border-radius: 5px; transition: 0.2s; }
-  .wall img:hover { transform: translateY(-2px) scale(1.04); }
-
-  /* Skill Filter Bar */
-  .filter-bar {
-    display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap;
-  }
-  .filter-btn {
-    background: rgba(16, 24, 44, 0.7); border: 1px solid var(--border);
-    color: var(--muted); padding: 8px 18px; border-radius: 999px;
-    font-size: 0.84rem; font-weight: 500; cursor: pointer; transition: 0.2s;
-  }
-  .filter-btn:hover, .filter-btn.active {
-    background: linear-gradient(135deg, var(--a1), var(--a2));
-    color: #04121f; border-color: transparent; font-weight: 600;
-  }
-
-  /* Live Telemetry Card (PVE 9 Node Explorer) */
-  .telemetry-box {
-    background: rgba(8, 13, 26, 0.92); border: 1px solid rgba(138, 170, 240, 0.25);
-    border-radius: var(--radius-lg); padding: 26px; margin-top: 26px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-  }
-  .telemetry-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
-  }
-  .telemetry-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px;
-  }
-  .telem-card {
-    background: rgba(15, 23, 44, 0.65); border: 1px solid var(--border); border-radius: 12px; padding: 16px;
-  }
-  .telem-card span.label { font-size: 0.75rem; color: var(--muted); font-family: var(--mono); text-transform: uppercase; }
-  .telem-card div.val { font-size: 1.25rem; font-weight: 700; color: #fff; margin-top: 4px; font-family: var(--mono); }
-  
-  /* 16-thread CPU Activity Visualizer */
-  .thread-grid {
-    display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin-top: 10px;
-  }
-  .thread-bar-wrap { height: 30px; background: rgba(0, 0, 0, 0.45); border-radius: 4px; overflow: hidden; display: flex; align-items: flex-end; padding: 2px; }
-  .thread-bar { width: 100%; background: var(--a1); border-radius: 2px; transition: height 0.6s ease; }
-
-  /* Topology Architecture Diagram */
-  .arch-diagram {
-    background: rgba(6, 10, 20, 0.9); border: 1px solid var(--border);
-    border-radius: var(--radius-lg); padding: 26px; margin-top: 26px;
-  }
-  .arch-layer {
-    background: rgba(15, 22, 42, 0.55); border: 1px solid var(--border);
-    border-radius: 12px; padding: 16px 20px; margin-bottom: 14px;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
-  }
-  .arch-layer:last-child { margin-bottom: 0; }
-  .arch-tag {
-    font-size: 0.75rem; font-family: var(--mono); color: var(--a1); font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.05em; min-width: 140px;
-  }
-  .arch-nodes { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; }
-  .arch-node {
-    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(138, 170, 240, 0.2);
-    padding: 6px 14px; border-radius: 8px; font-size: 0.82rem; font-family: var(--mono);
-    color: #e2e8f0; display: inline-flex; align-items: center; gap: 6px;
-    cursor: pointer; transition: 0.2s;
-  }
-  .arch-node:hover { border-color: var(--a1); transform: translateY(-2px); background: rgba(34, 211, 238, 0.12); }
-  .arch-node.master { border-color: var(--a3); color: var(--a3); }
-
-  /* Node Spec Inspector Box */
-  .inspector-box {
-    margin-top: 14px; padding: 14px 20px; border-radius: 10px; background: rgba(16, 24, 44, 0.9);
-    border: 1px dashed var(--a1); font-size: 0.84rem; font-family: var(--mono); color: var(--muted);
-    display: none; animation: fadeIn 0.25s ease;
-  }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-  /* Memory Distribution Bar */
-  .mem-bar-box { margin-top: 22px; padding: 18px; background: rgba(10, 16, 31, 0.65); border-radius: 12px; border: 1px solid var(--border); }
-  .mem-bar {
-    height: 14px; border-radius: 7px; overflow: hidden; display: flex; background: #1e293b; margin: 12px 0;
-  }
-  .mem-seg { height: 100%; transition: width 1s ease; }
-  .mem-seg.vms { background: var(--a1); width: 62.5%; }
-  .mem-seg.lxc { background: var(--a2); width: 25%; }
-  .mem-seg.sys { background: var(--a3); width: 12.5%; }
-  .mem-legend { display: flex; gap: 20px; font-size: 0.78rem; color: var(--muted); flex-wrap: wrap; font-family: var(--mono); }
-  .mem-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; vertical-align: middle; margin-right: 6px; }
-
-  /* Stats Strip */
-  .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 32px; }
-  .stat {
-    text-align: center; background: var(--card); backdrop-filter: blur(12px);
-    border: 1px solid var(--border); border-radius: 16px; padding: 22px 14px; transition: 0.3s;
-  }
-  .stat:hover { border-color: rgba(34, 211, 238, 0.5); transform: translateY(-3px); }
-  .stat b {
-    display: block; font-size: 1.85rem;
-    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .stat span { color: var(--muted); font-size: 0.83rem; }
-
-  /* Command Palette Modal */
-  .cmd-modal {
-    position: fixed; inset: 0; z-index: 150;
-    background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(8px);
-    display: none; align-items: flex-start; justify-content: center; padding-top: 14vh;
-  }
-  .cmd-modal.open { display: flex; }
-  .cmd-box {
-    background: #0d1527; border: 1px solid rgba(138, 170, 240, 0.3);
-    border-radius: 16px; width: 92%; max-width: 580px; overflow: hidden;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85);
-    animation: cmdPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  @keyframes cmdPop {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .cmd-input-wrap {
-    display: flex; align-items: center; gap: 12px; padding: 16px 20px;
-    border-bottom: 1px solid var(--border); background: rgba(16, 24, 44, 0.8);
-  }
-  .cmd-search-input {
-    background: transparent; border: none; outline: none;
-    color: #fff; font-size: 1.05rem; font-family: 'Inter', sans-serif; flex: 1;
-  }
-  .cmd-list { max-height: 320px; overflow-y: auto; padding: 10px; }
-  .cmd-group-label {
-    font-size: 0.7rem; color: var(--muted); font-family: var(--mono);
-    text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 16px 4px;
-  }
-  .cmd-item {
-    padding: 10px 16px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between;
-    color: var(--muted); cursor: pointer; transition: 0.15s; font-size: 0.9rem;
-  }
-  .cmd-item:hover, .cmd-item.active { background: rgba(34, 211, 238, 0.12); color: #fff; }
-  .cmd-item-icon { display: flex; align-items: center; gap: 10px; }
-
-  /* Toast Notification */
-  #toast {
-    position: fixed; bottom: 28px; right: 28px; z-index: 200;
-    background: #0f172a; border: 1px solid var(--a1); color: #fff;
-    padding: 12px 20px; border-radius: 10px; font-size: 0.88rem; font-family: var(--mono);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); display: flex; align-items: center; gap: 10px;
-    transform: translateY(100px); opacity: 0; pointer-events: none; transition: 0.3s;
-  }
-  #toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
-
-  footer {
-    border-top: 1px solid var(--border); padding: 42px 0; text-align: center;
-    color: var(--muted); font-size: 0.9rem;
-  }
-
-  #top-btn {
-    position: fixed; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--a1), var(--a2)); color: #04121f; border: none; font-size: 1.2rem;
-    cursor: pointer; opacity: 0; pointer-events: none; transition: 0.3s; z-index: 60;
-    box-shadow: 0 8px 24px rgba(34, 211, 238, 0.4);
-  }
-  #top-btn.show { opacity: 1; pointer-events: auto; }
-  #top-btn:hover { transform: translateY(-3px); }
-</style>
+    </style>
 </head>
-<body data-theme="mauve">
+<body data-theme="mocha">
+    <!-- Fondo Animado Canvas -->
+    <canvas id="aurora-bg"></canvas>
 
-<canvas id="bg-canvas"></canvas>
-<div class="sky"></div>
-<div class="blob b1"></div>
-<div class="blob b2"></div>
-<div class="blob b3"></div>
-<div id="bar"></div>
+    <!-- Navbar Minimalista (Efecto Dock macOS) -->
+    <nav class="fl-dock">
+        <div class="dock-item" data-tooltip="Buscar / Comandos (⌘K)" onclick="togglePalette()">
+            <i data-lucide="search"></i>
+        </div>
+        <div class="dock-item" data-tooltip="Cambiar Tema" onclick="cycleTheme()">
+            <i data-lucide="palette"></i>
+        </div>
+        <div class="dock-divider"></div>
+        <a class="dock-item active" href="#dashboard" data-tooltip="Inicio / Console">
+            <i data-lucide="terminal"></i>
+        </a>
+        <a class="dock-item" href="#webkvm" data-tooltip="Proyecto WebKVM">
+            <i data-lucide="box"></i>
+        </a>
+        <a class="dock-item" href="#homelab" data-tooltip="Homelab / PVE Runtime">
+            <i data-lucide="server"></i>
+        </a>
+        <a class="dock-item" href="#stack" data-tooltip="Armería Técnica">
+            <i data-lucide="cpu"></i>
+        </a>
+        <a class="dock-item" href="https://github.com/Slaker19" target="_blank" data-tooltip="GitHub">
+            <i data-lucide="github"></i>
+        </a>
+        <a class="dock-item" href="mailto:alvinpp1908@gmail.com" data-tooltip="Contacto">
+            <i data-lucide="mail"></i>
+        </a>
+    </nav>
 
-<!-- Navegación -->
-<nav>
-  <div class="wrap">
-    <a class="logo" href="#top">
-      Alvin<span>.homelab</span>
-      <span class="status-pill"><span class="pulse-dot"></span> PVE 9 Online</span>
-    </a>
-    <ul>
-      <li><a class="link" href="#about">Sobre mí</a></li>
-      <li><a class="link" href="#projects">Proyectos</a></li>
-      <li><a class="link" href="#lab">Homelab</a></li>
-      <li><a class="link" href="#skills">Conocimientos</a></li>
-      <li><a class="link" href="#contact">Contacto</a></li>
-    </ul>
-    <div class="nav-actions">
-      <!-- Theme Switcher Button -->
-      <button class="theme-btn" id="theme-toggle" title="Cambiar tema de acento Catppuccin">
-        <span class="color-dot"></span> <span id="theme-name">Mauve</span>
-      </button>
-      <button class="cmd-btn" id="open-cmd" title="Abrir paleta de comandos (Ctrl+K)">
-        <span>Buscar</span> <kbd>⌘K</kbd>
-      </button>
-      <button class="mobile-toggle" id="menu-toggle" aria-label="Abrir menú">☰</button>
-    </div>
-  </div>
-</nav>
+    <main class="bento-container" id="dashboard">
+        
+        <!-- Card 1: Perfil Hero -->
+        <div class="bCard sp-8 row-2" id="hero" onmousemove="handleHover(event, this)">
+            <span class="bLabel">sysadmin / dev / architect</span>
+            <div class="hero-module">
+                <div>
+                    <h1 class="bTitle">Alvin Perez <div class="hero-avatar"><i data-lucide="terminal-square"></i></div></h1>
+                    <p class="bSub" style="max-width: 500px; font-size: 1.05rem;">
+                        Técnico IT y desarrollador Backend Go. Diseño infraestructuras ultra silenciosas a <strong>15W TDP</strong> y construyo software de grado productivo para virtualización, como <strong>WebKVM</strong>.
+                    </p>
+                </div>
+                <!-- Status en vivo simulado -->
+                <div class="hero-stats">
+                    <div class="stat-badge"><div class="dot-flashing"></div> PVE Node 99.98% UP</div>
+                    <div class="stat-badge" style="color:var(--a-sky); border-color:rgba(137,220,235,0.3); background:rgba(137,220,235,0.05);"><i data-lucide="git-commit" style="width:14px;height:14px;"></i> Commit a235271 (v0.1.6)</div>
+                </div>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:auto;">
+                <a href="#projects" class="btn-solid">Explorar Armería <i data-lucide="arrow-right" style="width:18px;"></i></a>
+                <a href="https://github.com/Slaker19" target="_blank" class="btn-ghost"><i data-lucide="github" style="width:18px;"></i> GitHub</a>
+            </div>
+        </div>
 
-<!-- Mobile Drawer Menu -->
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#about" class="mob-link">Sobre mí</a>
-  <a href="#projects" class="mob-link">Proyectos (WebKVM v0.1.6)</a>
-  <a href="#lab" class="mob-link">Homelab Proxmox VE 9</a>
-  <a href="#skills" class="mob-link">Conocimientos & Skills</a>
-  <a href="#contact" class="mob-link">Contacto</a>
+        <!-- Card 2: Interactive Console Sandbox -->
+        <div class="bCard sp-4 row-2" style="background:#090a10;" onmousemove="handleHover(event, this)">
+            <span class="bLabel" style="color:var(--a-mauve);">System Sandbox CLI</span>
+            <div class="term-box">
+                <div class="term-header">
+                    <div class="term-mac-btns"><div class="mac-close"></div><div class="mac-min"></div><div class="mac-max"></div></div>
+                    <span style="color:var(--muted); font-size:0.75rem;">alvin@alvinnas:~ (zsh)</span>
+                    <i data-lucide="shield-check" style="width:14px; color:var(--a-green);"></i>
+                </div>
+                <div class="term-body" id="term-out">Bienvenido al entorno CLI web.
+Ejecuta 'help', 'webkvm status' o 'neofetch'.
 </div>
-
-<!-- Header / Hero -->
-<header id="top">
-  <div class="wrap">
-    <div class="hero-tag">
-      <span>🚀</span> Creador de WebKVM v0.1.6 · SysAdmin & Homelab Architect
-    </div>
-    <h1>Alvin <b>Perez</b></h1>
-    <span id="typed"></span><span class="cursor">&nbsp;</span>
-    <p class="lead">
-      Técnico IT especializado en infraestructura Linux, diagnóstico de hardware y virtualización de alto rendimiento.
-      Mi laboratorio diario corre sobre <strong>Proxmox VE 9</strong> y de ahí nace <strong>WebKVM</strong>: gestión híbrida de VMs (KVM/QEMU) y contenedores (Incus/LXC) en un único binario Go sin sobrecargas.
-    </p>
-
-    <div class="hero-cta">
-      <a class="btn primary" href="#projects">Explorar Proyectos <span>→</span></a>
-      <a class="btn ghost" href="#lab">Arquitectura Homelab <span>⚡</span></a>
-      <a class="btn ghost" href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener">WebKVM en GitHub ↗</a>
-    </div>
-
-    <!-- Interactive Terminal Widget -->
-    <div class="terminal-box">
-      <div class="terminal-header">
-        <div class="terminal-dots">
-          <div class="tdot red"></div>
-          <div class="tdot yellow"></div>
-          <div class="tdot green"></div>
-        </div>
-        <div class="terminal-title">alvin@alvinnas: ~ (zsh) · WebKVM Live Demo</div>
-        <div style="font-size:0.75rem; color:var(--green); font-family:var(--mono);">● connected</div>
-      </div>
-      <div class="terminal-tabs">
-        <button class="ttab active" onclick="switchTermTab(0)">⚡ WebKVM Install</button>
-        <button class="ttab" onclick="switchTermTab(1)">💻 Terminal CLI (Interactivo)</button>
-        <button class="ttab" onclick="switchTermTab(2)">🐳 Docker Container</button>
-        <button class="ttab" onclick="switchTermTab(3)">🛡️ Security Jail Logs</button>
-      </div>
-      <div class="terminal-body">
-        <!-- Tab 0: Install -->
-        <div class="terminal-pane active" id="pane-0">
-          <button class="term-copy-btn" onclick="copySnippet('curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash')">Copiar</button>
-          <div style="color:var(--muted); margin-bottom:8px;"># Instalador one-liner multi-distro (Debian/Ubuntu, Fedora/RHEL, Arch)</div>
-          <div style="color:#89dceb; word-break:break-all;">curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash</div>
-          <div style="color:var(--muted); margin-top:12px; font-size:0.78rem;">
-            ✓ Detección de gestor nativo (apt/dnf/pacman) &nbsp;·&nbsp; ✓ Preflight de KVM & Incus &nbsp;·&nbsp; ✓ Rollback automático
-          </div>
-        </div>
-
-        <!-- Tab 1: Interactive CLI -->
-        <div class="terminal-pane" id="pane-1">
-          <div class="cli-output" id="cli-out">WebKVM CLI v0.1.6 (x86_64-linux) — Type 'help' or click an action below.
-alvinnas:~$ webkvm status
-● WebKVM Daemon: Active (running) · 16.6 MB RAM
-Hypervisors: QEMU/KVM (libvirt) + Incus/LXC (native)
-Host Network: vmbr0 (Bond L2 active-backup: eno1+eno2)
-Security Jail: Active (0 banned IPs, SSH journal watcher enabled)</div>
-          <div class="cli-prompt-line">
-            <span class="cli-user">alvin@alvinnas</span>:<span class="cli-path">~</span>$&nbsp;
-            <input type="text" class="cli-input" id="cli-in" placeholder="escribe 'help', 'status', 'vms'..." autocomplete="off" />
-          </div>
-          <div class="cli-quick-actions">
-            <span style="font-size:0.75rem; color:var(--muted); align-self:center;">Comandos rápidos:</span>
-            <button class="cli-pill" onclick="runCli('webkvm status')">webkvm status</button>
-            <button class="cli-pill" onclick="runCli('webkvm jobs')">⚡ webkvm jobs</button>
-            <button class="cli-pill" onclick="runCli('webkvm vm list')">webkvm vm list</button>
-            <button class="cli-pill" onclick="runCli('webkvm host bonds')">webkvm host bonds</button>
-            <button class="cli-pill" onclick="runCli('fastfetch')">fastfetch</button>
-            <button class="cli-pill" onclick="runCli('clear')">clear</button>
-          </div>
-        </div>
-
-        <!-- Tab 2: Docker -->
-        <div class="terminal-pane" id="pane-2">
-          <button class="term-copy-btn" onclick="copySnippet('docker run -d --name webkvm --privileged --network host -v /var/run/libvirt:/var/run/libvirt -v /var/lib/incus:/var/lib/incus ghcr.io/slaker19/webkvm:v0.1.6')">Copiar</button>
-          <div style="color:var(--muted); margin-bottom:8px;"># Contenedor oficial WebKVM con CLI bundleada</div>
-          <div style="color:#a6e3a1; word-break:break-all;">docker run -d --name webkvm --privileged --network host   -v /var/run/libvirt:/var/run/libvirt   -v /var/lib/incus:/var/lib/incus   ghcr.io/slaker19/webkvm:v0.1.6</div>
-        </div>
-
-        <!-- Tab 3: Security Jail -->
-        <div class="terminal-pane" id="pane-3">
-          <div style="color:var(--peach); font-size:0.8rem; line-height:1.7;">
-[INFO] netguard.ssh_watcher: starting journald reader for ssh/sshd services<br>
-[WARN] netguard.jail: failed password for root from 198.51.100.42 port 48212 (attempt 1/5)<br>
-[WARN] netguard.jail: failed password for invalid user admin from 198.51.100.42 (attempt 5/5)<br>
-<span style="color:#f38ba8; font-weight:600;">[ALERT] netguard.jail: BANNING 198.51.100.42 for 3600s via nftables table inet webkvm_jail</span><br>
-[INFO] notify.alert: SMTP notification delivered to alvinpp1908@gmail.com (RFC 2047 encoded)
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- Quick Stats Strip -->
-<div class="wrap">
-  <div class="strip">
-    <div class="stat"><b data-count="52" data-suffix="+">0+</b><span>⭐ Stars en WebKVM</span></div>
-    <div class="stat"><b>v0.1.6</b><span>Release Estable</span></div>
-    <div class="stat"><b data-count="8" data-suffix="C / 16T">0C</b><span>Ryzen 7 5700U @ 15W</span></div>
-    <div class="stat"><b data-count="32" data-suffix=" GB">0</b><span>RAM DDR4 Homelab</span></div>
-    <div class="stat"><b data-count="43" data-prefix="~" data-decimal="1" data-suffix=" TB">~4,3</b><span>Almacenamiento NVMe/SSD/HDD</span></div>
-    <div class="stat"><b>99.98%</b><span>Uptime 24/7 en PVE 9</span></div>
-  </div>
-</div>
-
-<!-- Section: Sobre mí -->
-<section id="about">
-  <div class="wrap">
-    <h2>Sobre <em>mí</em></h2>
-    <div class="grid">
-      <div class="card spotlight-card">
-        <div class="icochip">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </div>
-        <h3>Técnico IT & Sistemas</h3>
-        <p>Me dedico a la infraestructura y soporte de sistemas profesionalmente y por pasión. Experto en diagnóstico a bajo nivel, mantenimiento de hosts Linux y despliegues con cero tolerancia a fallos.</p>
-      </div>
-
-      <div class="card spotlight-card">
-        <div class="icochip">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>
-        </div>
-        <h3>Hardware & Eficiencia Térmica</h3>
-        <p>Montaje minucioso, telemetría térmica, benchmarks y tuning de latencia. Máxima eficiencia con TDPs contenidos (15W 24/7) y passthrough de GPU y dispositivos PCIe con grupos IOMMU limpios.</p>
-      </div>
-
-      <div class="card spotlight-card">
-        <div class="icochip">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg>
-        </div>
-        <h3>Homelab en Proxmox VE 9</h3>
-        <p>Nodo de producción que sostiene todos mis servicios y banco de pruebas: microsegmentación de red, almacenamiento ZFS y Btrfs, bridges L2, bonding y automatización completa.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section: Proyectos -->
-<section id="projects" style="background:rgba(8,13,26,0.6)">
-  <div class="wrap">
-    <h2>Pro<em>yectos</em></h2>
-
-    <!-- Flagship: WebKVM -->
-    <div class="card featured spotlight-card" style="margin-bottom:26px;">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-        <span class="featured-badge"><span class="pulse-dot"></span> PROYECTO PRINCIPAL · RELEASE v0.1.6</span>
-        <span style="font-family:var(--mono); font-size:0.78rem; color:var(--a1)">AGPLv3 · Go 1.24+ · Svelte 5</span>
-      </div>
-
-      <h3 style="font-size:1.45rem;">WebKVM — Gestor web híbrido: VMs KVM/QEMU + Contenedores Incus/LXC</h3>
-      <p style="margin-top:6px;">
-        Panel web autoalojado de alto rendimiento sobre libvirt (QEMU/KVM) y el backend moderno de contenedores <strong>Incus</strong> (compatible con LXD). Compilado en un único binario ligero en Go con el frontend Svelte 5 embebido: sin bases de datos externas, sin proxy inverso obligatorio, con HTTPS automático y alternativas de despliegue mediante Docker, paquetes nativos (.deb/.rpm) o instalador one-liner.
-      </p>
-
-      <!-- Sub-tabs for WebKVM -->
-      <div class="feat-tabs">
-        <button class="feat-tab active" onclick="switchFeatTab(0)">🚀 Binario & Rendimiento</button>
-        <button class="feat-tab" onclick="switchFeatTab(1)">🌐 Redes del Host & Bonding L2</button>
-        <button class="feat-tab" onclick="switchFeatTab(2)">🛡️ Security Jail & Passkeys</button>
-        <button class="feat-tab" onclick="switchFeatTab(3)">⚡ Task Center en Tiempo Real</button>
-        <button class="feat-tab" onclick="switchFeatTab(4)">📦 Almacenamiento & Passthrough</button>
-      </div>
-
-      <div class="feat-panel active" id="fpanel-0">
-        <strong>Binario Go + Svelte 5 embebido (~14 MB, ~7 MB RAM en reposo):</strong> No requiere NodeJS ni Python ni MySQL ni Nginx. El binario levanta su propio servidor HTTPS TLS nativo con certificados autofirmados con SAN automático para dominios y direcciones IP.
-      </div>
-      <div class="feat-panel" id="fpanel-1">
-        <strong>Gestión de Bonds L2 del Host con Netplan:</strong> Creación de agregaciones de enlace (active-backup, LACP 802.3ad, balance-rr) persistidas atómicamente en <code>/etc/netplan/</code> con guardas automáticas de rollback para prevenir la pérdida de conexión del host.
-      </div>
-      <div class="feat-panel" id="fpanel-2">
-        <strong>Seguridad multicapa sin secretos filtrados:</strong> Security Jail con lector de journald en tiempo real para bloquear atacantes SSH con <code>nftables</code>, autenticación biométrica WebAuthn (Passkeys), 2FA/TOTP y notificaciones SMTP RFC 2047 seguras.
-      </div>
-      <div class="feat-panel" id="fpanel-3">
-        <strong>Centro de Tareas Asíncronas (Task Center):</strong> Monitorización visual con barra de progreso en vivo y polling reactivo para operaciones pesadas: clonaciones masivas, migración de discos en caliente, snapshots y despliegues de plantillas.
-      </div>
-      <div class="feat-panel" id="fpanel-4">
-        <strong>Almacenamiento unificado y Passthrough IOMMU:</strong> Soporte nativo para ZFS, Software RAID (mdadm), NFS, SMB y pools de directorio. Asignación de GPUs y USBs con verificación previa de grupos de aislamiento IOMMU/VFIO.
-      </div>
-
-      <!-- Interactive WebKVM Live Mock UI Window -->
-      <div class="webkvm-mock-window">
-        <div class="mock-header">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <div class="terminal-dots">
-              <div class="tdot red"></div>
-              <div class="tdot yellow"></div>
-              <div class="tdot green"></div>
+                <div class="term-header" style="background:#0c0e14; border-top:1px solid var(--border); border-bottom:none;">
+                    <div class="term-input-line" style="margin:0; width:100%;">
+                        <span class="cmd-prompt">➜</span><span style="color:var(--a-blue);margin-right:8px;">~</span>
+                        <input type="text" class="term-input" id="term-in" autocomplete="off" placeholder="Escribe un comando..." />
+                    </div>
+                </div>
             </div>
-            <div class="mock-urlbar">🔒 https://webkvm.alvinnas.local:8081 &nbsp;·&nbsp; <span style="color:var(--green)">Passkeys Ready</span></div>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button class="mock-task-pill" id="mock-task-trigger" onclick="toggleMockTaskDrawer()">⚡ Task Center (1 en curso) ▼</button>
-            <span style="color:var(--muted); font-family:var(--mono);">v0.1.6</span>
-          </div>
-        </div>
-        <div class="mock-body">
-          <table class="mock-table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Hipervisor</th>
-                <th>Estado</th>
-                <th>vCPU / RAM</th>
-                <th>IP</th>
-                <th>Acciones Rápidas</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="vm-row-1">
-                <td><strong>ubuntu-server</strong></td>
-                <td><span style="color:var(--a1)">KVM/QEMU</span></td>
-                <td><span class="status-badge running" id="vm-badge-1">RUNNING</span></td>
-                <td>4 vCPU · 8192 MB</td>
-                <td>10.0.0.101</td>
-                <td>
-                  <div style="display:flex; gap:6px;">
-                    <button class="mock-btn" onclick="toggleMockVM(1, event)">⏹ Detener</button>
-                    <button class="mock-btn accent" onclick="triggerCloneDemo('ubuntu-server')">⚡ Clonar</button>
-                  </div>
-                </td>
-              </tr>
-              <tr id="vm-row-2">
-                <td><strong>fedora-webkvm</strong></td>
-                <td><span style="color:var(--a1)">KVM/QEMU</span></td>
-                <td><span class="status-badge running" id="vm-badge-2">RUNNING</span></td>
-                <td>2 vCPU · 4096 MB</td>
-                <td>10.0.0.102</td>
-                <td>
-                  <div style="display:flex; gap:6px;">
-                    <button class="mock-btn" onclick="toggleMockVM(2, event)">⏹ Detener</button>
-                    <button class="mock-btn accent" onclick="triggerCloneDemo('fedora-webkvm')">⚡ Clonar</button>
-                  </div>
-                </td>
-              </tr>
-              <tr id="vm-row-3">
-                <td><strong>arch-linux-webkvm</strong></td>
-                <td><span style="color:var(--a1)">KVM/QEMU</span></td>
-                <td><span class="status-badge stopped" id="vm-badge-3">STOPPED</span></td>
-                <td>4 vCPU · 8192 MB</td>
-                <td>—</td>
-                <td>
-                  <div style="display:flex; gap:6px;">
-                    <button class="mock-btn" onclick="toggleMockVM(3, event)">▶ Iniciar</button>
-                    <button class="mock-btn accent" onclick="triggerCloneDemo('arch-linux-webkvm')">⚡ Clonar</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
 
-        <!-- WebKVM v0.1.6 Live Task Center Drawer -->
-        <div class="mock-task-drawer" id="mock-task-drawer">
-          <div class="drawer-header">
-            <span style="display:flex; align-items:center; gap:8px;">
-              <span class="pulse-dot"></span>
-              <strong style="color:#fff;">Task Center en Tiempo Real (WebKVM v0.1.6)</strong>
-            </span>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <button class="mock-btn accent" onclick="startSimulatedJob()">+ Clonación de prueba</button>
-              <button class="mock-btn" onclick="toggleMockTaskDrawer()">✕ Ocultar</button>
+        <!-- Card 3: Proyecto WebKVM v0.1.6 -->
+        <div class="bCard sp-7 row-3" id="webkvm" onmousemove="handleHover(event, this)">
+            <span class="bLabel" style="color:var(--a-red);">Proyecto Principal Estelar</span>
+            <h2 class="bTitle" style="font-size:1.8rem;">WebKVM v0.1.6</h2>
+            <p class="bSub" style="margin-bottom:8px;">
+                Gestor web autoalojado de alto rendimiento para <strong>KVM/QEMU</strong> e <strong>Incus/LXC</strong>. 
+                Todo en un único binario Go sin base de datos ni NodeJS. Task center asíncrono, Netplan y Security Jail integrados.
+            </p>
+            <div class="tech-grid" style="margin-bottom:16px;">
+                <span class="tech-chip" style="color:var(--a-sky); border-color:var(--border);"><i data-lucide="box" style="width:14px;"></i> Go backend</span>
+                <span class="tech-chip" style="color:#ff3e00; border-color:var(--border);"><i data-lucide="layout" style="width:14px;"></i> Svelte 5</span>
+                <span class="tech-chip" style="color:var(--a-mauve); border-color:var(--border);"><i data-lucide="shield-alert" style="width:14px;"></i> Passkeys / nftables</span>
+                <span class="tech-chip" style="cursor:pointer;" onclick="cmdPal('curl')"><i data-lucide="copy" style="width:14px;"></i> Instalar (Bash script)</span>
             </div>
-          </div>
-          <div class="drawer-job" id="active-mock-job">
-            <div class="job-meta">
-              <div>
-                <span class="job-badge running" id="job-badge">RUNNING</span>
-                <strong id="job-title" style="margin-left:6px; color:#fff;">Clonando disco VM ubuntu-server -> nvme0n1</strong>
-                <span class="job-id" id="job-id">#job-c812a</span>
-              </div>
-              <div class="job-percent" id="job-pct" style="font-family:var(--mono); color:var(--a1); font-weight:700;">78%</div>
+            
+            <!-- Live App Mock -->
+            <div class="kvm-app">
+                <div class="kvm-nav">
+                    <div class="kvm-url"><i data-lucide="lock" style="width:12px; display:inline-block; margin-right:4px;"></i> https://webkvm:8081</div>
+                    <div style="display:flex;gap:10px;">
+                        <button class="kbtn" onclick="fireTaskDrawer()"><i data-lucide="activity" style="width:14px; margin-right:4px; vertical-align:text-bottom;"></i> Tareas: <span id="kvm-task-c">0</span></button>
+                    </div>
+                </div>
+                <div class="kvm-body">
+                    <div class="kvm-side">
+                        <div class="kvm-sitem act"><i data-lucide="monitor"></i> Máquinas (3)</div>
+                        <div class="kvm-sitem"><i data-lucide="hard-drive"></i> Storage (2)</div>
+                        <div class="kvm-sitem"><i data-lucide="network"></i> Red / Bonds</div>
+                    </div>
+                    <div class="kvm-content">
+                        <table class="kvm-table">
+                            <tr><th>Name</th><th>Hypervisor</th><th>Status</th><th>Acción</th></tr>
+                            <tr>
+                                <td><strong style="color:var(--text);">ubuntu-cloud</strong></td>
+                                <td>KVM</td>
+                                <td><span style="color:var(--a-green);">● RUNNING</span></td>
+                                <td><button class="kbtn prim" onclick="fireTaskDrawer('ubuntu-cloud')">⚡ Clonar</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong style="color:var(--text);">adguard-dns</strong></td>
+                                <td>Incus LXC</td>
+                                <td><span style="color:var(--a-green);">● RUNNING</span></td>
+                                <td><button class="kbtn prim" onclick="fireTaskDrawer('adguard-dns')">⚡ Clonar</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong style="color:var(--text);">win11-vfio</strong></td>
+                                <td>KVM</td>
+                                <td><span style="color:var(--a-red);">○ STOPPED</span></td>
+                                <td><button class="kbtn" onclick="sysToast('Arrancando con passthrough IOMMU...')">▶ Iniciar</button></td>
+                            </tr>
+                        </table>
+
+                        <!-- Animated Drawer superpuesto -->
+                        <div class="kvm-drawer" id="kvm-drawer">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="font-family:var(--f-mono); font-size:0.8rem; color:#fff;" id="drw-title">Clonando: ubuntu-cloud -> clone-01</div>
+                                <div style="font-family:var(--f-mono); font-size:0.8rem; color:var(--a-sky);" id="drw-pct">12%</div>
+                            </div>
+                            <div class="drawer-prog-rail"><div class="drawer-prog-fill" id="drw-fill"></div></div>
+                            <div style="font-family:var(--f-mono); font-size:0.75rem; color:var(--subtext);" id="drw-step">Copiando diferencial qcow2 (~2.4 GB/s)</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="job-progress-bar">
-              <div class="job-progress-fill" id="job-fill" style="width: 78%;"></div>
+        </div>
+
+        <!-- Card 4: Hardware & Telemetry -->
+        <div class="bCard sp-5 row-2" id="homelab" onmousemove="handleHover(event, this)">
+            <span class="bLabel" style="color:var(--a-green);">Homelab Engine / Telemetría VIVA</span>
+            <h3 class="bTitle" style="font-size:1.3rem;">Proxmox VE 9.0 (15W TDP)</h3>
+            <p class="bSub" style="font-size:0.85rem;">Nodo Baremetal donde todo nace. AMD Ryzen 7 5700U (8C/16T) con 32 GB RAM DDR4. Diseñado para extrema eficiencia energética.</p>
+            
+            <div class="cpu-donut-container">
+                <div style="font-family:var(--f-mono); font-size:0.75rem; color:var(--a-sky);">CPU Hilos<br><span style="font-size:1.4rem;color:#fff;font-weight:700;" id="cpu-load-val">12%</span></div>
+                <div class="cpu-bars" id="cpu-bars">
+                    <!-- generadas en JS -->
+                </div>
             </div>
-            <div class="job-step">
-              <span id="job-step">Fase 3/4: Copiando capa diferencial COW QCOW2 (~3.2 GB/s)</span>
-              <span style="color:var(--muted);" id="job-elapsed">Transcurrido: 4.8s</span>
+
+            <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:16px;">
+                <div style="display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:0.75rem;">
+                    <span style="color:var(--a-blue);">Red Host: bond0 (LACP)</span>
+                    <span id="net-txt">RX 12 MB/s</span>
+                </div>
+                <canvas id="spark-canvas"></canvas>
             </div>
-          </div>
         </div>
-      </div>
 
-      <ul class="feat-list" style="margin-top:20px;">
-        <li>Instalador one-liner multi-distro: Debian/Ubuntu, Fedora/RHEL y Arch</li>
-        <li>Consolas interactivas: noVNC integrado y terminal serie xterm.js</li>
-        <li>Cloud-init Studio con inyección de llaves SSH, usuarios y red</li>
-        <li>Distribución nativa en paquetes .deb/.rpm y contenedor Docker</li>
-      </ul>
+        <!-- Card 5: Storage Architecture -->
+        <div class="bCard sp-5 row-1" onmousemove="handleHover(event, this)">
+            <span class="bLabel" style="color:var(--a-peach);">Arquitectura de Almacenamiento</span>
+            <div class="strp-rack">
+                <div class="strp-drive" onmouseenter="sysToast('NVMe Btrfs con soporte para snapshots instantáneas COW. Subvolúmenes activos.')">
+                    <div class="drive-info">
+                        <span class="drive-name">Micron 2400 (NVMe)</span>
+                        <span class="drive-meta">1 TB / Btrfs (VMs Raíz)</span>
+                    </div>
+                    <div class="drive-health"><i data-lucide="thermometer" style="width:14px;"></i> 39°C</div>
+                </div>
+                <div class="strp-drive" onmouseenter="sysToast('Pool ZFS tolerante a fallos. Sin errores detectados en la suma de comprobación.')">
+                    <div class="drive-info">
+                        <span class="drive-name">2x SSDs Kingston en Mirror</span>
+                        <span class="drive-meta">2x 1 TB / ZFS (Microservicios)</span>
+                    </div>
+                    <div class="drive-health"><i data-lucide="check-circle" style="width:14px;"></i> SMART OK</div>
+                </div>
+            </div>
+        </div>
 
-      <div class="icons" style="margin-top:20px;">
-        <span class="chip"><img src="https://cdn.simpleicons.org/go" alt="Go" />Go 1.24+</span>
-        <span class="chip"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte 5" />Svelte 5</span>
-        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>libvirt</span>
-        <span class="chip"><img src="https://cdn.simpleicons.org/qemu" alt="QEMU/KVM" />QEMU/KVM</span>
-        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11a5 5 0 0 1 5 5v4h10v-4a5 5 0 0 1 5-5Z"/><path d="M8 20v-2M16 20v-2"/></svg>Incus / LXC</span>
-        <span class="chip"><img src="https://cdn.simpleicons.org/docker" alt="Docker" />Docker</span>
-        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>nftables</span>
-        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M12 12V8"/></svg>Netplan & Bonds L2</span>
-      </div>
+        <!-- Card 6: Skills Arsenal Bento -->
+        <div class="bCard sp-12 row-1" id="stack" onmousemove="handleHover(event, this)">
+            <span class="bLabel" style="color:var(--a-mauve);">Skills & Technologies Arsenal</span>
+            <div class="tech-grid" style="gap: 12px; justify-content: center; margin-top:20px;">
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/linux" width="16" /> Linux Core / bash / zsh</span>
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/go" width="16" /> Golang / concurrency</span>
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/svelte" width="16" /> Svelte 5 / Frontend</span>
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/proxmox" width="16" /> Proxmox / libvirt KVM</span>
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/docker" width="16" /> Docker / Incus LXC</span>
+                <span class="tech-chip"><i data-lucide="shield" style="width:16px;"></i> nftables / Zero-Trust</span>
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/archlinux" width="16" /> Arch / Fedora / Ubuntu</span>
+                <span class="tech-chip"><img src="https://cdn.simpleicons.org/cloudflare" width="16" /> Cloudflare WAF / DNS</span>
+                <span class="tech-chip"><i data-lucide="database" style="width:16px;"></i> ZFS / Btrfs / XFS / LVM</span>
+            </div>
+        </div>
 
-      <p style="margin-top:22px; display:flex; gap:20px; flex-wrap:wrap;">
-        <a href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener" style="font-weight:600;">Ver Código en GitHub ↗</a>
-        <a href="https://github.com/Slaker19/webkvm/releases/tag/v0.1.6" target="_blank" rel="noopener" style="color:var(--green); font-weight:600;">Notas de Release v0.1.6 ↗</a>
-      </p>
+    </main>
+
+    <!-- Command Palette Modal -->
+    <div class="palette-overlay" id="cmd-palette" onclick="if(event.target===this) togglePalette()">
+        <div class="palette-box">
+            <div class="pal-search">
+                <i data-lucide="search"></i>
+                <input type="text" id="pal-input" placeholder="Buscar comando, proyecto, o ejecuta 'neofetch'..." autocomplete="off">
+                <kbd>ESC</kbd>
+            </div>
+            <div class="pal-results" id="pal-results">
+                <!-- Inyectado por JS -->
+            </div>
+        </div>
     </div>
 
-    <!-- Other Projects Grid -->
-    <div class="grid">
-      <!-- Project 2: Dotfiles Hyprland Rice -->
-      <div class="card spotlight-card">
-        <div class="icochip">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#cba6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </div>
-        <div style="font-size:0.75rem; color:var(--mauve); font-family:var(--mono); margin-bottom:4px;">DOTFILES & LINUX RICE</div>
-        <h3>dotfiles-slaker — Catppuccin Mocha Mauve</h3>
-        <p>Configuración integral y reproducible de entorno de escritorio Linux sobre <strong>Hyprland (Wayland)</strong> bajo la paleta Catppuccin Mocha Mauve: Waybar modular, terminal Kitty, Neovim IDE optimizado, lanzador Rofi y scripts de automatización.</p>
-        <div class="icons">
-          <span class="chip">Hyprland</span>
-          <span class="chip">Wayland</span>
-          <span class="chip">Catppuccin</span>
-          <span class="chip">Neovim</span>
-        </div>
-        <p style="margin-top:16px;"><a href="https://github.com/Slaker19/dotfiles-slaker" target="_blank" rel="noopener">Ver dotfiles en GitHub ↗</a></p>
-      </div>
-
-      <!-- Project 3: Homelab Automation Testbeds -->
-      <div class="card spotlight-card">
-        <div class="icochip">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-        </div>
-        <div style="font-size:0.75rem; color:var(--a1); font-family:var(--mono); margin-bottom:4px;">AUTOMATIZACIÓN & CI/CD</div>
-        <h3>Homelab Multi-Distro CI Testbeds</h3>
-        <p>Harness de pruebas automatizadas sobre VMs efímeras KVM (Ubuntu Server, Fedora y Arch Linux). Validación integral de scripts idempotentes, pruebas de compilación Go y pruebas de integración para libvirt e Incus.</p>
-        <div class="icons">
-          <span class="chip">Bash</span>
-          <span class="chip">Cloud-Init</span>
-          <span class="chip">GitHub Actions</span>
-          <span class="chip">Multi-Distro</span>
-        </div>
-      </div>
-
-      <!-- Project 4: Just-Calculate -->
-      <div class="card spotlight-card">
-        <div class="icochip">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fab387" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
-        </div>
-        <div style="font-size:0.75rem; color:var(--peach); font-family:var(--mono); margin-bottom:4px;">HERRAMIENTA LIGERA</div>
-        <h3>just-calculate</h3>
-        <p>Calculadora ligera y directa desarrollada para resolver operaciones rápidas con mínima sobrecarga y código limpio.</p>
-        <p style="margin-top:16px;"><a href="https://github.com/Slaker19/just-calculate" target="_blank" rel="noopener">Ver repositorio ↗</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section: Homelab -->
-<section id="lab">
-  <div class="wrap">
-    <h2>Mi <em>Homelab</em></h2>
-    <p style="color:var(--muted); margin-bottom:28px;">
-      Un único nodo físico <strong>Proxmox VE 9</strong> donde convive todo: desde el desarrollo e integración continua de WebKVM hasta los servicios multimedia, de seguridad y almacenamiento domésticos.
-    </p>
-
-    <!-- Live Telemetry Card: Node Explorer -->
-    <div class="telemetry-box">
-      <div class="telemetry-header">
-        <div>
-          <span style="font-size:0.75rem; color:var(--a1); font-family:var(--mono); text-transform:uppercase;">NODO FÍSICO</span>
-          <h3 style="color:#fff; font-size:1.25rem; display:flex; align-items:center; gap:8px;">
-            alvinnas (Proxmox VE 9.0) <span class="status-pill" style="font-size:0.7rem;"><span class="pulse-dot"></span> 24/7 ONLINE</span>
-          </h3>
-        </div>
-        <div style="font-family:var(--mono); font-size:0.82rem; color:var(--muted);">
-          Uptime: <span style="color:var(--text)" id="telem-uptime">48d 14h 25m 39s</span>
-        </div>
-      </div>
-
-      <div class="telemetry-grid">
-        <!-- CPU & Threads -->
-        <div class="telem-card">
-          <span class="label">CPU 8C / 16T @ 15W TDP</span>
-          <div class="val" id="telem-cpu-load">12.4%</div>
-          <div class="thread-grid" id="threads-grid">
-            <!-- 16 threads generated in JS -->
-          </div>
-        </div>
-
-        <!-- Thermal & Power -->
-        <div class="telem-card">
-          <span class="label">Térmica & Consumo</span>
-          <div class="val" style="color:var(--green)">14.8 W · 41.6°C</div>
-          <div style="font-size:0.74rem; color:var(--muted); margin-top:8px; font-family:var(--mono);">
-            Ventilador: 1,380 RPM (Silencioso)
-          </div>
-        </div>
-
-        <!-- Network L2 Bond -->
-        <div class="telem-card">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="label">Red: bond0 (LACP)</span>
-            <span style="font-size:0.7rem; color:var(--green); font-family:var(--mono);">● vmbr0</span>
-          </div>
-          <div class="val" style="color:var(--a1)" id="telem-net">RX 14.8 MB/s</div>
-          <canvas id="net-sparkline" width="240" height="38" title="Tráfico en tiempo real bond0 (LACP)"></canvas>
-        </div>
-
-        <!-- Storage Pools -->
-        <div class="telem-card" style="cursor:pointer;" onclick="toggleStorageDetails()" title="Haz clic para ver el desglose SMART y pools físicos">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="label">Almacenamiento (~4.3 TB)</span>
-            <span style="font-size:0.7rem; color:var(--a1); font-family:var(--mono);">SMART 🔍</span>
-          </div>
-          <div class="val" style="color:var(--peach)">SMART OK · 0 Errs</div>
-          <div style="font-size:0.74rem; color:var(--muted); margin-top:8px; font-family:var(--mono);">
-            ZFS Mirror + Btrfs NVMe + XFS ▼
-          </div>
-        </div>
-      </div>
-
-      <!-- Storage Breakdown Modal/Drawer -->
-      <div class="storage-detail-box" id="storage-detail-box">
-        <div class="storage-disk-card">
-          <strong>1. Micron NVMe 2400 (1 TB M.2)</strong>
-          <div>Formato: Btrfs (subvolúmenes de VMs y raíz)</div>
-          <div style="color:var(--green);">Salud: 100% · Temp: 38°C · TBW: 14.2 TB</div>
-          <div style="color:var(--muted); font-size:0.72rem; margin-top:4px;">Puntos de montaje: / · /var/lib/vz · /var/lib/incus</div>
-        </div>
-        <div class="storage-disk-card">
-          <strong>2. 2x SSDs Kingston (2x 1 TB SATA)</strong>
-          <div>Pool ZFS: tank-zfs en Mirror (RAID1)</div>
-          <div style="color:var(--green);">Salud: Passed · 0 Checksum Errs · Temp: 32°C</div>
-          <div style="color:var(--muted); font-size:0.72rem; margin-top:4px;">Servicios: Vaultwarden, AdGuard, bases de datos</div>
-        </div>
-        <div class="storage-disk-card">
-          <strong>3. Seagate Barracuda (2 TB 3.5" HDD)</strong>
-          <div>Formato: XFS con montaje 'nofail'</div>
-          <div style="color:var(--green);">SMART: OK · Temp: 30°C · 0 sectores reubicados</div>
-          <div style="color:var(--muted); font-size:0.72rem; margin-top:4px;">Destino backups: /mnt/Seagate (snapshots diarios)</div>
-        </div>
-      </div>
-
-      <!-- Homelab Live Services Health & Latency -->
-      <div style="margin-top:22px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <span style="font-size:0.75rem; color:var(--a1); font-family:var(--mono); text-transform:uppercase;">MONITOREO DE SERVICIOS EN VIVO (HOMELAB)</span>
-          <span style="font-size:0.72rem; color:var(--muted); font-family:var(--mono);" id="live-ping-time">Polling cada 2s</span>
-        </div>
-        <div class="services-status-grid">
-          <div class="svc-chip">
-            <span style="color:#fff;">⚡ WebKVM (v0.1.6)</span>
-            <span style="color:var(--green); font-weight:600;" id="lat-webkvm">0.2 ms</span>
-          </div>
-          <div class="svc-chip">
-            <span style="color:#fff;">🛡️ Security Jail (nftables)</span>
-            <span style="color:var(--green); font-weight:600;">0 BANS</span>
-          </div>
-          <div class="svc-chip">
-            <span style="color:#fff;">🛡️ AdGuard Home DNS</span>
-            <span style="color:var(--green); font-weight:600;" id="lat-adguard">0.8 ms</span>
-          </div>
-          <div class="svc-chip">
-            <span style="color:#fff;">🌐 Cloudflare WAF Ingress</span>
-            <span style="color:var(--green); font-weight:600;" id="lat-cf">11.4 ms</span>
-          </div>
-          <div class="svc-chip">
-            <span style="color:#fff;">🔑 Vaultwarden LXC</span>
-            <span style="color:var(--green); font-weight:600;" id="lat-vault">1.2 ms</span>
-          </div>
-          <div class="svc-chip">
-            <span style="color:#fff;">🎬 Immich & Jellyfin</span>
-            <span style="color:var(--green); font-weight:600;" id="lat-jelly">1.8 ms</span>
-          </div>
-        </div>
-      </div>
+    <!-- Live Toast -->
+    <div class="toast" id="sys-toast">
+        <i data-lucide="check-circle-2" id="toast-icon"></i>
+        <span id="toast-msg">Mensaje temporal</span>
     </div>
 
-    <!-- Topology Interactive Architecture Box -->
-    <div class="arch-diagram">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-        <h3 style="font-size:1.15rem; color:#fff;">Topología de Red & Arquitectura del Nodo</h3>
-        <span style="font-size:0.75rem; font-family:var(--mono); color:var(--green);">Haz clic en un nodo para inspeccionar 🔍</span>
-      </div>
+    <script>
+        lucide.createIcons();
+        
+// Audio Context (Low overhead sci-fi clicks)
+const actx = new (window.AudioContext || window.webkitAudioContext)();
+function playBloop(freq, type='sine', dur=0.04) {
+    if(actx.state==='suspended') actx.resume();
+    let osc = actx.createOscillator(), g = actx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, actx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, actx.currentTime + dur);
+    g.gain.setValueAtTime(0.04, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
+    osc.connect(g); g.connect(actx.destination);
+    osc.start(); osc.stop(actx.currentTime + dur);
+}
 
-      <!-- Layer 1: Ingress -->
-      <div class="arch-layer">
-        <div class="arch-tag">1. Borde / Ingress</div>
-        <div class="arch-nodes">
-          <span class="arch-node" onclick="inspectNode('Cloudflare Edge & API', 'DNS-01 Challenge, Proxy WAF, SSL Origin Certificate, protección contra DDoS.')">Cloudflare Edge & API</span>
-          <span class="arch-node" onclick="inspectNode('WireGuard VPN', 'Túnel cifrado punto a punto para acceso administrativo seguro sin exponer puertos al público.')">WireGuard VPN Tunnel</span>
-          <span class="arch-node" onclick="inspectNode('Tailscale Mesh', 'Red mesh segura con autenticación Zero-Trust para nodos remotos.')">Tailscale Mesh</span>
-        </div>
-      </div>
+// Interacciones Hover (Spotlight effect)
+function handleHover(e, el) {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--ms-x', (e.clientX - r.left)+'px');
+    el.style.setProperty('--ms-y', (e.clientY - r.top)+'px');
+}
 
-      <!-- Layer 2: Gateway -->
-      <div class="arch-layer">
-        <div class="arch-tag">2. Gateway & Proxy</div>
-        <div class="arch-nodes">
-          <span class="arch-node" onclick="inspectNode('Nginx Proxy Manager', 'Reverse proxy con 48 hosts proxied, certificados Let\'s Encrypt automáticos y forzado HTTPS.')">Nginx Proxy Manager</span>
-          <span class="arch-node" onclick="inspectNode('nftables Firewall', 'Reglas restrictivas por defecto con chains dedicadas por interfaz y protección de loopback.')">nftables Firewall Rules</span>
-          <span class="arch-node" onclick="inspectNode('Security Jail Watcher', 'Monitor activo de journald que bloquea atacantes SSH al 5º intento fallido con bloqueo nftables.')">Security Jail Watcher</span>
-        </div>
-      </div>
-
-      <!-- Layer 3: Host -->
-      <div class="arch-layer">
-        <div class="arch-tag">3. Hipervisor Host</div>
-        <div class="arch-nodes">
-          <span class="arch-node master" onclick="inspectNode('Proxmox VE 9.0 Host', 'AMD Ryzen 7 5700U (8C/16T @ 15W), 32 GB DDR4, Linux 6.8 kernel, microcódigo AMD actualizado.')">Proxmox VE 9.0 (Ryzen 7 5700U 16T · 32GB RAM · 15W TDP)</span>
-          <span class="arch-node" onclick="inspectNode('vmbr0 (Bridge + Bond L2)', 'Linux bridge que conecta las VMs al enlace agregado bond0 (eno1 + eno2) en modo 802.3ad LACP.')">vmbr0 (Linux Bridge con L2 Bond)</span>
-          <span class="arch-node" onclick="inspectNode('Almacenamiento Híbrido', '1TB NVMe Btrfs para VMs de alto I/O + 2x SSDs ZFS Mirror para datos críticos + 2TB HDD Seagate XFS para backups.')">ZFS Mirror + Btrfs NVMe + Seagate XFS</span>
-        </div>
-      </div>
-
-      <!-- Layer 4: Workloads -->
-      <div class="arch-layer">
-        <div class="arch-tag">4. Cargas de Trabajo</div>
-        <div class="arch-nodes">
-          <span class="arch-node" style="border-color:#38bdf8;" onclick="inspectNode('VM: ubuntu-server', 'KVM VM (4 vCPU, 8 GB RAM, 10.0.0.101). Banco de pruebas apt y servicios principales.')">VM: ubuntu-server (apt/apps)</span>
-          <span class="arch-node" style="border-color:#38bdf8;" onclick="inspectNode('VM: fedora-webkvm', 'KVM VM (2 vCPU, 4 GB RAM, 10.0.0.102). Banco de pruebas dnf y compilación.')">VM: fedora-webkvm (dnf CI)</span>
-          <span class="arch-node" style="border-color:#38bdf8;" onclick="inspectNode('VM: arch-linux', 'KVM VM (4 vCPU, 8 GB RAM, 10.0.0.103). Banco de pruebas pacman y kernel testing.')">VM: arch-linux (pacman)</span>
-          <span class="arch-node" style="border-color:#a6e3a1;" onclick="inspectNode('LXC: AdGuard Home', 'Contenedor LXC Alpine (128 MB RAM). DNS primario recursivo y filtrado de telemetría/anuncios.')">LXC: AdGuard Home (DNS)</span>
-          <span class="arch-node" style="border-color:#a6e3a1;" onclick="inspectNode('LXC: Vaultwarden', 'Contenedor LXC (256 MB RAM). Gestor de credenciales con backup cifrado diario.')">LXC: Vaultwarden</span>
-          <span class="arch-node" style="border-color:#a6e3a1;" onclick="inspectNode('LXC: Immich & Jellyfin', 'Contenedor LXC Ubuntu con passthrough de GPU AMD Radeon para aceleración por hardware VA-API.')">LXC: Immich & Jellyfin</span>
-          <span class="arch-node" style="border-color:#a6e3a1;" onclick="inspectNode('LXC: Prometheus & Beszel', 'Contenedor LXC de telemetría y recolección de métricas de host y contenedores.')">LXC: Prometheus & Beszel</span>
-        </div>
-      </div>
-
-      <!-- Node Inspector Output Box -->
-      <div class="inspector-box" id="node-inspector">
-        <strong id="inspect-title" style="color:#fff;"></strong>: <span id="inspect-desc"></span>
-      </div>
-
-      <!-- Memory Distribution Bar -->
-      <div class="mem-bar-box">
-        <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-family:var(--mono);">
-          <span>Distribución de Memoria RAM (Total: 32 GB DDR4)</span>
-          <span style="color:var(--a1);">20 GB VMs + 8 GB LXC + 4 GB ARC/Cache</span>
-        </div>
-        <div class="mem-bar">
-          <div class="mem-seg vms" title="20 GB Máquinas Virtuales (62.5%)"></div>
-          <div class="mem-seg lxc" title="8 GB Contenedores LXC (25.0%)"></div>
-          <div class="mem-seg sys" title="4 GB ZFS ARC, Btrfs y SO (12.5%)"></div>
-        </div>
-        <div class="mem-legend">
-          <span><span class="mem-dot" style="background:var(--a1)"></span> 20 GB · VMs KVM Testbed</span>
-          <span><span class="mem-dot" style="background:var(--a2)"></span> 8 GB · 14x Contenedores LXC</span>
-          <span><span class="mem-dot" style="background:var(--a3)"></span> 4 GB · ZFS ARC Cache y Host</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Hardware description card -->
-    <div class="card spotlight-card" style="margin-top:24px;">
-      <h3>Hardware: Alta densidad y consumo contenido (15W TDP)</h3>
-      <div class="grid" style="gap:24px; margin-top:14px;">
-        <div>
-          <strong style="color:var(--a1);">CPU · AMD Ryzen 7 5700U (8C/16T)</strong>
-          <p style="margin-top:6px;">
-            Los 16 hilos permiten levantar en paralelo los tres bancos de prueba de WebKVM (Ubuntu 8 GB + Fedora 4 GB + Arch 8 GB) sin que los 14 contenedores LXC se resientan. Su TDP de 15 W mantiene el nodo 24/7 por debajo del consumo de una bombilla con rendimiento sostenido durante compilaciones Go.
-          </p>
-        </div>
-        <div>
-          <strong style="color:var(--a3);">RAM & Storage · 32 GB DDR4 & ~4.3 TB Híbrido</strong>
-          <p style="margin-top:6px;">
-            El punto justo de equilibrio: 20 GB asignados a las VMs de test, holgura suficiente para los microservicios LXC y suficiente memoria para alimentar la caché Btrfs del NVMe y ARC de ZFS, evitando recurrir a swap en compilaciones pesadas.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Standards of work -->
-    <div class="card spotlight-card" style="margin-top:20px;">
-      <h3>Estándares de Trabajo & Fiabilidad</h3>
-      <div class="grid" style="gap:20px; margin-top:12px;">
-        <div>
-          <strong style="color:var(--a1);">1. Infraestructura 100% Reproducible</strong>
-          <p style="margin-top:4px;">Nada se instala manualmente dos veces: scripts idempotentes, validación previa del entorno de hardware, y rollback automático ante cualquier anomalía detectada.</p>
-        </div>
-        <div>
-          <strong style="color:var(--a2);">2. Eficiencia Energética 24/7</strong>
-          <p style="margin-top:4px;">Optimización constante para un entorno doméstico silencioso y de bajo consumo sin renunciar a virtualización y almacenamiento de nivel corporativo.</p>
-        </div>
-        <div>
-          <strong style="color:var(--a3);">3. Seguridad Defensiva & Auditoría</strong>
-          <p style="margin-top:4px;">Cero contraseñas en texto plano, aislamiento estricto por VLANs/bridges, monitorización reactiva de fuerza bruta (Security Jail) y copias de seguridad consistentes sin credenciales.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section: Conocimientos / Skills -->
-<section id="skills" style="background:rgba(8,13,26,0.6)">
-  <div class="wrap">
-    <h2>Conoci<em>mientos & Stack</em></h2>
-
-    <!-- Filter Buttons -->
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterSkills('all')">Todos (10)</button>
-      <button class="filter-btn" onclick="filterSkills('virt-cloud')">Virtualización & Cloud</button>
-      <button class="filter-btn" onclick="filterSkills('backend')">Backend & Dev</button>
-      <button class="filter-btn" onclick="filterSkills('net-security')">Redes & Seguridad</button>
-      <button class="filter-btn" onclick="filterSkills('os-storage')">Sistemas & Almacenamiento</button>
-      <button class="filter-btn" onclick="filterSkills('monitoring')">Observabilidad</button>
-    </div>
-
-    <div class="wall">
-<img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" /><img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white" alt="JavaScript" /><img src="https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white" alt="Bash" /><img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell" /><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" /><img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS" /><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" /><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=white" alt="Linux" /><img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" alt="Ubuntu" /><img src="https://img.shields.io/badge/Fedora-51A2DA?style=for-the-badge&logo=fedora&logoColor=white" alt="Fedora" /><img src="https://img.shields.io/badge/Arch-1793D1?style=for-the-badge&logo=archlinux&logoColor=white" alt="Arch" /><img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white" alt="Debian" /><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /><img src="https://img.shields.io/badge/Proxmox%20VE-E57000?style=for-the-badge&logo=proxmox&logoColor=white" alt="Proxmox VE" /><img src="https://img.shields.io/badge/TrueNAS-0095D5?style=for-the-badge&logo=truenas&logoColor=white" alt="TrueNAS" /><img src="https://img.shields.io/badge/OMV-680FDC?style=for-the-badge&logo=openmediavault&logoColor=white" alt="OMV" /><img src="https://img.shields.io/badge/Unraid-F15A2C?style=for-the-badge&logo=unraid&logoColor=white" alt="Unraid" /><img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" alt="Nginx" /><img src="https://img.shields.io/badge/Apache-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="Apache" /><img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" alt="WordPress" /><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" /><img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white" alt="MariaDB" /><img src="https://img.shields.io/badge/Oracle DB-F80000?style=for-the-badge&logo=oracle&logoColor=white" alt="Oracle DB" /><img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" alt="Prometheus" /><img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white" alt="Grafana" /><img src="https://img.shields.io/badge/Netdata-00AB44?style=for-the-badge&logo=netdata&logoColor=white" alt="Netdata" /><img src="https://img.shields.io/badge/Zabbix-D40000?style=for-the-badge&logo=zabbix&logoColor=white" alt="Zabbix" /><img src="https://img.shields.io/badge/Glances-53A8C6?style=for-the-badge&logo=glances&logoColor=white" alt="Glances" /><img src="https://img.shields.io/badge/Cockpit-028A99?style=for-the-badge&logo=cockpitproject&logoColor=white" alt="Cockpit" /><img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" alt="Cloudflare" /><img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="AWS" /><img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" /><img src="https://img.shields.io/badge/WireGuard-88171A?style=for-the-badge&logo=wireguard&logoColor=white" alt="WireGuard" /><img src="https://img.shields.io/badge/Tailscale-4B70CC?style=for-the-badge&logo=tailscale&logoColor=white" alt="Tailscale" /><img src="https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama" /><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white" alt="Jira" /><img src="https://img.shields.io/badge/Zammad-EE4311?style=for-the-badge&logo=zammad&logoColor=white" alt="Zammad" /><img src="https://img.shields.io/badge/Beszel-43A31F?style=for-the-badge" alt="Beszel" /><img src="https://img.shields.io/badge/PowerDNS-9B00DA?style=for-the-badge&logo=powerdns&logoColor=white" alt="PowerDNS" /><img src="https://img.shields.io/badge/Pangolin-F97316?style=for-the-badge&logo=pangolin&logoColor=white" alt="Pangolin" /><img src="https://img.shields.io/badge/Entra ID-0078D4?style=for-the-badge&logo=microsoftentraid&logoColor=white" alt="Entra ID" />
-    </div>
-
-    <div class="grid" id="skills-grid">
-<div class="card skill-card spotlight-card" data-category="backend">
-        <h3>Lenguajes y scripting</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/go" alt="Go" />Go</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" />JavaScript</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/gnubash" alt="Bash" />Bash</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg>PowerShell</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/html5" alt="HTML" />HTML</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/css" alt="CSS" />CSS</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/php" alt="PHP" />PHP</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="os-storage">
-        <h3>Sistemas operativos</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/ubuntu" alt="Ubuntu" />Ubuntu</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/fedora" alt="Fedora" />Fedora</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch" />Arch</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/debian" alt="Debian" />Debian</span>
-          <span class="ttxt">y derivados (Mint, Manjaro…)</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>Windows Server</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="virt-cloud">
-        <h3>Virtualización y NAS</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/proxmox" alt="Proxmox VE" />Proxmox VE</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/docker" alt="Docker" />Docker</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11a5 5 0 0 1 5 5v4h10v-4a5 5 0 0 1 5-5Z"/><path d="M8 20v-2M16 20v-2"/></svg>Incus / LXC</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/truenas" alt="TrueNAS Scale" />TrueNAS Scale</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/openmediavault" alt="OpenMediaVault" />OpenMediaVault</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/unraid" alt="Unraid" />Unraid</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>ZimaOS</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="net-security">
-        <h3>Redes y acceso remoto</h3>
-        <div class="icons">
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m7 9 3 3-3 3"/><path d="M13 15h4"/></svg>SSH</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>RDP</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/wireguard" alt="WireGuard" />WireGuard</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/tailscale" alt="Tailscale" />Tailscale</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M12 12V8"/></svg>DHCP</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>DNS · PowerDNS</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" />Cloudflare</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/pangolin" alt="Pangolin" />Pangolin</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="net-security">
-        <h3>Servidores web y correo</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx" />Nginx</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/apache" alt="Apache" />Apache</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>IMAP</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>POP3</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>SMTP</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="os-storage">
-        <h3>Almacenamiento y protocolos</h3>
-        <div class="icons">
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>SMB</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/><path d="M6 16h.01M10 16h.01"/></svg>NFS</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V9"/><path d="m21 8-4-4-4 4"/><path d="M17 4v11"/></svg>SFTP</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>ZFS</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="backend">
-        <h3>Bases de datos</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" />MySQL</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/mariadb" alt="MariaDB" />MariaDB</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>Oracle Database</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="monitoring">
-        <h3>Observabilidad</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/prometheus" alt="Prometheus" />Prometheus</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/grafana" alt="Grafana" />Grafana</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/netdata" alt="Netdata" />Netdata</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Glances</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>Zabbix</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/cockpit" alt="Cockpit" />Cockpit</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>Beszel</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="virt-cloud">
-        <h3>Identidad, soporte y nube</h3>
-        <div class="icons">
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><circle cx="9" cy="10" r="1.5"/><circle cx="15" cy="10" r="1.5"/><path d="M8.5 15a4 4 0 0 1 7 0"/></svg>Microsoft Entra ID</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/jira" alt="Jira" />Jira</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>Zammad</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm18 0h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-5Z"/><path d="M21 11a9 9 0 0 0-18 0"/><path d="M21 16v2a2 2 0 0 1-2 2h-4"/></svg>HelpDesk</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1.1A7 7 0 1 0 4 14.9"/><path d="M9 19h8.5"/></svg>AWS (nivel básico)</span>
-        </div>
-      </div>
-      <div class="card skill-card spotlight-card" data-category="os-storage">
-        <h3>Apps y otros</h3>
-        <div class="icons">
-          <span class="chip"><img src="https://cdn.simpleicons.org/wordpress" alt="WordPress" />WordPress</span>
-          <span class="chip"><img src="https://cdn.simpleicons.org/ollama" alt="Ollama · LLMs locales" />Ollama · LLMs locales</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>Nginx Proxy Manager</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Section: Contacto -->
-<section id="contact">
-  <div class="wrap" style="text-align:center;">
-    <h2 style="justify-content:center;">Conta<em>cto</em></h2>
-    <p style="color:var(--muted); max-width:550px; margin:0 auto 30px;">
-      ¿Quieres hablar de virtualización, arquitectura Linux, proyectos en Go o colaborar en WebKVM?
-    </p>
-
-    <div class="hero-cta" style="margin-top:0;">
-      <a class="btn primary" href="mailto:alvinpp1908@gmail.com">
-        <span>✉</span> Enviar Correo Directo
-      </a>
-      <button class="btn ghost" onclick="copySnippet('alvinpp1908@gmail.com')">
-        <span>📋</span> Copiar alvinpp1908@gmail.com
-      </button>
-      <a class="btn ghost" href="https://github.com/Slaker19" target="_blank" rel="noopener">
-        <span>🐙</span> Perfil de GitHub ↗
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- Command Palette Modal -->
-<div class="cmd-modal" id="cmd-modal" onclick="closeCmdModal(event)">
-  <div class="cmd-box" onclick="event.stopPropagation()">
-    <div class="cmd-input-wrap">
-      <span style="color:var(--a1)">🔍</span>
-      <input type="text" class="cmd-search-input" id="cmd-search" placeholder="Escribe para buscar o saltar..." autofocus />
-      <kbd style="color:var(--muted); font-size:0.75rem; background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px;">ESC</kbd>
-    </div>
-    <div class="cmd-list" id="cmd-list">
-      <div class="cmd-group-label">Navegación</div>
-      <div class="cmd-item" onclick="navTo('#projects')">
-        <div class="cmd-item-icon"><span>🚀</span> Ver Proyectos (WebKVM v0.1.6)</div>
-        <kbd>#projects</kbd>
-      </div>
-      <div class="cmd-item" onclick="navTo('#lab')">
-        <div class="cmd-item-icon"><span>🖥️</span> Ver Arquitectura Homelab (PVE 9)</div>
-        <kbd>#lab</kbd>
-      </div>
-      <div class="cmd-item" onclick="navTo('#skills')">
-        <div class="cmd-item-icon"><span>🛠️</span> Explorar Habilidades & Tecnologías</div>
-        <kbd>#skills</kbd>
-      </div>
-      <div class="cmd-item" onclick="navTo('#about')">
-        <div class="cmd-item-icon"><span>👤</span> Sobre mí & Perfil</div>
-        <kbd>#about</kbd>
-      </div>
-
-      <div class="cmd-group-label">Acciones Rápidas</div>
-      <div class="cmd-item" onclick="copySnippet('alvinpp1908@gmail.com'); closeCmdModal()">
-        <div class="cmd-item-icon"><span>📋</span> Copiar correo electrónico</div>
-        <kbd>alvinpp1908@gmail.com</kbd>
-      </div>
-      <div class="cmd-item" onclick="copySnippet('curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash'); closeCmdModal()">
-        <div class="cmd-item-icon"><span>⚡</span> Copiar one-liner WebKVM</div>
-        <kbd>curl install</kbd>
-      </div>
-      <div class="cmd-item" onclick="cycleTheme(); closeCmdModal()">
-        <div class="cmd-item-icon"><span>🎨</span> Alternar Tema Catppuccin</div>
-        <kbd>Mauve/Sapphire/Emerald</kbd>
-      </div>
-      <div class="cmd-item" onclick="navTo('#projects'); toggleMockTaskDrawer(); closeCmdModal()">
-        <div class="cmd-item-icon"><span>⚡</span> Abrir Task Center de WebKVM (v0.1.6)</div>
-        <kbd>#task-center</kbd>
-      </div>
-      <div class="cmd-item" onclick="navTo('#lab'); toggleStorageDetails(); closeCmdModal()">
-        <div class="cmd-item-icon"><span>💾</span> Inspeccionar Discos & SMART del Homelab</div>
-        <kbd>#smart-disks</kbd>
-      </div>
-
-      <div class="cmd-group-label">Repositorios Externos</div>
-      <div class="cmd-item" onclick="window.open('https://github.com/Slaker19/webkvm', '_blank'); closeCmdModal()">
-        <div class="cmd-item-icon"><span>⭐</span> Abrir repositorio de WebKVM</div>
-        <kbd>GitHub ↗</kbd>
-      </div>
-      <div class="cmd-item" onclick="window.open('https://github.com/Slaker19/dotfiles-slaker', '_blank'); closeCmdModal()">
-        <div class="cmd-item-icon"><span>🎨</span> Ver Dotfiles Hyprland Catppuccin</div>
-        <kbd>GitHub ↗</kbd>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Toast Feedback -->
-<div id="toast"><span>✓</span> <span id="toast-msg">Copiado al portapapeles</span></div>
-
-<footer>
-  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
-    <div>© 2026 Alvin Perez — Precisión técnica & Homelab Proxmox VE 9</div>
-    <div style="display:flex; gap:16px; align-items:center;">
-      <button class="mock-btn" id="sfx-toggle" onclick="toggleAudioSFX()" style="font-size:0.75rem;">🔇 Audio: Off</button>
-      <a href="#top" style="color:var(--a1)">Volver arriba ↑</a>
-    </div>
-  </div>
-</footer>
-
-<button id="top-btn" aria-label="Volver arriba">↑</button>
-
-<script>
-  // Audio Synthesizer Haptics (Pure Web Audio API)
-  var sfxEnabled = false;
-  var audioCtx = null;
-
-  function toggleAudioSFX() {
-    sfxEnabled = !sfxEnabled;
-    var btn = document.getElementById('sfx-toggle');
-    if (btn) btn.textContent = sfxEnabled ? '🔊 Audio: On' : '🔇 Audio: Off';
-    if (sfxEnabled && !audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    showToast(sfxEnabled ? 'Efectos de audio activados' : 'Efectos de audio desactivados');
-  }
-
-  function playUiClick(freq) {
-    if (!freq) freq = 600;
-    if (!sfxEnabled || !audioCtx) return;
-    try {
-      var osc = audioCtx.createOscillator();
-      var gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.04);
-      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.04);
-    } catch(e) {}
-  }
-
-  // Interactive Particle Canvas Background
-  var canvas = document.getElementById('bg-canvas');
-  if (canvas) {
-    var ctx = canvas.getContext('2d');
-    var width = canvas.width = window.innerWidth;
-    var height = canvas.height = window.innerHeight;
-    var particles = [];
-    var count = Math.min(Math.floor(width / 26), 46);
-
-    for (var i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        r: Math.random() * 1.8 + 1
-      });
-    }
-
-    var animId;
-    function renderBg() {
-      ctx.clearRect(0, 0, width, height);
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
+// Background Animado (Aurora Boreal simulada muy liviana)
+const bgC = document.getElementById('aurora-bg');
+const ctxbg = bgC.getContext('2d');
+let bgData = [], W, H;
+function resize() { W = bgC.width = window.innerWidth; H = bgC.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+for(let i=0; i<3; i++) {
+    bgData.push({x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5, r: 800+Math.random()*400, c: i});
+}
+const colors = ['rgba(137,180,250,0.08)', 'rgba(203,166,247,0.06)', 'rgba(137,220,235,0.07)'];
+function animBg() {
+    ctxbg.clearRect(0,0,W,H);
+    bgData.forEach(p => {
         p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        ctx.fillStyle = 'rgba(137, 220, 235, 0.6)';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        for (var j = i + 1; j < particles.length; j++) {
-          var p2 = particles[j];
-          var dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 110) {
-            ctx.strokeStyle = 'rgba(203, 166, 247, ' + (0.14 * (1 - dist / 110)) + ')';
-            ctx.lineWidth = 0.8;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      }
-      animId = requestAnimationFrame(renderBg);
-    }
-
-    renderBg();
-
-    window.addEventListener('resize', function() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+        if(p.x< -p.r || p.x > W+p.r) p.vx*=-1;
+        if(p.y< -p.r || p.y > H+p.r) p.vy*=-1;
+        let grad = ctxbg.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        grad.addColorStop(0, colors[p.c]); grad.addColorStop(1, 'transparent');
+        ctxbg.fillStyle = grad;
+        ctxbg.fillRect(0,0,W,H);
     });
+    requestAnimationFrame(animBg);
+}
+animBg();
 
-    document.addEventListener('visibilitychange', function() {
-      if (document.hidden) cancelAnimationFrame(animId);
-      else renderBg();
-    });
-  }
-
-  // Spotlight mouse effect on all .card
-  document.querySelectorAll('.spotlight-card').forEach(function(card) {
-    card.addEventListener('mousemove', function(e) {
-      var rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
-      card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
-    });
-  });
-
-  // Theme Accent Switcher
-  var themes = ['mauve', 'sapphire', 'emerald', 'peach', 'crimson'];
-  var themeNames = { mauve: 'Mauve', sapphire: 'Sapphire', emerald: 'Emerald', peach: 'Peach', crimson: 'Crimson' };
-  var currentThemeIdx = 0;
-
-  function applyTheme(t) {
-    document.body.setAttribute('data-theme', t);
-    var label = document.getElementById('theme-name');
-    if (label) label.textContent = themeNames[t] || t;
-    localStorage.setItem('slaker-theme', t);
-  }
-
-  function cycleTheme() {
-    currentThemeIdx = (currentThemeIdx + 1) % themes.length;
-    applyTheme(themes[currentThemeIdx]);
-    playUiClick(700);
-    showToast('Tema cambiado a ' + themeNames[themes[currentThemeIdx]]);
-  }
-
-  var themeToggleBtn = document.getElementById('theme-toggle');
-  if (themeToggleBtn) themeToggleBtn.onclick = cycleTheme;
-
-  var savedTheme = localStorage.getItem('slaker-theme');
-  if (savedTheme && themes.indexOf(savedTheme) !== -1) {
-    currentThemeIdx = themes.indexOf(savedTheme);
-    applyTheme(savedTheme);
-  }
-
-  // Typing animation
-  var lines = [
-    "Técnico IT & SysAdmin",
-    "Entusiasta del hardware & 15W TDP",
-    "Homelab sobre Proxmox VE 9",
-    "Backend Go · KVM / Incus",
-    "Creador de WebKVM (v0.1.6)",
-    "Catppuccin Rice Enthusiast"
-  ];
-  var tEl = document.getElementById('typed');
-  var li = 0, ci = 0, del = false;
-  (function tick() {
-    var t = lines[li];
-    tEl.textContent = t.slice(0, ci);
-    if (!del) {
-      if (ci++ === t.length) { del = true; return setTimeout(tick, 1700); }
-    } else {
-      if (ci-- === 0) { del = false; li = (li + 1) % lines.length; return setTimeout(tick, 350); }
-    }
-    setTimeout(tick, del ? 38 : 75);
-  })();
-
-  // Scroll progress & back to top
-  var bar = document.getElementById('bar'), tb = document.getElementById('top-btn');
-  window.addEventListener('scroll', function() {
-    var h = document.documentElement;
-    var p = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-    bar.style.width = p + '%';
-    tb.classList.toggle('show', h.scrollTop > 500);
-  }, { passive: true });
-  tb.onclick = function() {
-    playUiClick(500);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Reveal cards animation
-  var io = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        e.target.style.opacity = 1;
-        e.target.style.transform = 'none';
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('.card, .stat, .arch-diagram, .telemetry-box').forEach(function(c, i) {
-    c.style.opacity = 0;
-    c.style.transform = 'translateY(20px)';
-    c.style.transition = 'opacity 0.5s ease ' + ((i % 4) * 0.07) + 's, transform 0.5s ease ' + ((i % 4) * 0.07) + 's';
-    io.observe(c);
-  });
-
-  // Count-up stats
-  var fmt = function(v, d) { return d ? v.toFixed(d).replace('.', ',') : Math.round(v); };
-  var cio = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (!e.isIntersecting) return;
-      cio.unobserve(e.target);
-      var el = e.target, target = +el.dataset.count || 0, dec = +(el.dataset.decimal || 0);
-      var pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
-      var t0 = performance.now();
-      (function step(now) {
-        var p = Math.min((now - t0) / 1200, 1), v = target * (1 - Math.pow(1 - p, 3));
-        el.textContent = pre + fmt(v, dec) + suf;
-        if (p < 1) requestAnimationFrame(step);
-      })(t0);
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-count]').forEach(function(el) { cio.observe(el); });
-
-  // Active nav tracking
-  var secs = Array.from(document.querySelectorAll('section[id], header[id]'));
-  var links = Array.from(document.querySelectorAll('nav a.link'));
-  var nio = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        links.forEach(function(l) {
-          l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
-        });
-      }
-    });
-  }, { rootMargin: '-40% 0px -50%' });
-  secs.forEach(function(s) { nio.observe(s); });
-
-  // Terminal tabs
-  function switchTermTab(idx) {
-    playUiClick(550);
-    document.querySelectorAll('.ttab').forEach(function(t, i) { t.classList.toggle('active', i === idx); });
-    document.querySelectorAll('.terminal-pane').forEach(function(p, i) { p.classList.toggle('active', i === idx); });
-  }
-
-  // WebKVM featured tabs
-  function switchFeatTab(idx) {
-    playUiClick(550);
-    document.querySelectorAll('.feat-tab').forEach(function(t, i) { t.classList.toggle('active', i === idx); });
-    document.querySelectorAll('.feat-panel').forEach(function(p, i) { p.classList.toggle('active', i === idx); });
-  }
-
-  // Skill filter
-  function filterSkills(category) {
-    playUiClick(600);
-    document.querySelectorAll('.filter-btn').forEach(function(btn) {
-      btn.classList.toggle('active', btn.getAttribute('onclick').indexOf(category) !== -1);
-    });
-    document.querySelectorAll('.skill-card').forEach(function(card) {
-      if (category === 'all' || card.dataset.category === category) {
-        card.style.display = 'block';
-        setTimeout(function() { card.style.opacity = '1'; card.style.transform = 'none'; }, 10);
-      } else {
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.95)';
-        setTimeout(function() { card.style.display = 'none'; }, 200);
-      }
-    });
-  }
-
-  // Toast notification
-  function showToast(msg) {
-    var t = document.getElementById('toast');
-    document.getElementById('toast-msg').textContent = msg;
+// Toast Global System
+let toastTo;
+function sysToast(msg, icon='check-circle-2', c='var(--a-green)', bg='rgba(166,227,161,0.15)') {
+    const t = document.getElementById('sys-toast');
+    const ti = document.getElementById('toast-icon');
+    document.getElementById('toast-msg').innerText = msg;
+    t.style.borderColor = c; t.style.color = c; t.style.background = bg;
+    ti.setAttribute('data-lucide', icon); lucide.createIcons();
     t.classList.add('show');
-    setTimeout(function() { t.classList.remove('show'); }, 2600);
-  }
+    clearTimeout(toastTo);
+    toastTo = setTimeout(()=> t.classList.remove('show'), 3500);
+}
 
-  function copySnippet(text) {
-    playUiClick(850);
-    navigator.clipboard.writeText(text).then(function() {
-      showToast('Copiado al portapapeles');
-    }).catch(function() {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast('Copiado al portapapeles');
+// Live CPUs
+const cbox = document.getElementById('cpu-bars');
+for(let i=0; i<16; i++) {
+    let b = document.createElement('div'); b.className='cpu-bar'; b.id='cpb'+i;
+    cbox.appendChild(b);
+}
+setInterval(()=>{
+    let sum = 0;
+    for(let i=0; i<16; i++) {
+        let val = Math.random() * 50 + (i<4?20:5);
+        sum+=val;
+        document.getElementById('cpb'+i).style.height = val + '%';
+        let cc = 'var(--a-sky)';
+        if(val>60) cc='var(--a-peach)'; if(val>85) cc='var(--a-red)';
+        document.getElementById('cpb'+i).style.background = cc;
+    }
+    document.getElementById('cpu-load-val').innerText = (sum/16).toFixed(1)+'%';
+}, 1200);
+
+// Live Network Sparkline
+const spanv = document.getElementById('spark-canvas');
+const sctx = spanv.getContext('2d');
+let points = []; for(let i=0; i<40; i++) points.push(10);
+setInterval(()=>{
+    points.shift(); points.push(Math.random()*25 + 5);
+    let sw = spanv.width = spanv.offsetWidth; let sh = spanv.height = spanv.offsetHeight;
+    sctx.clearRect(0,0,sw,sh);
+    sctx.beginPath(); sctx.moveTo(0, sh - (points[0]/40*sh));
+    for(let i=1; i<points.length; i++) sctx.lineTo(sw*(i/(points.length-1)), sh - (points[i]/40*sh));
+    sctx.strokeStyle = 'rgba(137,220,235,0.8)'; sctx.lineWidth=2; sctx.stroke();
+    
+    document.getElementById('net-txt').innerText = `RX ${(points[points.length-1]).toFixed(1)} MB/s · TX ${(points[points.length-1]*0.6).toFixed(1)} MB/s`;
+}, 800);
+
+// Cambiador de Tema
+const ts = ['mocha', 'tokyo', 'nord'];
+let tidx = 0;
+function cycleTheme() {
+    playBloop(600);
+    tidx = (tidx+1)%ts.length;
+    document.body.setAttribute('data-theme', ts[tidx]);
+    sysToast(`🎨 Tema ajustado a: ${ts[tidx].toUpperCase()}`, 'palette', 'var(--a-mauve)', 'rgba(203,166,247,0.15)');
+}
+
+// Terminal CLI Custom Logic
+const tIn = document.getElementById('term-in');
+const tOut = document.getElementById('term-out');
+const hist = []; let hidx = 0;
+tIn.addEventListener('keydown', e => {
+    if(e.key === 'Enter') {
+        playBloop(450, 'square');
+        const v = tIn.value.trim();
+        if(v) { hist.push(v); hidx = hist.length; }
+        parseCmd(v); tIn.value = '';
+    }
+    else if(e.key === 'ArrowUp') { e.preventDefault(); if(hidx>0){ hidx--; tIn.value=hist[hidx];} }
+    else if(e.key === 'ArrowDown') { e.preventDefault(); if(hidx<hist.length-1){ hidx++; tIn.value=hist[hidx];} else {hidx=hist.length; tIn.value='';} }
+});
+
+function parseCmd(c) {
+    let r = ""; c = c.toLowerCase();
+    if(c === 'clear') { tOut.innerHTML = ''; return; }
+    else if(c === 'neofetch' || c === 'fastfetch') {
+        r = `<span style="color:var(--a-sky);">
+       _.._        alvin@alvinnas
+     .' .-'`       -------------
+    /  /           OS: Proxmox VE 9.0 (Debian 13)
+    |  |           Host: Custom Mini-Server (15W TDP)
+    \  '.          Kernel: Linux 6.8.12-pve
+     '._ `'-._     Packages: 1,428 (dpkg)
+        `'---'     CPU: AMD Ryzen 7 5700U (16) @ 4.37GHz
+                   Memory: 20.4 GiB / 31.2 GiB (65%)
+                   Engine: WebKVM v0.1.6</span>`;
+    }
+    else if(c === 'webkvm status' || c === 'status') {
+        r = `● WebKVM Daemon: Active (running)
+Endpoints: https://127.0.0.1:8081 | Unix: /run/webkvm.sock
+Hypervisors: QEMU/KVM (libvirt) + Incus/LXC
+Security Jail: Active (0 banned IPs)`;
+    }
+    else if(c === 'help') {
+        r = `Comandos: neofetch, webkvm status, whoami, clear, date`;
+    }
+    else if(c === 'whoami') r = `Ingeniero en continua evolución. Apasionado por Linux y el silicio.`;
+    else if(c === 'date') r = new Date().toString();
+    else if(c !== "") r = `zsh: command not found: ${c}`;
+    
+    tOut.innerHTML += `\n<span class="cmd-prompt">➜</span><span style="color:var(--a-blue);">~</span> ${c}\n${r}`;
+    tOut.scrollTop = tOut.scrollHeight;
+}
+
+// WebKVM App Live Drawer Demo
+let drInterval;
+function fireTaskDrawer(target='ubuntu-cloud') {
+    playBloop(800, 'triangle');
+    const dr = document.getElementById('kvm-drawer');
+    const fl = document.getElementById('drw-fill');
+    const pct = document.getElementById('drw-pct');
+    const step = document.getElementById('drw-step');
+    
+    document.getElementById('drw-title').innerText = `Clonando: ${target} -> ${target}-clone`;
+    dr.classList.add('show');
+    clearInterval(drInterval);
+    
+    let p = 0; fl.style.width='0%'; fl.style.background='linear-gradient(90deg, var(--a-mauve), var(--a-blue))';
+    drInterval = setInterval(()=>{
+        p += Math.floor(Math.random()*8)+3;
+        if(p>=100) p=100;
+        pct.innerText = p+'%'; fl.style.width = p+'%';
+        
+        if(p<30) step.innerText = "Fase 1: Snapshot atómico y validando pools...";
+        else if(p<70) step.innerText = "Fase 2: Copiando COW / delta layers (~2.4 GB/s)";
+        else if(p<95) step.innerText = "Fase 3: Cloud-init override e inyección de red";
+        else step.innerText = "Hecho: VM registrada en libvirt daemon.";
+        
+        if(p>=100) {
+            clearInterval(drInterval);
+            pct.innerText = "SUCCESS"; pct.style.color = "var(--a-green)";
+            fl.style.background = "var(--a-green)";
+            sysToast(`Operación de clonación para ${target} completada!`);
+            setTimeout(()=> { dr.classList.remove('show'); pct.style.color="var(--a-sky)"; }, 3000);
+        }
+    }, 250);
+}
+
+// Command Palette
+const pal = document.getElementById('cmd-palette');
+const pin = document.getElementById('pal-input');
+const res = document.getElementById('pal-results');
+const cmds = [
+    {n: 'Ejecutar Neofetch', s: 'Ver specs en terminal', i: 'terminal', a: () => { window.location.hash='#dashboard'; parseCmd('neofetch'); }},
+    {n: 'Temas: Alternar', s: 'Ciclar paletas', i: 'palette', a: cycleTheme},
+    {n: 'GitHub: Slaker19', s: 'Ir al perfil', i: 'github', a: () => window.open('https://github.com/Slaker19')},
+    {n: 'Copiar One-liner WebKVM', s: 'curl install script', i: 'copy', a: () => { navigator.clipboard.writeText('curl -fsSL https://raw.github... | bash'); sysToast('Script de instalación bash copiado.'); }},
+    {n: 'Mail de contacto', s: 'Copiar correo a clipboard', i: 'mail', a: () => { navigator.clipboard.writeText('alvinpp1908@gmail.com'); sysToast('alvinpp1908@gmail.com copiado!'); }}
+];
+
+function togglePalette() {
+    playBloop(500, 'triangle');
+    const open = pal.classList.contains('open');
+    if(open) { pal.classList.remove('open'); pin.blur(); }
+    else { pal.classList.add('open'); pin.value=''; randerPal(); setTimeout(()=>pin.focus(),100); }
+}
+
+function randerPal(f='') {
+    let h = ''; f = f.toLowerCase();
+    cmds.filter(c => c.n.toLowerCase().includes(f) || c.s.toLowerCase().includes(f)).forEach((c, idx) => {
+        h += `<div class="pal-item" onclick="palAction(${idx})"><i data-lucide="${c.i}"></i><div><div style="font-size:0.9rem; font-weight:600; color:var(--text);">${c.n}</div><div style="font-size:0.75rem; color:var(--subtext); font-family:var(--f-mono);">${c.s}</div></div></div>`;
     });
-  }
+    res.innerHTML = h; lucide.createIcons();
+}
+window.palAction = idx => { togglePalette(); cmds[idx].a(); }
+pin.addEventListener('input', e => randerPal(e.target.value));
 
-  // Interactive Mock VM Toggle
-  var mockVMStates = {
-    1: { running: true, name: 'ubuntu-server', ip: '10.0.0.101' },
-    2: { running: true, name: 'fedora-webkvm', ip: '10.0.0.102' },
-    3: { running: false, name: 'arch-linux-webkvm', ip: '10.0.0.103' }
-  };
+document.addEventListener('keydown', e => {
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k') { e.preventDefault(); togglePalette(); }
+    else if(e.key==='Escape' && pal.classList.contains('open')) togglePalette();
+});
 
-  function toggleMockVM(id, ev) {
-    playUiClick(650);
-    var vm = mockVMStates[id];
-    var badge = document.getElementById('vm-badge-' + id);
-    var btn = ev.target;
-    if (vm.running) {
-      badge.textContent = 'STOPPING...';
-      badge.className = 'status-badge stopped';
-      btn.textContent = '⌛ ...';
-      setTimeout(function() {
-        vm.running = false;
-        badge.textContent = 'STOPPED';
-        btn.textContent = '▶ Iniciar';
-        showToast('VM ' + vm.name + ' detenida');
-      }, 700);
-    } else {
-      badge.textContent = 'STARTING...';
-      badge.className = 'status-badge running';
-      btn.textContent = '⌛ ...';
-      setTimeout(function() {
-        vm.running = true;
-        badge.textContent = 'RUNNING';
-        btn.textContent = '⏹ Detener';
-        showToast('VM ' + vm.name + ' iniciada correctamente');
-      }, 800);
-    }
-  }
+// Alias helper para cards y tools
+function cmdPal(c) {
+    if(c==='curl') { navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash'); sysToast("Instalador (Bash) copiado al portapapeles.", "copy"); playBloop(800); }
+}
 
-  // WebKVM v0.1.6 Interactive Task Drawer & Job Simulation
-  var jobSimInterval = null;
-  var jobPct = 78;
-
-  function toggleMockTaskDrawer() {
-    playUiClick(600);
-    var drawer = document.getElementById('mock-task-drawer');
-    var trigger = document.getElementById('mock-task-trigger');
-    if (!drawer) return;
-    drawer.classList.toggle('open');
-    if (trigger) {
-      trigger.textContent = drawer.classList.contains('open') ? '⚡ Task Center (Abierto) ▲' : '⚡ Task Center (1 en curso) ▼';
-    }
-  }
-
-  function triggerCloneDemo(vmName) {
-    playUiClick(750);
-    var drawer = document.getElementById('mock-task-drawer');
-    if (drawer && !drawer.classList.contains('open')) {
-      drawer.classList.add('open');
-    }
-    startSimulatedJob('Clonando ' + vmName + ' -> ' + vmName + '-clone');
-    showToast('Iniciando tarea de clonación en segundo plano...');
-  }
-
-  function startSimulatedJob(customTitle) {
-    playUiClick(700);
-    if (jobSimInterval) clearInterval(jobSimInterval);
-    jobPct = 0;
-    var titleEl = document.getElementById('job-title');
-    var badgeEl = document.getElementById('job-badge');
-    var pctEl = document.getElementById('job-pct');
-    var fillEl = document.getElementById('job-fill');
-    var stepEl = document.getElementById('job-step');
-    var elapsedEl = document.getElementById('job-elapsed');
-    var trigger = document.getElementById('mock-task-trigger');
-
-    if (customTitle && titleEl) titleEl.textContent = customTitle;
-    if (badgeEl) {
-      badgeEl.textContent = 'RUNNING';
-      badgeEl.className = 'job-badge running';
-    }
-    if (trigger) trigger.textContent = '⚡ Task Center (Ejecutando...) ▲';
-
-    var steps = [
-      { p: 15, msg: 'Fase 1/4: Validando pool de destino en /var/lib/vz...', t: '0.9s' },
-      { p: 45, msg: 'Fase 2/4: Creando snapshot atómico qcow2...', t: '2.1s' },
-      { p: 80, msg: 'Fase 3/4: Copiando capa diferencial COW (~3.4 GB/s)...', t: '4.5s' },
-      { p: 96, msg: 'Fase 4/4: Inyectando metadatos Cloud-Init y red...', t: '5.8s' },
-      { p: 100, msg: 'Completado: Disco y VM registrados con éxito en libvirt', t: '6.4s' }
-    ];
-
-    var curStepIdx = 0;
-    jobSimInterval = setInterval(function() {
-      jobPct += Math.floor(Math.random() * 8) + 4;
-      if (jobPct > 100) jobPct = 100;
-
-      while (curStepIdx < steps.length - 1 && jobPct >= steps[curStepIdx + 1].p) {
-        curStepIdx++;
-      }
-
-      if (pctEl) pctEl.textContent = jobPct + '%';
-      if (fillEl) fillEl.style.width = jobPct + '%';
-      if (stepEl) stepEl.textContent = steps[curStepIdx].msg;
-      if (elapsedEl) elapsedEl.textContent = 'Transcurrido: ' + steps[curStepIdx].t;
-
-      if (jobPct >= 100) {
-        clearInterval(jobSimInterval);
-        if (badgeEl) {
-          badgeEl.textContent = 'SUCCESS';
-          badgeEl.className = 'job-badge success';
-        }
-        if (trigger) trigger.textContent = '⚡ Task Center (Completado) ▼';
-        showToast('✓ Tarea completada con éxito (v0.1.6)');
-      }
-    }, 280);
-  }
-
-  // Homelab Storage Details Toggle
-  function toggleStorageDetails() {
-    playUiClick(550);
-    var box = document.getElementById('storage-detail-box');
-    if (!box) return;
-    var isOpen = box.style.display === 'grid';
-    box.style.display = isOpen ? 'none' : 'grid';
-    showToast(isOpen ? 'Ocultando desglose de almacenamiento' : 'Mostrando detalles de discos físicos & SMART');
-  }
-
-  // Network Sparkline Real-time Graph (Canvas 2D)
-  var sparkCanvas = document.getElementById('net-sparkline');
-  if (sparkCanvas) {
-    var sCtx = sparkCanvas.getContext('2d');
-    var sW = sparkCanvas.width = 240;
-    var sH = sparkCanvas.height = 38;
-    var netData = [];
-    for (var i = 0; i < 30; i++) netData.push(Math.random() * 15 + 10);
-
-    function drawSparkline() {
-      sCtx.clearRect(0, 0, sW, sH);
-      // Gradient fill
-      var grad = sCtx.createLinearGradient(0, 0, 0, sH);
-      grad.addColorStop(0, 'rgba(137, 220, 235, 0.45)');
-      grad.addColorStop(1, 'rgba(137, 220, 235, 0.0)');
-
-      sCtx.beginPath();
-      var step = sW / (netData.length - 1);
-      sCtx.moveTo(0, sH - (netData[0] / 35) * sH);
-      for (var i = 1; i < netData.length; i++) {
-        var x = i * step;
-        var y = sH - (netData[i] / 35) * sH;
-        sCtx.lineTo(x, y);
-      }
-      sCtx.strokeStyle = '#89dceb';
-      sCtx.lineWidth = 2;
-      sCtx.stroke();
-
-      // Complete path for fill
-      sCtx.lineTo(sW, sH);
-      sCtx.lineTo(0, sH);
-      sCtx.closePath();
-      sCtx.fillStyle = grad;
-      sCtx.fill();
-    }
-
-    drawSparkline();
-
-    setInterval(function() {
-      var nextVal = Math.random() * 16 + 12;
-      netData.shift();
-      netData.push(nextVal);
-      drawSparkline();
-      var netValEl = document.getElementById('telem-net');
-      if (netValEl) {
-        netValEl.textContent = 'RX ' + nextVal.toFixed(1) + ' MB/s · TX ' + (nextVal * 0.65).toFixed(1) + ' MB/s';
-      }
-    }, 900);
-  }
-
-  // Service Latency Jitter Simulation
-  setInterval(function() {
-    var lW = document.getElementById('lat-webkvm');
-    var lA = document.getElementById('lat-adguard');
-    var lC = document.getElementById('lat-cf');
-    var lV = document.getElementById('lat-vault');
-    var lJ = document.getElementById('lat-jelly');
-    if (lW) lW.textContent = (Math.random() * 0.15 + 0.15).toFixed(2) + ' ms';
-    if (lA) lA.textContent = (Math.random() * 0.3 + 0.7).toFixed(1) + ' ms';
-    if (lC) lC.textContent = (Math.random() * 2.2 + 10.8).toFixed(1) + ' ms';
-    if (lV) lV.textContent = (Math.random() * 0.4 + 1.1).toFixed(1) + ' ms';
-    if (lJ) lJ.textContent = (Math.random() * 0.5 + 1.6).toFixed(1) + ' ms';
-  }, 2200);
-
-  // Live GitHub Stars API Fetch with Safe Fallback
-  fetch('https://api.github.com/repos/Slaker19/webkvm')
-    .then(function(r) { return r.ok ? r.json() : null; })
-    .then(function(data) {
-      if (data && typeof data.stargazers_count === 'number') {
-        var starEl = document.querySelector('.stat b[data-suffix="+"]');
-        if (starEl) {
-          starEl.dataset.count = data.stargazers_count;
-          starEl.textContent = data.stargazers_count + '+';
-        }
-      }
-    })
-    .catch(function() {});
-
-  // Node Inspector for Topology
-  function inspectNode(name, description) {
-    playUiClick(720);
-    var box = document.getElementById('node-inspector');
-    var title = document.getElementById('inspect-title');
-    var desc = document.getElementById('inspect-desc');
-    title.textContent = name;
-    desc.textContent = description;
-    box.style.display = 'block';
-  }
-
-  // Telemetry 16-thread generator & live simulation
-  var threadContainer = document.getElementById('threads-grid');
-  if (threadContainer) {
-    for (var i = 0; i < 16; i++) {
-      var wrap = document.createElement('div');
-      wrap.className = 'thread-bar-wrap';
-      wrap.title = 'Hilo CPU ' + i;
-      var barEl = document.createElement('div');
-      barEl.className = 'thread-bar';
-      barEl.id = 'tbar-' + i;
-      barEl.style.height = (Math.floor(Math.random() * 40) + 10) + '%';
-      wrap.appendChild(barEl);
-      threadContainer.appendChild(wrap);
-    }
-
-    setInterval(function() {
-      var totalLoad = 0;
-      for (var i = 0; i < 16; i++) {
-        var el = document.getElementById('tbar-' + i);
-        if (el) {
-          var val = Math.floor(Math.random() * 45) + (i < 4 ? 15 : 6);
-          totalLoad += val;
-          el.style.height = val + '%';
-        }
-      }
-      var avg = (totalLoad / 16).toFixed(1);
-      var cpuVal = document.getElementById('telem-cpu-load');
-      if (cpuVal) cpuVal.textContent = avg + '%';
-    }, 1400);
-  }
-
-  // Live ticking uptime
-  var upSec = 48 * 86400 + 14 * 3600 + 25 * 60 + 39;
-  setInterval(function() {
-    upSec++;
-    var d = Math.floor(upSec / 86400);
-    var h = Math.floor((upSec % 86400) / 3600);
-    var m = Math.floor((upSec % 3600) / 60);
-    var s = upSec % 60;
-    var el = document.getElementById('telem-uptime');
-    if (el) el.textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
-  }, 1000);
-
-  // Terminal CLI interactive logic with History and Tab Completion
-  var cliIn = document.getElementById('cli-in');
-  var cliOut = document.getElementById('cli-out');
-  var cliHistory = ['webkvm status'];
-  var historyIdx = cliHistory.length;
-  var knownCommands = [
-    'webkvm status',
-    'webkvm jobs',
-    'webkvm vm list',
-    'webkvm host bonds',
-    'webkvm jail',
-    'fastfetch',
-    'neofetch',
-    'sysinfo',
-    'free -h',
-    'df -h',
-    'ping',
-    'help',
-    'clear'
-  ];
-
-  function runCli(cmd) {
-    playUiClick(500);
-    cliIn.value = cmd;
-    handleCliCommand(cmd);
-  }
-
-  if (cliIn) {
-    cliIn.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        playUiClick(500);
-        var cmd = cliIn.value.trim();
-        if (cmd) {
-          cliHistory.push(cmd);
-          historyIdx = cliHistory.length;
-        }
-        handleCliCommand(cmd);
-        cliIn.value = '';
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (historyIdx > 0) {
-          historyIdx--;
-          cliIn.value = cliHistory[historyIdx] || '';
-        }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (historyIdx < cliHistory.length - 1) {
-          historyIdx++;
-          cliIn.value = cliHistory[historyIdx] || '';
-        } else {
-          historyIdx = cliHistory.length;
-          cliIn.value = '';
-        }
-      } else if (e.key === 'Tab') {
-        e.preventDefault();
-        var val = cliIn.value.toLowerCase().trim();
-        if (!val) return;
-        var match = knownCommands.find(function(c) { return c.startsWith(val); });
-        if (match) cliIn.value = match;
-      }
-    });
-  }
-
-  function handleCliCommand(cmd) {
-    var c = cmd.toLowerCase().trim();
-    var res = "";
-    if (c === "clear") {
-      cliOut.textContent = "";
-      return;
-    } else if (c === "webkvm status" || c === "status") {
-      res = "● WebKVM Daemon: Active (running) since Sun 2026-10-04 12:08:18 UTC\n" +
-            "Version: v0.1.6 · Memory: 16.6 MB / 32 GB · CPU: 0.1%\n" +
-            "Endpoints: https://10.0.0.10:8081 | Unix: /run/webkvm.sock\n" +
-            "Hypervisors: QEMU/KVM (libvirt 10.0) + Incus/LXC (v6.0 LTS)\n" +
-            "Active Tasks: 0 in progress | Security Jail: 0 banned IPs";
-    } else if (c === "webkvm jobs" || c === "jobs" || c === "tasks") {
-      res = "ID        TYPE          TARGET             STATUS    PROGRESS               ELAPSED\n" +
-            "job-c812  vm.clone      ubuntu-server      SUCCESS   [██████████████] 100%   6.2s\n" +
-            "job-d401  disk.move     fedora-webkvm      SUCCESS   [██████████████] 100%   14.8s\n" +
-            "job-e923  lxc.create    adguard-home       SUCCESS   [██████████████] 100%   2.4s\n" +
-            "Total: 3 jobs registrados · Task center poller: SSE/WebSocket activo (v0.1.6)";
-    } else if (c === "webkvm jail" || c === "jail") {
-      res = "SECURITY JAIL (nftables table inet webkvm_jail)\n" +
-            "Monitor: journalctl -u ssh -u sshd -f -n 0 -o cat\n" +
-            "Estado: Activo (Max retries: 5 | Ban duration: 3600s)\n" +
-            "IPs baneadas activas: 0 | Reglas nftables sincronizadas: OK";
-    } else if (c === "webkvm vm list" || c === "vms" || c === "vm list") {
-      res = "ID   NAME                 STATE     VCPU   RAM      IP ADDRESS        UPTIME\n" +
-            "1    ubuntu-server        RUNNING   4      8192MB   10.0.0.101/24     42d 14h\n" +
-            "2    fedora-webkvm        RUNNING   2      4096MB   10.0.0.102/24     18d 06h\n" +
-            "3    arch-linux-webkvm    RUNNING   4      8192MB   10.0.0.103/24     12d 21h";
-    } else if (c === "webkvm host bonds" || c === "bonds" || c === "net") {
-      res = "BOND     MODE              SLAVES        MASTER   STATUS   NETPLAN CONFIG\n" +
-            "bond0    802.3ad (LACP)    eno1, eno2    vmbr0    UP       /etc/netplan/zz-webkvm-vmbr0.yaml\n" +
-            "[Netplan atomic persistence: OK · Rollback guard: ACTIVE]";
-    } else if (c === "fastfetch" || c === "neofetch") {
-      res = "       _.._        alvin@alvinnas\n" +
-            "     .' .-'`       -------------\n" +
-            "    /  /           OS: Proxmox VE 9.0 (Debian 13 Bookworm x86_64)\n" +
-            "    |  |           Host: Custom Mini-Server (15W TDP)\n" +
-            "    \\  '.          Kernel: Linux 6.8.12-pve\n" +
-            "     '._ `'-._     Uptime: 48 days, 14 hours, 25 mins\n" +
-            "        `'---'     Packages: 1,428 (dpkg), 14 (incus/lxc)\n" +
-            "                   Shell: zsh 5.9 + Starship (Catppuccin Mocha)\n" +
-            "                   CPU: AMD Ryzen 7 5700U with Radeon Graphics (16) @ 4.37GHz\n" +
-            "                   GPU: AMD ATI Lucienne (VA-API Passthrough)\n" +
-            "                   Memory: 20.4 GiB / 31.2 GiB (65%)\n" +
-            "                   Disk (/): 410G / 953G (Btrfs NVMe)\n" +
-            "                   Engine: WebKVM v0.1.6 (Single Go binary + Svelte 5)";
-    } else if (c === "free -h" || c === "free") {
-      res = "               total        used        free      shared  buff/cache   available\n" +
-            "Mem:            31Gi        20Gi       3.8Gi       240Mi       7.2Gi        11Gi\n" +
-            "Swap:          8.0Gi          0B       8.0Gi";
-    } else if (c === "df -h" || c === "df") {
-      res = "Filesystem      Size  Used Avail Use% Mounted on\n" +
-            "/dev/nvme0n1p2  953G  410G  543G  43% /\n" +
-            "tank-zfs        910G  280G  630G  31% /mnt/tank-zfs\n" +
-            "/dev/sda1       1.8T  820G  1.0T  45% /mnt/Seagate\n" +
-            "efivarfs        128K   42K   82K  34% /sys/firmware/efi/efivars";
-    } else if (c === "ping") {
-      res = "PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.\n" +
-            "64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.184 ms\n" +
-            "64 bytes from 10.0.0.1: icmp_seq=2 ttl=64 time=0.179 ms\n" +
-            "--- 10.0.0.1 ping statistics ---\n" +
-            "2 packets transmitted, 2 received, 0% packet loss, rtt avg 0.181 ms";
-    } else if (c === "sysinfo" || c === "uname -a") {
-      res = "Host: alvinnas (Proxmox VE 9.0 · Linux 6.8.12-pve x86_64)\n" +
-            "CPU: AMD Ryzen 7 5700U with Radeon Graphics (8 Cores, 16 Threads @ 15W TDP)\n" +
-            "RAM: 32 GB DDR4-3200 (Used: 20 GB VMs, 8 GB LXC, 4 GB ARC/Cache)\n" +
-            "Storage Pools: 1x 1TB NVMe Btrfs + 2x 1TB SSD ZFS Mirror + 1x 2TB HDD Seagate XFS";
-    } else if (c === "help") {
-      res = "Comandos disponibles:\n" +
-            "  webkvm status      - Estado del demonio WebKVM y recursos\n" +
-            "  webkvm jobs        - Lista de tareas en segundo plano (v0.1.6)\n" +
-            "  webkvm vm list    - Lista de máquinas virtuales y estado\n" +
-            "  webkvm host bonds - Configuración de bonding L2 y Netplan\n" +
-            "  webkvm jail       - Estado del monitor SSH y nftables jail\n" +
-            "  fastfetch / neo   - Resumen del sistema con banner ASCII\n" +
-            "  free -h / df -h   - Memoria RAM y almacenamiento montado\n" +
-            "  sysinfo           - Especificaciones de hardware del nodo\n" +
-            "  clear             - Limpiar la pantalla del terminal";
-    } else if (c === "") {
-      return;
-    } else {
-      res = "webkvm: comando no reconocido: '" + cmd + "'. Escribe 'help' para ver la lista de comandos.";
-    }
-
-    cliOut.textContent += "\n\nalvinnas:~$ " + cmd + "\n" + res;
-    cliOut.scrollTop = cliOut.scrollHeight;
-  }
-
-  // Command palette
-  var cmdModal = document.getElementById('cmd-modal');
-  var cmdSearch = document.getElementById('cmd-search');
-  var openCmdBtn = document.getElementById('open-cmd');
-
-  function openCmd() {
-    playUiClick(500);
-    cmdModal.classList.add('open');
-    cmdSearch.value = '';
-    cmdSearch.focus();
-    filterCmdItems('');
-  }
-
-  function closeCmdModal(e) {
-    cmdModal.classList.remove('open');
-  }
-
-  if (openCmdBtn) openCmdBtn.onclick = openCmd;
-
-  window.addEventListener('keydown', function(e) {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      cmdModal.classList.contains('open') ? closeCmdModal() : openCmd();
-    }
-    if (e.key === 'Escape' && cmdModal.classList.contains('open')) {
-      closeCmdModal();
-    }
-  });
-
-  cmdSearch.addEventListener('input', function() {
-    filterCmdItems(cmdSearch.value.toLowerCase().trim());
-  });
-
-  function filterCmdItems(q) {
-    document.querySelectorAll('.cmd-item').forEach(function(item) {
-      var txt = item.textContent.toLowerCase();
-      item.style.display = txt.indexOf(q) !== -1 ? 'flex' : 'none';
-    });
-  }
-
-  function navTo(hash) {
-    playUiClick(600);
-    closeCmdModal();
-    var el = document.querySelector(hash);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // Mobile menu
-  var menuToggle = document.getElementById('menu-toggle');
-  var mobileMenu = document.getElementById('mobile-menu');
-  if (menuToggle && mobileMenu) {
-    menuToggle.onclick = function() {
-      playUiClick(500);
-      mobileMenu.classList.toggle('open');
-      menuToggle.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
-    };
-    document.querySelectorAll('.mob-link').forEach(function(link) {
-      link.onclick = function() {
-        mobileMenu.classList.remove('open');
-        menuToggle.textContent = '☰';
-      };
-    });
-  }
-</script>
+    </script>
 </body>
 </html>
