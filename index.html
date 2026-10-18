@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Alvin Perez — IT Infrastructure, Homelab AOOSTAR & Backend Go</title>
-  <meta name="description" content="Portfolio de Alvin Perez: Técnico IT, SysAdmin Linux, Homelab en AOOSTAR WTR PRO (Ryzen 7 5825U · 15W TDP), virtualización híbrida KVM/Incus y creador de WebKVM." />
+  <title>Alvin Perez — Systems Infrastructure & Backend Go</title>
+  <meta name="description" content="Portfolio de Alvin Perez: Ingeniero de Sistemas, Linux SysAdmin, Homelab en AOOSTAR WTR PRO (Ryzen 7 5825U · 15W TDP), virtualización híbrida KVM/Incus y creador de WebKVM." />
   <meta name="theme-color" content="#090d16" />
   
   <!-- OpenGraph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Alvin Perez — IT Infrastructure, Homelab AOOSTAR & Backend Go" />
-  <meta property="og:description" content="Especialista en sistemas Linux, Proxmox VE 9, hardware de alta eficiencia (AOOSTAR WTR PRO 15W) y creador de WebKVM." />
+  <meta property="og:title" content="Alvin Perez — Systems Infrastructure & Backend Go" />
+  <meta property="og:description" content="Especialista en infraestructura Linux, Proxmox VE 9, hardware de alta eficiencia (AOOSTAR WTR PRO 15W) y creador de WebKVM." />
   <meta property="og:url" content="https://slaker19.github.io" />
 
-  <!-- Google Fonts: Inter, Space Grotesk, JetBrains Mono -->
+  <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg: #090d16;
       --bg-surface: #0f1523;
       --bg-card: #131b2e;
-      --bg-card-hover: #19243d;
+      --bg-card-hover: #18233c;
       --border: rgba(255, 255, 255, 0.08);
       --border-hover: rgba(56, 189, 248, 0.35);
 
@@ -79,7 +79,6 @@
         var(--bg);
     }
 
-    /* Container */
     .container {
       width: 100%;
       max-width: var(--max-w);
@@ -94,7 +93,7 @@
       z-index: 100;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      background: rgba(9, 13, 22, 0.78);
+      background: rgba(9, 13, 22, 0.82);
       border-bottom: 1px solid var(--border);
       transition: all 0.2s ease;
     }
@@ -138,7 +137,7 @@
     .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: color 0.15s ease;
     }
@@ -154,7 +153,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.35rem 0.7rem;
+      padding: 0.35rem 0.75rem;
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.25);
       border-radius: 999px;
@@ -180,7 +179,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 1.1rem;
       border-radius: var(--radius-sm);
       font-size: 0.88rem;
       font-weight: 600;
@@ -196,7 +195,7 @@
     .btn-primary:hover {
       background: #e2e8f0;
       transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
     }
     .btn-secondary {
       background: var(--bg-card);
@@ -209,17 +208,8 @@
       transform: translateY(-1px);
     }
     .btn-sm {
-      padding: 0.35rem 0.75rem;
-      font-size: 0.8rem;
-    }
-    .mobile-btn {
-      display: none;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      padding: 0.45rem;
-      cursor: pointer;
+      padding: 0.38rem 0.8rem;
+      font-size: 0.82rem;
     }
 
     /* Hero */
@@ -243,12 +233,12 @@
     }
     .hero-title {
       font-family: var(--font-heading);
-      font-size: 3.2rem;
+      font-size: 3.3rem;
       line-height: 1.15;
       font-weight: 700;
       letter-spacing: -0.035em;
-      margin-bottom: 1.25rem;
-      max-width: 860px;
+      margin-bottom: 1.35rem;
+      max-width: 900px;
     }
     .hero-title span {
       background: linear-gradient(135deg, #fff 30%, var(--sky) 70%, var(--emerald) 100%);
@@ -257,10 +247,10 @@
     }
     .hero-desc {
       font-size: 1.15rem;
-      line-height: 1.7;
+      line-height: 1.75;
       color: var(--text-muted);
-      max-width: 740px;
-      margin-bottom: 2.25rem;
+      max-width: 760px;
+      margin-bottom: 2.5rem;
     }
     .hero-desc strong {
       color: var(--text);
@@ -295,7 +285,6 @@
       font-size: 1.85rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: var(--text);
     }
     .metric-val.emerald { color: var(--emerald); }
     .metric-val.sky { color: var(--sky); }
@@ -337,7 +326,52 @@
       color: var(--text-muted);
       font-size: 1rem;
       margin-top: 0.5rem;
-      max-width: 680px;
+      max-width: 720px;
+      line-height: 1.65;
+    }
+
+    /* Engineering Principles Card */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+    .principle-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+    }
+    .principle-box:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .principle-icon {
+      font-size: 1.25rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .principle-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .principle-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     /* WebKVM Featured Spotlight */
@@ -369,7 +403,7 @@
     }
     .spotlight-title {
       font-family: var(--font-heading);
-      font-size: 1.8rem;
+      font-size: 1.85rem;
       font-weight: 700;
       margin-bottom: 0.4rem;
     }
@@ -382,7 +416,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.25rem 0.6rem;
+      padding: 0.25rem 0.65rem;
       border-radius: var(--radius-sm);
       font-size: 0.75rem;
       font-family: var(--font-mono);
@@ -402,7 +436,6 @@
       color: var(--sky);
     }
 
-    /* Terminal installer bar */
     .cli-copy-box {
       background: #060911;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -935,17 +968,18 @@
 
     /* Responsive */
     @media (max-width: 960px) {
-      .hero-title { font-size: 2.5rem; }
+      .hero-title { font-size: 2.6rem; }
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
       .homelab-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: repeat(2, 1fr); }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .arch-tab-panel.active { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .mobile-btn { display: block; }
-      .hero-title { font-size: 2.1rem; }
+      .hero-title { font-size: 2.2rem; }
       .metric-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; }
       .spotlight-card { padding: 1.5rem; }
       .service-grid { grid-template-columns: 1fr; }
@@ -965,6 +999,7 @@
       <ul class="nav-links">
         <li><a href="#webkvm">WebKVM</a></li>
         <li><a href="#homelab">AOOSTAR Homelab</a></li>
+        <li><a href="#principios">Principios</a></li>
         <li><a href="#terminal">Terminal</a></li>
         <li><a href="#stack">Stack</a></li>
         <li><a href="#contacto">Contacto</a></li>
@@ -989,15 +1024,15 @@
     <section class="hero">
       <div class="hero-tag">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
-        <span>Técnico IT & Desarrollador Backend Go</span>
+        <span>Systems Infrastructure & Backend Go Engineer</span>
       </div>
 
       <h1 class="hero-title">
-        Infraestructura Linux ligera, <span>virtualización híbrida</span> y software resiliente.
+        Ingeniería de sistemas Linux, <span>virtualización de alto rendimiento</span> y software en Go.
       </h1>
 
       <p class="hero-desc">
-        Especialista en sistemas Linux y arquitectura de alto rendimiento con bajo consumo. Creador de <strong>WebKVM</strong> — plataforma que unifica VMs KVM y contenedores Incus en un único binario Go de ~14 MB. Mi laboratorio 24/7 en producción corre sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP.
+        Especialista en infraestructura bare-metal, virtualización híbrida y diseño de software de sistemas de bajo consumo. Creador y arquitecto principal de <strong>WebKVM</strong> (gestor KVM/Incus en un binario autónomo Go de ~14 MB). Mi infraestructura en producción opera 24/7 sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.
       </p>
 
       <div class="hero-actions">
@@ -1006,7 +1041,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
         </a>
         <a href="#homelab" class="btn btn-secondary">
-          <span>Ver Nodo AOOSTAR (15W)</span>
+          <span>Inspeccionar Nodo AOOSTAR (15W)</span>
         </a>
         <button onclick="copyToClipboard('alvinpp1908@gmail.com', 'Email copiado: alvinpp1908@gmail.com')" class="btn btn-secondary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
@@ -1035,13 +1070,58 @@
       </div>
     </section>
 
+    <!-- Engineering Principles -->
+    <section id="principios" class="section">
+      <div class="section-head">
+        <span class="section-tag">Filosofía de Arquitectura</span>
+        <h2 class="section-title">Principios de Ingeniería</h2>
+        <p class="section-desc">
+          Fundamentos técnicos aplicados en cada capa de software e infraestructura: cero dependencias innecesarias, máxima eficiencia por vatio y robustez defensiva.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--sky);">📦</div>
+          <h3 class="principle-title">Simplicidad de Despliegue</h3>
+          <p class="principle-desc">
+            Binarios autocontenidos sin bases de datos externas obligatorias ni dependencias de runtime. El software debe arrancar en segundos en cualquier Linux estándar.
+          </p>
+        </div>
+
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--emerald);">⚡</div>
+          <h3 class="principle-title">Kernel Directo sobre Polling</h3>
+          <p class="principle-desc">
+            Lectura directa de interfaces sysfs del kernel Linux en lugar de generar bucles de subprocesos CLI. Rendimiento nativo con consumo mínimo de CPU y memoria.
+          </p>
+        </div>
+
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--rose);">🛡</div>
+          <h3 class="principle-title">Fail-Closed por Defecto</h3>
+          <p class="principle-desc">
+            Seguridad estricta en las fronteras de red: tickets de un solo uso en RAM para WebSockets, dialers anti-SSRF rigurosos y confirmación con auto-rollback en cortafuegos.
+          </p>
+        </div>
+
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--amber);">🌱</div>
+          <h3 class="principle-title">Eficiencia & Densidad</h3>
+          <p class="principle-desc">
+            Alineación rigurosa de hardware y software. Operar una nube privada y decenas de servicios 24/7 en un chasis silencioso de 15W TDP sin comprometer fiabilidad.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- WebKVM Section -->
     <section id="webkvm" class="section">
       <div class="section-head">
         <span class="section-tag">Buque Insignia · Software de Código Abierto</span>
         <h2 class="section-title">WebKVM: Nube Privada en Binario Único</h2>
         <p class="section-desc">
-          Convierte cualquier Linux en un entorno de virtualización híbrida en 1 minuto. Sin secuestrar el sistema operativo, sin bases de datos externas y consumiendo apenas 15 MB de RAM en reposo.
+          Convierte cualquier servidor Linux en una plataforma de virtualización híbrida en 1 minuto. Sin secuestrar el sistema operativo, sin bases de datos externas y consumiendo apenas 15 MB de RAM en reposo.
         </p>
       </div>
 
@@ -1297,10 +1377,12 @@ Digest: sha256:... Size: 108.18 MB
 
             <div class="service-card">
               <div class="service-info">
-                <div class="service-icon" style="color:var(--amber);">⚡</div>
-                <div>
-                  <div class="service-name">NPM Proxy</div>
-                  <div class="service-role">TLS Let's Encrypt</div>
+                <div class="service-info">
+                  <div class="service-icon" style="color:var(--amber);">⚡</div>
+                  <div>
+                    <div class="service-name">NPM Proxy</div>
+                    <div class="service-role">TLS Let's Encrypt</div>
+                  </div>
                 </div>
               </div>
               <span class="service-latency" id="lat-npm">0.82 ms</span>
@@ -1391,7 +1473,7 @@ Digest: sha256:... Size: 108.18 MB
         <span class="section-tag">Playground Interactivo</span>
         <h2 class="section-title">Terminal del Sistema</h2>
         <p class="section-desc">
-          Interactúa directamente con la consola virtual para consultar especificaciones, proyectos y datos de infraestructura.
+          Interactúa directamente con la consola virtual para consultar especificaciones de hardware, proyectos y datos de infraestructura.
         </p>
       </div>
 
@@ -1435,6 +1517,7 @@ Digest: sha256:... Size: 108.18 MB
           <button class="term-chip" onclick="runCommand('webkvm')">webkvm</button>
           <button class="term-chip" onclick="runCommand('services')">services</button>
           <button class="term-chip" onclick="runCommand('calc')">calc</button>
+          <button class="term-chip" onclick="runCommand('principles')">principles</button>
           <button class="term-chip" onclick="runCommand('contact')">contact</button>
           <button class="term-chip" onclick="runCommand('clear')">clear</button>
         </div>
@@ -1611,7 +1694,7 @@ Digest: sha256:... Size: 108.18 MB
       }, 3000);
     }
 
-    // Micro jitter for latency indicators (realism)
+    // Micro jitter for latency indicators
     setInterval(() => {
       const ids = [
         { id: 'lat-webkvm', base: 0.18 },
@@ -1637,13 +1720,14 @@ Digest: sha256:... Size: 108.18 MB
 
     const commands = {
       help: () => `Comandos disponibles:
-  - fastfetch  : Muestra ficha del nodo AOOSTAR WTR PRO
-  - specs      : Detalle de CPU, memoria y almacenamiento RAID
-  - webkvm     : Resumen de características del proyecto WebKVM
-  - services   : Estado de servicios homelab 24/7
-  - calc       : Comparativa de ahorro energético
-  - contact    : Información de contacto
-  - clear      : Limpia el terminal`,
+  - fastfetch   : Muestra ficha del nodo AOOSTAR WTR PRO
+  - specs       : Detalle de CPU, memoria y almacenamiento RAID
+  - webkvm      : Resumen de características del proyecto WebKVM
+  - services    : Estado de servicios homelab 24/7
+  - calc        : Comparativa de ahorro energético
+  - principles  : Principios de ingeniería y diseño
+  - contact     : Información de contacto
+  - clear       : Limpia el terminal`,
 
       fastfetch: () => `       /\\_/\\      alvin@aoostar-wtr-pro
       ( o.o )     ---------------------
@@ -1673,7 +1757,7 @@ Digest: sha256:... Size: 108.18 MB
   • Docker Hub : slaker1908/webkvm:latest`,
 
       services: () => `Homelab Services (Proxmox VE 9.2 · vmbr0 192.168.1.0/24):
-  [UP] WebKVM (v0.1.8)           : https://192.168.1.40:8080 (0.18 ms)
+  [UP] WebKVM (v0.1.8-fix01)     : https://192.168.1.40:8080 (0.18 ms)
   [UP] AdGuard Home DNS          : 192.168.1.2:53 (0.45 ms)
   [UP] Nginx Proxy Manager       : https://192.168.1.2:81 (0.82 ms)
   [UP] AI Local Agents           : http://192.168.1.110 (1.12 ms)
@@ -1684,6 +1768,12 @@ Digest: sha256:... Size: 108.18 MB
   • AOOSTAR WTR PRO (15W 24/7)   : 131 kWh / año (~29 € / año)
   • Servidor Rack 2U (350W 24/7) : 3,066 kWh / año (~674 € / año)
   • Ahorro estimado              : ~645 € / año y 733 kg CO2 evitados.`,
+
+      principles: () => `Principios de Arquitectura:
+  1. Simplicidad de Despliegue: binarios únicos y cero bases de datos externas.
+  2. Kernel Directo sobre Polling: telemetría sysfs sin spawn de procesos CLI.
+  3. Fail-Closed por Defecto: límites seguros en red y permisos mínimos.
+  4. Eficiencia & Densidad: máximo rendimiento por vatio en hardware bare-metal.`,
 
       contact: () => `Vías de contacto:
   • Email : alvinpp1908@gmail.com
