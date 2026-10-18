@@ -720,60 +720,6 @@
       font-weight: 700;
     }
 
-    /* Projects Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .project-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 1.5rem;
-      transition: all 0.2s ease;
-    }
-    .project-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    }
-    .project-card-top h3 {
-      font-family: var(--font-heading);
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-    }
-    .project-card-top p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .project-card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 1rem;
-    }
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--sky);
-      text-decoration: none;
-      transition: gap 0.15s ease;
-    }
-    .project-link:hover {
-      gap: 0.55rem;
-      color: #fff;
-    }
-
     /* Terminal Playground */
     .terminal-container {
       background: #060911;
@@ -992,7 +938,6 @@
       .hero-title { font-size: 2.5rem; }
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
       .homelab-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .arch-tab-panel.active { grid-template-columns: 1fr; }
     }
@@ -1020,7 +965,6 @@
       <ul class="nav-links">
         <li><a href="#webkvm">WebKVM</a></li>
         <li><a href="#homelab">AOOSTAR Homelab</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#terminal">Terminal</a></li>
         <li><a href="#stack">Stack</a></li>
         <li><a href="#contacto">Contacto</a></li>
@@ -1437,79 +1381,6 @@ Digest: sha256:... Size: 108.18 MB
           <p style="font-size:0.75rem; color:var(--text-dim); margin-top:1.25rem; line-height:1.4;">
             * Cálculo basado en precio medio eléctrico de 0.22 €/kWh y factor de emisión de 0.25 kg CO2/kWh de la red eléctrica europea.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Engineering Projects -->
-    <section id="proyectos" class="section">
-      <div class="section-head">
-        <span class="section-tag">Desarrollo de Software & Herramientas</span>
-        <h2 class="section-title">Otros Proyectos Destacados</h2>
-        <p class="section-desc">
-          Utilidades especializadas, automatizaciones para el mundo real y entornos de desarrollo construidos con foco en la simplicidad y el rendimiento.
-        </p>
-      </div>
-
-      <div class="projects-grid">
-        <!-- DTF Tools -->
-        <div class="project-card">
-          <div class="project-card-top">
-            <h3>DTF Tools App</h3>
-            <p>
-              Suite de herramientas para talleres de personalización textil DTF (Direct to Film). Procesamiento de imágenes de alta resolución, cálculo de área de tinta blanca y optimización de metros de bobina.
-            </p>
-            <div class="project-card-meta">
-              <span class="badge sky">Go Backend</span>
-              <span class="badge">Desktop / Web</span>
-              <span class="badge">Image Processing</span>
-            </div>
-          </div>
-          <div>
-            <span class="badge emerald">Producción Industrial</span>
-          </div>
-        </div>
-
-        <!-- TV Remote -->
-        <div class="project-card">
-          <div class="project-card-top">
-            <h3>Mando TV Web</h3>
-            <p>
-              Controlador universal local para Smart TVs sobre la red doméstica. Soporte directo para LG webOS, Samsung Tizen y Android TV mediante WebSockets de baja latencia y paquetes Wake-on-LAN.
-            </p>
-            <div class="project-card-meta">
-              <span class="badge sky">WebSockets</span>
-              <span class="badge">Wake-on-LAN</span>
-              <span class="badge">Smart TVs</span>
-            </div>
-          </div>
-          <div>
-            <a href="https://github.com/Slaker19/tv-remote" target="_blank" rel="noopener" class="project-link">
-              <span>Repositorio en GitHub</span>
-              <span>↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Dotfiles -->
-        <div class="project-card">
-          <div class="project-card-top">
-            <h3>dotfiles-slaker</h3>
-            <p>
-              Configuración reproducible de entorno de trabajo sobre Wayland (Hyprland, Waybar, Kitty, Neovim y Rofi). Estética coherente Catppuccin Mocha con gestión de energía optimizada.
-            </p>
-            <div class="project-card-meta">
-              <span class="badge">Hyprland</span>
-              <span class="badge">Wayland</span>
-              <span class="badge">Catppuccin</span>
-            </div>
-          </div>
-          <div>
-            <a href="https://github.com/Slaker19/dotfiles-slaker" target="_blank" rel="noopener" class="project-link">
-              <span>Explorar Dotfiles</span>
-              <span>↗</span>
-            </a>
-          </div>
         </div>
       </div>
     </section>
