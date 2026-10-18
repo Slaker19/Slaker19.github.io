@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Alvin Perez — Systems Infrastructure & Backend Go</title>
-  <meta name="description" content="Portfolio de Alvin Perez: Ingeniero de Sistemas, Linux SysAdmin, Homelab AOOSTAR WTR PRO (Ryzen 7 5825U · 15W TDP), virtualización híbrida KVM/Incus y creador de WebKVM." />
+  <title>Alvin Perez — Systems Architecture, Linux Infrastructure & Go</title>
+  <meta name="description" content="Portfolio de Alvin Perez: Ingeniero de Sistemas, Linux SysAdmin, Homelab en AOOSTAR WTR PRO (Ryzen 7 5825U · 15W TDP), virtualización híbrida KVM/Incus y creador de WebKVM." />
   <meta name="theme-color" content="#000000" />
   
   <!-- OpenGraph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Alvin Perez — Systems Infrastructure & Backend Go" />
-  <meta property="og:description" content="Especialista en infraestructura Linux, Proxmox VE 9, hardware de alta eficiencia (AOOSTAR WTR PRO 15W) y creador de WebKVM." />
+  <meta property="og:title" content="Alvin Perez — Systems Architecture & Backend Go" />
+  <meta property="og:description" content="Especialista en infraestructura Linux bare-metal, virtualización híbrida KVM/Incus, AOOSTAR WTR PRO (15W TDP) y creador de WebKVM." />
   <meta property="og:url" content="https://slaker19.github.io" />
 
   <!-- Google Fonts: Space Grotesk, Inter, JetBrains Mono -->
@@ -22,10 +22,10 @@
     :root {
       --bg: #000000;
       --bg-surface: #040812;
-      --bg-card: #090e1a;
-      --bg-card-hover: #0f172a;
+      --bg-card: #080d1a;
+      --bg-card-hover: #0d1527;
       --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(56, 189, 248, 0.35);
+      --border-hover: rgba(56, 189, 248, 0.4);
 
       --text: #f8fafc;
       --text-muted: #94a3b8;
@@ -45,7 +45,7 @@
       --max-w: 1140px;
       --radius-sm: 8px;
       --radius: 12px;
-      --radius-lg: 16px;
+      --radius-lg: 18px;
     }
 
     *, *::before, *::after {
@@ -74,8 +74,103 @@
       background: #000000;
     }
 
-    
-    /* Language Toggle */
+    /* Luxury Dynamic Spotlight Follower */
+    .mouse-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(800px circle at var(--mouse-x, 50vw) var(--mouse-y, 30vh), rgba(56, 189, 248, 0.045), rgba(16, 185, 129, 0.02) 40%, transparent 80%);
+      transition: background 0.15s ease;
+    }
+
+    /* Subtle Technical Grid */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(0, 0, 0, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #0284c7, #10b981);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
     .lang-switch-box {
       display: inline-flex;
       align-items: center;
@@ -99,6 +194,313 @@
     .lang-btn.active {
       color: var(--sky);
     }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--emerald);
+      white-space: nowrap;
+    }
+    .status-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      animation: pulse-ring 2s infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: #ffffff;
+      color: #000000;
+    }
+    .btn-primary:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
+    }
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+    .btn-sm {
+      padding: 0.38rem 0.8rem;
+      font-size: 0.82rem;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 5.5rem 0 3.5rem;
+      position: relative;
+    }
+    .hero-tag-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--sky);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .titanium-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.35rem;
+      max-width: 940px;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #ffffff 40%, var(--sky) 75%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.18rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-desc strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Horology-style Metric Grid */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      padding: 1.75rem;
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    }
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      position: relative;
+    }
+    .metric-val {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .metric-val.emerald { color: var(--emerald); }
+    .metric-val.sky { color: var(--sky); }
+    .metric-val.amber { color: var(--amber); }
+    .metric-val.indigo { color: var(--indigo); }
+    .metric-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Section Utilities */
+    .section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .section-head {
+      margin-bottom: 2.75rem;
+    }
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sky);
+      margin-bottom: 0.5rem;
+      display: block;
+      font-weight: 600;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-top: 0.5rem;
+      max-width: 720px;
+      line-height: 1.65;
+    }
+
+    /* Principles Grid */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+    .principle-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.25s ease;
+    }
+    .principle-box:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .principle-icon {
+      font-size: 1.25rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .principle-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .principle-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* WebKVM Luxury Spotlight */
+    .spotlight-card {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--sky), var(--emerald), transparent);
+    }
+    .spotlight-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .spotlight-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+    .spotlight-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .badge.emerald {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+    }
+    .badge.sky {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: var(--sky);
+    }
 
     /* GitHub Live Stats Bar */
     .github-live-card {
@@ -111,7 +513,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      margin-top: 1.5rem;
+      margin: 1.5rem 0 2rem;
       font-family: var(--font-mono);
       font-size: 0.82rem;
     }
@@ -129,17 +531,59 @@
       height: 15px;
     }
 
-    /* WebKVM Interactive OS Window / Mockup */
+    /* CLI install bar */
+    .cli-copy-box {
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .cli-copy-text {
+      overflow-x: auto;
+      white-space: nowrap;
+      user-select: all;
+    }
+    .cli-copy-text span {
+      color: var(--emerald);
+      user-select: none;
+    }
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+
+    /* Interactive WebKVM OS Mockup */
     .mockup-window {
-      background: #080c14;
+      background: #060911;
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius);
       overflow: hidden;
-      margin-top: 2rem;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      margin: 2rem 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
     }
     .mockup-header {
-      background: #0d1322;
+      background: #0c1221;
       padding: 0.65rem 1rem;
       display: flex;
       align-items: center;
@@ -237,463 +681,7 @@
       color: #fff;
     }
 
-    /* Skills Search & Category Filters */
-    .skills-filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .skills-search-input {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 0.55rem 1rem 0.55rem 2.4rem;
-      color: var(--text);
-      font-family: var(--font-sans);
-      font-size: 0.85rem;
-      outline: none;
-      width: 280px;
-      transition: all 0.2s ease;
-    }
-    .skills-search-input:focus {
-      border-color: var(--sky);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
-      width: 320px;
-    }
-    .skills-search-wrapper {
-      position: relative;
-    }
-    .skills-search-icon {
-      position: absolute;
-      left: 0.85rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-dim);
-      pointer-events: none;
-      width: 14px;
-      height: 14px;
-    }
-    .skills-pills-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .skill-filter-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .skill-filter-btn:hover {
-      background: var(--bg-card-hover);
-      color: var(--text);
-    }
-    .skill-filter-btn.active {
-      background: rgba(56, 189, 248, 0.15);
-      border-color: rgba(56, 189, 248, 0.4);
-      color: var(--sky);
-      font-weight: 600;
-    }
-
-    /* SVG Interactive Chassis Styling */
-    .svg-chassis-svg {
-      width: 100%;
-      height: auto;
-      max-height: 220px;
-    }
-    .svg-bay {
-      transition: all 0.25s ease;
-      cursor: pointer;
-    }
-    .svg-bay:hover {
-      filter: brightness(1.2);
-    }
-    .svg-led {
-      animation: blink 2.5s infinite ease-in-out;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 0.9; }
-      50% { opacity: 0.3; }
-    }
-
-    /* Subtle Luxury Dark Lighting */
-    body::before {
-      content: "";
-      position: fixed;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1000px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, rgba(16, 185, 129, 0.04) 40%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
-      width: 100%;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Navbar */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      background: rgba(0, 0, 0, 0.82);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--text);
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
-    }
-    .brand-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #0284c7, #10b981);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #fff;
-      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      transition: color 0.15s ease;
-    }
-    .nav-links a:hover {
-      color: var(--text);
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.35rem 0.75rem;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--emerald);
-      white-space: nowrap;
-    }
-    .status-pulse {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 8px var(--emerald);
-      animation: pulse-ring 2s infinite;
-    }
-    @keyframes pulse-ring {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.2); }
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.15rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-    .btn-primary {
-      background: #ffffff;
-      color: #000000;
-    }
-    .btn-primary:hover {
-      background: #e2e8f0;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.18);
-    }
-    .btn-secondary {
-      background: var(--bg-card);
-      color: var(--text);
-      border-color: var(--border);
-    }
-    .btn-secondary:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--border-hover);
-      transform: translateY(-1px);
-    }
-    .btn-sm {
-      padding: 0.38rem 0.8rem;
-      font-size: 0.82rem;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 5.5rem 0 3.5rem;
-      position: relative;
-    }
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      color: var(--sky);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 1.5rem;
-    }
-    .hero-title {
-      font-family: var(--font-heading);
-      font-size: 3.4rem;
-      line-height: 1.15;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.35rem;
-      max-width: 900px;
-    }
-    .hero-title span {
-      background: linear-gradient(135deg, #ffffff 40%, var(--sky) 75%, var(--emerald) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-desc {
-      font-size: 1.15rem;
-      line-height: 1.75;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin-bottom: 2.5rem;
-    }
-    .hero-desc strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-    }
-
-    /* Metric Grid */
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      padding: 1.5rem;
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    }
-    .metric-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-    .metric-val {
-      font-family: var(--font-heading);
-      font-size: 1.85rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .metric-val.emerald { color: var(--emerald); }
-    .metric-val.sky { color: var(--sky); }
-    .metric-val.amber { color: var(--amber); }
-    .metric-val.indigo { color: var(--indigo); }
-    .metric-lbl {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* Section Header */
-    .section {
-      padding: 4.5rem 0;
-      border-top: 1px solid var(--border);
-    }
-    .section-head {
-      margin-bottom: 2.5rem;
-    }
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--sky);
-      margin-bottom: 0.5rem;
-      display: block;
-      font-weight: 600;
-    }
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      line-height: 1.2;
-    }
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 1rem;
-      margin-top: 0.5rem;
-      max-width: 720px;
-      line-height: 1.65;
-    }
-
-    /* WebKVM Spotlight Card */
-    .spotlight-card {
-      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
-    }
-    .spotlight-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--sky), var(--emerald), transparent);
-    }
-    .spotlight-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .spotlight-title {
-      font-family: var(--font-heading);
-      font-size: 1.85rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .spotlight-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      font-family: var(--font-mono);
-      font-weight: 500;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-    .badge.emerald {
-      background: rgba(16, 185, 129, 0.1);
-      border-color: rgba(16, 185, 129, 0.3);
-      color: var(--emerald);
-    }
-    .badge.sky {
-      background: rgba(56, 189, 248, 0.1);
-      border-color: rgba(56, 189, 248, 0.3);
-      color: var(--sky);
-    }
-
-    .cli-copy-box {
-      background: #000000;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-sm);
-      padding: 0.85rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      color: var(--text);
-      margin-bottom: 2rem;
-    }
-    .cli-copy-text {
-      overflow-x: auto;
-      white-space: nowrap;
-      user-select: all;
-    }
-    .cli-copy-text span {
-      color: var(--emerald);
-      user-select: none;
-    }
-    .copy-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      border-radius: 6px;
-      padding: 0.35rem 0.75rem;
-      font-size: 0.78rem;
-      cursor: pointer;
-      font-family: var(--font-sans);
-      font-weight: 600;
-      transition: all 0.15s ease;
-      flex-shrink: 0;
-    }
-    .copy-btn:hover {
-      background: rgba(255, 255, 255, 0.16);
-      color: #fff;
-    }
-
-    /* Tabs */
+    /* Architecture Tabs */
     .arch-tabs-nav {
       display: flex;
       gap: 0.5rem;
@@ -782,7 +770,7 @@
     .arch-code-box .fn { color: #89b4fa; }
     .arch-code-box .comment { color: #64748b; font-style: italic; }
 
-    /* HARDWARE & SOFTWARE EXPLORER (Interactive Feature) */
+    /* AOOSTAR Hardware Exhibit */
     .hw-explorer {
       background: var(--bg-surface);
       border: 1px solid var(--border);
@@ -824,12 +812,10 @@
     }
     .hw-panel {
       display: none;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
       animation: fadeIn 0.2s ease;
     }
     .hw-panel.active {
-      display: grid;
+      display: block;
     }
     .hw-detail-title {
       font-family: var(--font-heading);
@@ -898,12 +884,24 @@
       color: var(--emerald);
       font-weight: 600;
     }
-    .hw-ascii-diagram {
-      font-size: 0.75rem;
-      line-height: 1.45;
-      color: #94a3b8;
-      white-space: pre;
-      overflow-x: auto;
+    .svg-chassis-svg {
+      width: 100%;
+      height: auto;
+      max-height: 240px;
+    }
+    .svg-bay {
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .svg-bay:hover {
+      filter: brightness(1.2);
+    }
+    .svg-led {
+      animation: blink 2.5s infinite ease-in-out;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 0.3; }
     }
 
     /* Live Services Grid */
@@ -1041,7 +1039,72 @@
       font-weight: 700;
     }
 
-    /* TECHNICAL SKILLS MATRIX (Official Badges Matching GitHub Profile) */
+    /* SKILLS MATRIX & FILTERS */
+    .skills-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .skills-search-input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      outline: none;
+      width: 280px;
+      transition: all 0.2s ease;
+    }
+    .skills-search-input:focus {
+      border-color: var(--sky);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+      width: 320px;
+    }
+    .skills-search-wrapper {
+      position: relative;
+    }
+    .skills-search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+      width: 14px;
+      height: 14px;
+    }
+    .skills-pills-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .skill-filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .skill-filter-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text);
+    }
+    .skill-filter-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: var(--sky);
+      font-weight: 600;
+    }
+
     .skills-category-group {
       display: flex;
       flex-direction: column;
@@ -1266,9 +1329,9 @@
 
     /* Responsive adjustments */
     @media (max-width: 960px) {
-      .hero-title { font-size: 2.6rem; }
+      .hero-title { font-size: 2.7rem; }
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
-      .hw-panel.active { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: repeat(2, 1fr); }
       .calc-results-grid { grid-template-columns: repeat(2, 1fr); }
       .service-grid { grid-template-columns: repeat(2, 1fr); }
       .arch-tab-panel.active { grid-template-columns: 1fr; }
@@ -1277,6 +1340,7 @@
       .nav-links { display: none; }
       .hero-title { font-size: 2.2rem; }
       .metric-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: 1fr; }
       .calc-results-grid { grid-template-columns: 1fr; }
       .service-grid { grid-template-columns: 1fr; }
       .spotlight-card { padding: 1.5rem; }
@@ -1285,6 +1349,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Dynamic Mouse Spotlight -->
+  <div class="mouse-glow"></div>
 
   <!-- Navigation -->
   <header class="navbar">
@@ -1297,6 +1364,7 @@
       <ul class="nav-links">
         <li><a href="#webkvm" data-i18n="nav.webkvm">WebKVM</a></li>
         <li><a href="#homelab" data-i18n="nav.homelab">AOOSTAR Homelab</a></li>
+        <li><a href="#principios" data-i18n="nav.principles">Principios</a></li>
         <li><a href="#stack" data-i18n="nav.skills">Conocimientos</a></li>
         <li><a href="#terminal" data-i18n="nav.terminal">Terminal</a></li>
         <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
@@ -1313,7 +1381,7 @@
           <span data-i18n="nav.available">Disponible</span>
         </div>
         <a href="https://github.com/Slaker19" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" aria-label="GitHub Profile">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           <span>GitHub</span>
         </a>
       </div>
@@ -1324,26 +1392,31 @@
 
     <!-- Hero -->
     <section class="hero">
-      <div class="hero-tag">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
-        <span>Técnico IT · Backend Go · Virtualización (KVM + Incus/LXC)</span>
+      <div class="hero-tag-bar">
+        <div class="hero-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+          <span data-i18n="hero.tag">Técnico IT · Backend Go · Virtualización (KVM + Incus/LXC)</span>
+        </div>
+        <div class="titanium-badge">
+          <span>ALVIN PEREZ · SYSTEMS ARCHITECT</span>
+        </div>
       </div>
 
-      <h1 class="hero-title">
+      <h1 class="hero-title" data-i18n="hero.title">
         Ingeniería de sistemas Linux, <span>virtualización híbrida</span> y software en Go.
       </h1>
 
-      <p class="hero-desc">
+      <p class="hero-desc" data-i18n="hero.desc">
         Especialista en infraestructura bare-metal, tuning de hardware y virtualización de bajo consumo. Creador de <strong>WebKVM</strong> (plataforma híbrida KVM/Incus en un binario autónomo Go de ~14 MB). Mi entorno 24/7 en producción opera sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.
       </p>
 
       <div class="hero-actions">
         <a href="#webkvm" class="btn btn-primary">
-          <span>Explorar WebKVM</span>
+          <span data-i18n="hero.ctaPrimary">Explorar WebKVM</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
         </a>
         <a href="#homelab" class="btn btn-secondary">
-          <span>Explorador Hardware (AOOSTAR)</span>
+          <span data-i18n="hero.ctaSecondary">Explorador Hardware (AOOSTAR)</span>
         </a>
         <button onclick="copyToClipboard('alvinpp1908@gmail.com', 'Email copiado: alvinpp1908@gmail.com')" class="btn btn-secondary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
@@ -1351,33 +1424,78 @@
         </button>
       </div>
 
-      <!-- Key Metrics -->
+      <!-- Precision Horology Metrics -->
       <div class="metric-grid">
         <div class="metric-item">
           <span class="metric-val emerald">15W</span>
-          <span class="metric-lbl">Consumo Reposo (AOOSTAR 24/7)</span>
+          <span class="metric-lbl" data-i18n="metric.idle">Consumo Reposo (AOOSTAR 24/7)</span>
         </div>
         <div class="metric-item">
           <span class="metric-val sky">~14 MB</span>
-          <span class="metric-lbl">Binario Autónomo WebKVM</span>
+          <span class="metric-lbl" data-i18n="metric.binary">Binario Autónomo WebKVM</span>
         </div>
         <div class="metric-item">
           <span class="metric-val amber">8C / 16T</span>
-          <span class="metric-lbl">AMD Ryzen 7 5825U Zen 3</span>
+          <span class="metric-lbl" data-i18n="metric.cpu">AMD Ryzen 7 5825U Zen 3</span>
         </div>
         <div class="metric-item">
           <span class="metric-val indigo">Dual 2.5G</span>
-          <span class="metric-lbl">Intel I226-V Ethernet L2</span>
+          <span class="metric-lbl" data-i18n="metric.net">Intel I226-V Ethernet L2</span>
         </div>
       </div>
     </section>
 
-    <!-- WebKVM Section -->
+    <!-- Engineering Principles -->
+    <section id="principios" class="section">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="principles.tag">Filosofía de Arquitectura</span>
+        <h2 class="section-title" data-i18n="principles.title">Principios de Ingeniería</h2>
+        <p class="section-desc" data-i18n="principles.desc">
+          Fundamentos técnicos aplicados en cada capa de software e infraestructura: cero dependencias innecesarias, máxima eficiencia por vatio y robustez defensiva.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--sky);">📦</div>
+          <h3 class="principle-title" data-i18n="principle.1.title">Simplicidad de Despliegue</h3>
+          <p class="principle-desc" data-i18n="principle.1.desc">
+            Binarios autocontenidos sin bases de datos externas obligatorias ni dependencias de runtime. El software debe arrancar en segundos en cualquier Linux estándar.
+          </p>
+        </div>
+
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--emerald);">⚡</div>
+          <h3 class="principle-title" data-i18n="principle.2.title">Kernel Directo sobre Polling</h3>
+          <p class="principle-desc" data-i18n="principle.2.desc">
+            Lectura directa de interfaces sysfs del kernel Linux en lugar de generar bucles de subprocesos CLI. Rendimiento nativo con consumo mínimo de CPU y memoria.
+          </p>
+        </div>
+
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--rose);">🛡</div>
+          <h3 class="principle-title" data-i18n="principle.3.title">Fail-Closed por Defecto</h3>
+          <p class="principle-desc" data-i18n="principle.3.desc">
+            Seguridad estricta en las fronteras de red: tickets de un solo uso en RAM para WebSockets, dialers anti-SSRF rigurosos y confirmación con auto-rollback en cortafuegos.
+          </p>
+        </div>
+
+        <div class="principle-box">
+          <div class="principle-icon" style="color:var(--amber);">🌱</div>
+          <h3 class="principle-title" data-i18n="principle.4.title">Eficiencia & Densidad</h3>
+          <p class="principle-desc" data-i18n="principle.4.desc">
+            Alineación rigurosa de hardware y software. Operar una nube privada y decenas de servicios 24/7 en un chasis silencioso de 15W TDP sin comprometer fiabilidad.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WebKVM Section (Flagship Exhibit) -->
     <section id="webkvm" class="section">
       <div class="section-head">
-        <span class="section-tag">Buque Insignia · Software de Código Abierto</span>
-        <h2 class="section-title">WebKVM: Nube Privada en Binario Único</h2>
-        <p class="section-desc">
+        <span class="section-tag" data-i18n="webkvm.tag">Buque Insignia · Software de Código Abierto</span>
+        <h2 class="section-title" data-i18n="webkvm.title">WebKVM: Nube Privada en Binario Único</h2>
+        <p class="section-desc" data-i18n="webkvm.desc">
           Convierte cualquier servidor Linux en una plataforma de virtualización híbrida en 1 minuto. Sin secuestrar el sistema operativo, sin bases de datos externas y consumiendo apenas 15 MB de RAM en reposo.
         </p>
       </div>
@@ -1386,7 +1504,7 @@
         <div class="spotlight-header">
           <div>
             <h3 class="spotlight-title">WebKVM Architecture</h3>
-            <p style="color:var(--text-muted); font-size:0.9rem;">
+            <p style="color:var(--text-muted); font-size:0.92rem;" data-i18n="webkvm.sub">
               Desarrollado en Go 1.26 + Svelte 5 (Runes) + libvirt CGO + API Incus nativa.
             </p>
           </div>
@@ -1406,133 +1524,6 @@
           </div>
           <button class="copy-btn" onclick="copyToClipboard('curl -fsSL https://raw.githubusercontent.com/Slaker19/webkvm/main/scripts/install-webkvm.sh | sudo bash', 'Comando de instalación copiado')">Copiar</button>
         </div>
-
-        <!-- Architecture Tabs -->
-        <div class="arch-tabs-nav">
-          <button class="arch-tab-btn active" onclick="switchArchTab('hybrid', this)">1. Cómputo Híbrido</button>
-          <button class="arch-tab-btn" onclick="switchArchTab('raid', this)">2. RAID por sysfs</button>
-          <button class="arch-tab-btn" onclick="switchArchTab('security', this)">3. Seguridad y Zero-Token</button>
-          <button class="arch-tab-btn" onclick="switchArchTab('universal', this)">4. Distribución Universal</button>
-        </div>
-
-        <!-- Tab 1 -->
-        <div id="arch-hybrid" class="arch-tab-panel active">
-          <div class="arch-info">
-            <h4>KVM VMs + Contenedores Incus/LXC unificados</h4>
-            <p>
-              A diferencia de Proxmox que exige tomar el control total del servidor, WebKVM se ejecuta como un simple servicio systemd no invasivo.
-            </p>
-            <ul>
-              <li>Máquinas virtuales KVM completas para Windows, Linux y BSD con QEMU.</li>
-              <li>Contenedores de sistema Incus/LXC ultra rápidos que arrancan en &lt; 1 segundo.</li>
-              <li>Consolas gráficas noVNC y terminales PTY serial acelerados por WebGL (xterm.js).</li>
-              <li>Telemetría reactiva en tiempo real mediante Server-Sent Events (SSE).</li>
-            </ul>
-          </div>
-          <div class="arch-code-box">
-<span class="comment">// compute.Backend: seam desacoplado de virtualización</span>
-<span class="kw">type</span> Backend <span class="kw">interface</span> {
-    ListInstances(ctx context.Context) ([]models.VM, error)
-    CreateInstance(ctx context.Context, req models.CreateVMRequest) error
-    StartInstance(ctx context.Context, id string) error
-    StopInstance(ctx context.Context, id string) error
-    AttachDisk(ctx context.Context, vmID string, disk models.Disk) error
-}
-
-<span class="comment">// Single Binary: Servidor Go con SPA Svelte 5 embebida</span>
-<span class="comment">//go:embed all:internal/frontend/dist</span>
-<span class="kw">var</span> embeddedFrontend embed.FS
-          </div>
-        </div>
-
-        <!-- Tab 2 -->
-        <div id="arch-raid" class="arch-tab-panel">
-          <div class="arch-info">
-            <h4>Gestión de Software RAID Nativa por Kernel sysfs</h4>
-            <p>
-              En lugar de ejecutar procesos hijos `mdadm` en bucles lentos, WebKVM lee directamente el subsistema del kernel Linux en `/sys/block/md*/md`.
-            </p>
-            <ul>
-              <li>Descubrimiento en tiempo real sin sobrecarga de subprocesos.</li>
-              <li>Formateo automático (ext4, xfs, btrfs) y unidades de montaje persistentes systemd.</li>
-              <li>Aprovisionamiento de storage pools en 1 clic sobre el array recién creado.</li>
-              <li>Montaje no destructivo de arrays existentes y monitorización de scrub/sync en vivo.</li>
-            </ul>
-          </div>
-          <div class="arch-code-box">
-<span class="comment">// ParseArrayState: lectura directa de sysfs del kernel</span>
-<span class="kw">func</span> <span class="fn">readSysfsArray</span>(name <span class="kw">string</span>) (*RAIDState, error) {
-    base := filepath.Join(<span class="str">"/sys/block"</span>, name, <span class="str">"md"</span>)
-    level, _ := os.ReadFile(filepath.Join(base, <span class="str">"level"</span>))
-    syncAction, _ := os.ReadFile(filepath.Join(base, <span class="str">"sync_action"</span>))
-    degraded, _ := os.ReadFile(filepath.Join(base, <span class="str">"degraded"</span>))
-
-    <span class="kw">return</span> &amp;RAIDState{
-        Level:      strings.TrimSpace(<span class="kw">string</span>(level)),
-        SyncAction: strings.TrimSpace(<span class="kw">string</span>(syncAction)),
-        Degraded:   strings.TrimSpace(<span class="kw">string</span>(degraded)) != <span class="str">"0"</span>,
-    }, nil
-}
-          </div>
-        </div>
-
-        <!-- Tab 3 -->
-        <div id="arch-security" class="arch-tab-panel">
-          <div class="arch-info">
-            <h4>Seguridad Defensiva y CLI Zero-Token</h4>
-            <p>
-              Diseñado con arquitectura de confianza cero en los límites de red y control de acceso riguroso para entornos de producción.
-            </p>
-            <ul>
-              <li>Tickets efímeros en RAM de 30 segundos para WebSockets (cero JWTs expuestos en URLs).</li>
-              <li>Dialer anti-SSRF con bloqueo estricto de rangos privados, CGNAT y loopback en descargas de imágenes.</li>
-              <li>Ventana de confirmación de 30s con auto-rollback en reglas de firewall.</li>
-              <li>CLI autónomo (`webkvm-cli`) con acceso zero-token como root y autodetección del listener.</li>
-            </ul>
-          </div>
-          <div class="arch-code-box">
-<span class="comment">// Cookies adaptativas: sin flag Secure en HTTP plano sobre LAN</span>
-<span class="kw">func</span> <span class="fn">cookiesSecure</span>(configured <span class="kw">bool</span>, mode TLSMode, envSet <span class="kw">bool</span>) <span class="kw">bool</span> {
-    <span class="kw">if</span> mode == tlsModeOff &amp;&amp; !envSet {
-        <span class="kw">return</span> <span class="kw">false</span> <span class="comment">// Previene bucles de login en HTTP plano (Issue #5)</span>
-    }
-    <span class="kw">return</span> configured
-}
-
-<span class="comment">// CLI: autenticación inmediata local mediante clave jwt.key</span>
-$ sudo webkvm-cli users list
-USERNAME  ROLE   ACTIVE  EMAIL
-admin     admin  true    admin@local
-          </div>
-        </div>
-
-        <!-- Tab 4 -->
-        <div id="arch-universal" class="arch-tab-panel">
-          <div class="arch-info">
-            <h4>Binario Universal Compilado y Probado</h4>
-            <p>
-              Compatibilidad binaria verificada mediante pruebas reales en máquinas virtuales KVM Cloud-Init independientes.
-            </p>
-            <ul>
-              <li>Compilado canónico sobre Ubuntu 24.04 (Noble) con libvirt 10.x.</li>
-              <li>Probado y verificado en vivo sobre Arch Linux (libvirt 12.8 + Incus 7.5.1).</li>
-              <li>Probado y verificado en vivo sobre Fedora 44 (libvirt 12.0 + Incus 6.23).</li>
-              <li>Probado y verificado en vivo sobre Ubuntu 24.04 y Ubuntu 26.04.</li>
-              <li>Paquetes nativos deb/rpm generados con nfpm y contenedor oficial en Docker Hub.</li>
-            </ul>
-          </div>
-          <div class="arch-code-box">
-<span class="comment">// Verificación en 3 distros KVM reales en la LAN:</span>
-Arch Linux   (192.168.1.102:8080) ➔ <span class="str">libvirt 12.8</span> + <span class="str">Incus 7.5</span> [OK]
-Fedora 44    (192.168.1.240:8080) ➔ <span class="str">libvirt 12.0</span> + <span class="str">Incus 6.2</span> [OK]
-Ubuntu 24.04 (192.168.1.239:8080) ➔ <span class="str">libvirt 10.0</span> + <span class="str">Incus 6.0</span> [OK]
-
-<span class="comment">// Docker Hub oficial:</span>
-$ docker pull slaker1908/webkvm:latest
-Digest: sha256:... Size: 108.18 MB
-          </div>
-        </div>
-
 
         <!-- Live GitHub Stats Bar -->
         <div class="github-live-card">
@@ -1691,6 +1682,132 @@ alvin@debian-prod:~$ htop<br>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Architecture Tabs -->
+        <div class="arch-tabs-nav">
+          <button class="arch-tab-btn active" onclick="switchArchTab('hybrid', this)">1. Cómputo Híbrido</button>
+          <button class="arch-tab-btn" onclick="switchArchTab('raid', this)">2. RAID por sysfs</button>
+          <button class="arch-tab-btn" onclick="switchArchTab('security', this)">3. Seguridad y Zero-Token</button>
+          <button class="arch-tab-btn" onclick="switchArchTab('universal', this)">4. Distribución Universal</button>
+        </div>
+
+        <!-- Tab 1 -->
+        <div id="arch-hybrid" class="arch-tab-panel active">
+          <div class="arch-info">
+            <h4>KVM VMs + Contenedores Incus/LXC unificados</h4>
+            <p>
+              A diferencia de Proxmox que exige tomar el control total del servidor, WebKVM se ejecuta como un simple servicio systemd no invasivo.
+            </p>
+            <ul>
+              <li>Máquinas virtuales KVM completas para Windows, Linux y BSD con QEMU.</li>
+              <li>Contenedores de sistema Incus/LXC ultra rápidos que arrancan en &lt; 1 segundo.</li>
+              <li>Consolas gráficas noVNC y terminales PTY serial acelerados por WebGL (xterm.js).</li>
+              <li>Telemetría reactiva en tiempo real mediante Server-Sent Events (SSE).</li>
+            </ul>
+          </div>
+          <div class="arch-code-box">
+<span class="comment">// compute.Backend: seam desacoplado de virtualización</span>
+<span class="kw">type</span> Backend <span class="kw">interface</span> {
+    ListInstances(ctx context.Context) ([]models.VM, error)
+    CreateInstance(ctx context.Context, req models.CreateVMRequest) error
+    StartInstance(ctx context.Context, id string) error
+    StopInstance(ctx context.Context, id string) error
+    AttachDisk(ctx context.Context, vmID string, disk models.Disk) error
+}
+
+<span class="comment">// Single Binary: Servidor Go con SPA Svelte 5 embebida</span>
+<span class="comment">//go:embed all:internal/frontend/dist</span>
+<span class="kw">var</span> embeddedFrontend embed.FS
+          </div>
+        </div>
+
+        <!-- Tab 2 -->
+        <div id="arch-raid" class="arch-tab-panel">
+          <div class="arch-info">
+            <h4>Gestión de Software RAID Nativa por Kernel sysfs</h4>
+            <p>
+              En lugar de ejecutar procesos hijos `mdadm` en bucles lentos, WebKVM lee directamente el subsistema del kernel Linux en `/sys/block/md*/md`.
+            </p>
+            <ul>
+              <li>Descubrimiento en tiempo real sin sobrecarga de subprocesos.</li>
+              <li>Formateo automático (ext4, xfs, btrfs) y unidades de montaje persistentes systemd.</li>
+              <li>Aprovisionamiento de storage pools en 1 clic sobre el array recién creado.</li>
+              <li>Montaje no destructivo de arrays existentes y monitorización de scrub/sync en vivo.</li>
+            </ul>
+          </div>
+          <div class="arch-code-box">
+<span class="comment">// ParseArrayState: lectura directa de sysfs del kernel</span>
+<span class="kw">func</span> <span class="fn">readSysfsArray</span>(name <span class="kw">string</span>) (*RAIDState, error) {
+    base := filepath.Join(<span class="str">"/sys/block"</span>, name, <span class="str">"md"</span>)
+    level, _ := os.ReadFile(filepath.Join(base, <span class="str">"level"</span>))
+    syncAction, _ := os.ReadFile(filepath.Join(base, <span class="str">"sync_action"</span>))
+    degraded, _ := os.ReadFile(filepath.Join(base, <span class="str">"degraded"</span>))
+
+    <span class="kw">return</span> &amp;RAIDState{
+        Level:      strings.TrimSpace(<span class="kw">string</span>(level)),
+        SyncAction: strings.TrimSpace(<span class="kw">string</span>(syncAction)),
+        Degraded:   strings.TrimSpace(<span class="kw">string</span>(degraded)) != <span class="str">"0"</span>,
+    }, nil
+}
+          </div>
+        </div>
+
+        <!-- Tab 3 -->
+        <div id="arch-security" class="arch-tab-panel">
+          <div class="arch-info">
+            <h4>Seguridad Defensiva y CLI Zero-Token</h4>
+            <p>
+              Diseñado con arquitectura de confianza cero en los límites de red y control de acceso riguroso para entornos de producción.
+            </p>
+            <ul>
+              <li>Tickets efímeros en RAM de 30 segundos para WebSockets (cero JWTs expuestos en URLs).</li>
+              <li>Dialer anti-SSRF con bloqueo estricto de rangos privados, CGNAT y loopback en descargas de imágenes.</li>
+              <li>Ventana de confirmación de 30s con auto-rollback en reglas de firewall.</li>
+              <li>CLI autónomo (`webkvm-cli`) con acceso zero-token como root y autodetección del listener.</li>
+            </ul>
+          </div>
+          <div class="arch-code-box">
+<span class="comment">// Cookies adaptativas: sin flag Secure en HTTP plano sobre LAN</span>
+<span class="kw">func</span> <span class="fn">cookiesSecure</span>(configured <span class="kw">bool</span>, mode TLSMode, envSet <span class="kw">bool</span>) <span class="kw">bool</span> {
+    <span class="kw">if</span> mode == tlsModeOff &amp;&amp; !envSet {
+        <span class="kw">return</span> <span class="kw">false</span> <span class="comment">// Previene bucles de login en HTTP plano (Issue #5)</span>
+    }
+    <span class="kw">return</span> configured
+}
+
+<span class="comment">// CLI: autenticación inmediata local mediante clave jwt.key</span>
+$ sudo webkvm-cli users list
+USERNAME  ROLE   ACTIVE  EMAIL
+admin     admin  true    admin@local
+          </div>
+        </div>
+
+        <!-- Tab 4 -->
+        <div id="arch-universal" class="arch-tab-panel">
+          <div class="arch-info">
+            <h4>Binario Universal Compilado y Probado</h4>
+            <p>
+              Compatibilidad binaria verificada mediante pruebas reales en máquinas virtuales KVM Cloud-Init independientes.
+            </p>
+            <ul>
+              <li>Compilado canónico sobre Ubuntu 24.04 (Noble) con libvirt 10.x.</li>
+              <li>Probado y verificado en vivo sobre Arch Linux (libvirt 12.8 + Incus 7.5.1).</li>
+              <li>Probado y verificado en vivo sobre Fedora 44 (libvirt 12.0 + Incus 6.23).</li>
+              <li>Probado y verificado en vivo sobre Ubuntu 24.04 y Ubuntu 26.04.</li>
+              <li>Paquetes nativos deb/rpm generados con nfpm y contenedor oficial en Docker Hub.</li>
+            </ul>
+          </div>
+          <div class="arch-code-box">
+<span class="comment">// Verificación en 3 distros KVM reales en la LAN:</span>
+Arch Linux   (192.168.1.102:8080) ➔ <span class="str">libvirt 12.8</span> + <span class="str">Incus 7.5</span> [OK]
+Fedora 44    (192.168.1.240:8080) ➔ <span class="str">libvirt 12.0</span> + <span class="str">Incus 6.2</span> [OK]
+Ubuntu 24.04 (192.168.1.239:8080) ➔ <span class="str">libvirt 10.0</span> + <span class="str">Incus 6.0</span> [OK]
+
+<span class="comment">// Docker Hub oficial:</span>
+$ docker pull slaker1908/webkvm:latest
+Digest: sha256:... Size: 108.18 MB
           </div>
         </div>
 
@@ -1882,125 +1999,124 @@ alvin@debian-prod:~$ htop<br>
       </div>
 
       <!-- Live Services Dashboard -->
-        <div class="service-grid">
-          <div class="service-card">
-            <div class="service-info">
-              <div class="service-icon" style="color:var(--sky);">☁</div>
-              <div>
-                <div class="service-name">WebKVM</div>
-                <div class="service-role">Virtualización KVM/LXC</div>
-              </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--sky);">☁</div>
+            <div>
+              <div class="service-name">WebKVM</div>
+              <div class="service-role">Virtualización KVM/LXC</div>
             </div>
-            <span class="service-latency" id="lat-webkvm">0.18 ms</span>
           </div>
-
-          <div class="service-card">
-            <div class="service-info">
-              <div class="service-icon" style="color:var(--emerald);">🛡</div>
-              <div>
-                <div class="service-name">AdGuard Home</div>
-                <div class="service-role">DNS Sinkhole & DoH</div>
-              </div>
-            </div>
-            <span class="service-latency" id="lat-adguard">0.45 ms</span>
-          </div>
-
-          <div class="service-card">
-            <div class="service-info">
-              <div class="service-icon" style="color:var(--amber);">⚡</div>
-              <div>
-                <div class="service-name">NPM Proxy</div>
-                <div class="service-role">TLS Let's Encrypt</div>
-              </div>
-            </div>
-            <span class="service-latency" id="lat-npm">0.82 ms</span>
-          </div>
-
-          <div class="service-card">
-            <div class="service-info">
-              <div class="service-icon" style="color:var(--indigo);">🤖</div>
-              <div>
-                <div class="service-name">AI Local Stack</div>
-                <div class="service-role">Modelos & Automatización</div>
-              </div>
-            </div>
-            <span class="service-latency" id="lat-ai">1.12 ms</span>
-          </div>
-
-          <div class="service-card">
-            <div class="service-info">
-              <div class="service-icon" style="color:var(--rose);">📷</div>
-              <div>
-                <div class="service-name">Immich</div>
-                <div class="service-role">Backup Fotos Seguro</div>
-              </div>
-            </div>
-            <span class="service-latency" id="lat-immich">1.95 ms</span>
-          </div>
-
-          <div class="service-card">
-            <div class="service-info">
-              <div class="service-icon" style="color:var(--sky);">🎵</div>
-              <div>
-                <div class="service-name">Media Stack</div>
-                <div class="service-role">MeTube & Downtify</div>
-              </div>
-            </div>
-            <span class="service-latency" id="lat-media">0.60 ms</span>
-          </div>
+          <span class="service-latency" id="lat-webkvm">0.18 ms</span>
         </div>
 
-        <!-- Energy Efficiency Calculator -->
-        <div class="calc-container">
-          <div class="calc-header">
-            <span class="section-tag">Calculadora de Eficiencia Energética</span>
-            <h3>AOOSTAR WTR PRO vs Servidor Rack 2U Tradicional</h3>
-            <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;">
-              Compara el impacto de consumo de un nodo compacto de 15W frente a un servidor empresarial encendido 24/7/365.
-            </p>
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--emerald);">🛡</div>
+            <div>
+              <div class="service-name">AdGuard Home</div>
+              <div class="service-role">DNS Sinkhole & DoH</div>
+            </div>
           </div>
+          <span class="service-latency" id="lat-adguard">0.45 ms</span>
+        </div>
 
-          <div class="calc-slider-box">
-            <div class="calc-slider-header">
-              <span>Potencia servidor comparativa:</span>
-              <strong id="sliderLabel">350 Watts (Rack 2U)</strong>
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--amber);">⚡</div>
+            <div>
+              <div class="service-name">NPM Proxy</div>
+              <div class="service-role">TLS Let's Encrypt</div>
             </div>
-            <input type="range" min="80" max="650" value="350" step="10" class="calc-slider" id="calcSlider" oninput="calculateSavings(this.value)">
           </div>
+          <span class="service-latency" id="lat-npm">0.82 ms</span>
+        </div>
 
-          <div class="calc-results-grid">
-            <div class="calc-res-card">
-              <span class="calc-res-label">Consumo Servidor Rack</span>
-              <span class="calc-res-val" id="resRackKwh" style="color:var(--amber);">3,066 kWh</span>
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--indigo);">🤖</div>
+            <div>
+              <div class="service-name">AI Local Stack</div>
+              <div class="service-role">Modelos & Automatización</div>
             </div>
-            <div class="calc-res-card">
-              <span class="calc-res-label">Consumo AOOSTAR (15W)</span>
-              <span class="calc-res-val" id="resAoostarKwh" style="color:var(--emerald);">131 kWh</span>
+          </div>
+          <span class="service-latency" id="lat-ai">1.12 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--rose);">📷</div>
+            <div>
+              <div class="service-name">Immich</div>
+              <div class="service-role">Backup Fotos Seguro</div>
             </div>
-            <div class="calc-res-card">
-              <span class="calc-res-label">Ahorro Económico Estimado</span>
-              <span class="calc-res-val" id="resEur" style="color:var(--sky);">~645 € / año</span>
+          </div>
+          <span class="service-latency" id="lat-immich">1.95 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--sky);">🎵</div>
+            <div>
+              <div class="service-name">Media Stack</div>
+              <div class="service-role">MeTube & Downtify</div>
             </div>
-            <div class="calc-res-card">
-              <span class="calc-res-label">Emisiones CO2 Evitadas</span>
-              <span class="calc-res-val" id="resCo2" style="color:var(--indigo);">~733 kg CO2</span>
-            </div>
+          </div>
+          <span class="service-latency" id="lat-media">0.60 ms</span>
+        </div>
+      </div>
+
+      <!-- Energy Efficiency Calculator -->
+      <div class="calc-container">
+        <div class="calc-header">
+          <span class="section-tag" data-i18n="calc.tag">Calculadora de Eficiencia Energética</span>
+          <h3 data-i18n="calc.title">AOOSTAR WTR PRO vs Servidor Rack 2U Tradicional</h3>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;" data-i18n="calc.desc">
+            Compara el impacto de consumo de un nodo compacto de 15W frente a un servidor empresarial encendido 24/7/365.
+          </p>
+        </div>
+
+        <div class="calc-slider-box">
+          <div class="calc-slider-header">
+            <span data-i18n="calc.sliderHead">Potencia servidor comparativa:</span>
+            <strong id="sliderLabel">350 Watts (Rack 2U)</strong>
+          </div>
+          <input type="range" min="80" max="650" value="350" step="10" class="calc-slider" id="calcSlider" oninput="calculateSavings(this.value)">
+        </div>
+
+        <div class="calc-results-grid">
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.rack">Consumo Servidor Rack</span>
+            <span class="calc-res-val" id="resRackKwh" style="color:var(--amber);">3,066 kWh</span>
+          </div>
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.aoostar">Consumo AOOSTAR (15W)</span>
+            <span class="calc-res-val" id="resAoostarKwh" style="color:var(--emerald);">131 kWh</span>
+          </div>
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.savings">Ahorro Económico Estimado</span>
+            <span class="calc-res-val" id="resEur" style="color:var(--sky);">~645 € / año</span>
+          </div>
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.co2">Emisiones CO2 Evitadas</span>
+            <span class="calc-res-val" id="resCo2" style="color:var(--indigo);">~733 kg CO2</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TECHNICAL SKILLS MATRIX (GitHub Profile Layout with Official SVG Logos) -->
+    <!-- TECHNICAL SKILLS MATRIX (Official Badges with Interactive Filter & Search) -->
     <section id="stack" class="section">
       <div class="section-head">
-        <span class="section-tag">Stack Técnico & Herramientas</span>
-        <h2 class="section-title">Matriz de Competencias</h2>
-        <p class="section-desc">
+        <span class="section-tag" data-i18n="skills.tag">Stack Técnico & Herramientas</span>
+        <h2 class="section-title" data-i18n="skills.title">Matriz de Competencias</h2>
+        <p class="section-desc" data-i18n="skills.desc">
           Tecnologías y herramientas utilizadas en entornos de producción, desde código y desarrollo hasta controladores de hardware y redes.
         </p>
       </div>
 
-                        <!-- Live Search & Category Filter Bar -->
+      <!-- Live Search & Category Filter Bar -->
       <div class="skills-filter-bar">
         <div class="skills-search-wrapper">
           <svg class="skills-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -2020,7 +2136,7 @@ alvin@debian-prod:~$ htop<br>
         </div>
       </div>
 
-      <div class="skills-category-group">
+<div class="skills-category-group">
 
         <!-- 1. Lenguajes & Backend -->
         <div class="skill-category-card">
@@ -2187,9 +2303,9 @@ alvin@debian-prod:~$ htop<br>
     <!-- Terminal Playground -->
     <section id="terminal" class="section">
       <div class="section-head">
-        <span class="section-tag">Playground Interactivo</span>
-        <h2 class="section-title">Terminal del Sistema</h2>
-        <p class="section-desc">
+        <span class="section-tag" data-i18n="terminal.tag">Playground Interactivo</span>
+        <h2 class="section-title" data-i18n="terminal.title">Terminal del Sistema</h2>
+        <p class="section-desc" data-i18n="terminal.desc">
           Interactúa directamente con la consola virtual para consultar especificaciones de hardware, proyectos y datos de infraestructura.
         </p>
       </div>
@@ -2220,7 +2336,7 @@ alvin@debian-prod:~$ htop<br>
                   Disk (/mnt/raid0): 1.8 TB Linux RAID 0 (Dual NVMe)
                   Network: 2x Intel I226-V 2.5GbE
           </div>
-          <div class="term-line" style="color:var(--text-muted);">Escribe <strong style="color:var(--text);">'help'</strong> para ver la lista de comandos disponibles o pulsa las opciones abajo.</div>
+          <div class="term-line" style="color:var(--text-muted);" data-i18n="term.intro">Escribe <strong style="color:var(--text);">'help'</strong> para ver la lista de comandos disponibles o pulsa las opciones abajo.</div>
         </div>
 
         <div class="terminal-input-row">
@@ -2234,6 +2350,7 @@ alvin@debian-prod:~$ htop<br>
           <button class="term-chip" onclick="runCommand('webkvm')">webkvm</button>
           <button class="term-chip" onclick="runCommand('services')">services</button>
           <button class="term-chip" onclick="runCommand('calc')">calc</button>
+          <button class="term-chip" onclick="runCommand('principles')">principles</button>
           <button class="term-chip" onclick="runCommand('contact')">contact</button>
           <button class="term-chip" onclick="runCommand('clear')">clear</button>
         </div>
@@ -2243,22 +2360,22 @@ alvin@debian-prod:~$ htop<br>
     <!-- Contact & Connect -->
     <section id="contacto" class="section">
       <div class="contact-card">
-        <span class="section-tag">Conexión Profesional</span>
-        <h2 class="section-title">¿Hablamos sobre Infraestructura o Software?</h2>
-        <p class="section-desc" style="max-width:560px;">
+        <span class="section-tag" data-i18n="contact.tag">Conexión Profesional</span>
+        <h2 class="section-title" data-i18n="contact.title">¿Hablamos sobre Infraestructura o Software?</h2>
+        <p class="section-desc" style="max-width:580px;" data-i18n="contact.desc">
           Siempre dispuesto a intercambiar conocimientos técnicos sobre administración de sistemas, ingeniería de servidores o desarrollo en Go.
         </p>
 
         <div class="contact-actions">
           <a href="mailto:alvinpp1908@gmail.com" class="btn btn-primary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <span>Enviar Correo</span>
+            <span data-i18n="contact.emailBtn">Enviar Correo</span>
           </a>
           <button onclick="copyToClipboard('alvinpp1908@gmail.com', 'Email copiado: alvinpp1908@gmail.com')" class="btn btn-secondary">
-            <span>Copiar al portapapeles</span>
+            <span data-i18n="contact.copyBtn">Copiar al portapapeles</span>
           </button>
           <a href="https://github.com/Slaker19" target="_blank" rel="noopener" class="btn btn-secondary">
-            <span>Perfil en GitHub ↗</span>
+            <span data-i18n="contact.githubBtn">Perfil en GitHub ↗</span>
           </a>
         </div>
       </div>
@@ -2270,10 +2387,10 @@ alvin@debian-prod:~$ htop<br>
   <footer class="footer">
     <div class="container footer-inner">
       <div>
-        <strong>Alvin Perez</strong> · Diseñado con precisión y respeto por los recursos del sistema.
+        <strong>Alvin Perez</strong> · <span data-i18n="footer.tagline">Diseñado con precisión y respeto por los recursos del sistema.</span>
       </div>
       <div class="footer-links">
-        <a href="#top">Volver arriba ↑</a>
+        <a href="#top" data-i18n="footer.top">Volver arriba ↑</a>
         <a href="https://github.com/Slaker19" target="_blank" rel="noopener">GitHub</a>
         <a href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener">WebKVM</a>
       </div>
@@ -2287,6 +2404,12 @@ alvin@debian-prod:~$ htop<br>
   </div>
 
   <script>
+    // --- 0. Interactive Mouse Glow (Spotlight Effect) ---
+    window.addEventListener('pointermove', (e) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+
     // --- 1. Internationalization (i18n) Dictionary & Switcher ---
     let currentLang = localStorage.getItem('webkvm_lang') || 'es';
 
@@ -2294,20 +2417,116 @@ alvin@debian-prod:~$ htop<br>
       es: {
         'nav.webkvm': 'WebKVM',
         'nav.homelab': 'AOOSTAR Homelab',
+        'nav.principles': 'Principios',
         'nav.skills': 'Conocimientos',
         'nav.terminal': 'Terminal',
         'nav.contact': 'Contacto',
         'nav.available': 'Disponible',
-        'filter.all': 'Todas (52)'
+        'hero.tag': 'Técnico IT · Backend Go · Virtualización (KVM + Incus/LXC)',
+        'hero.title': 'Ingeniería de sistemas Linux, <span>virtualización híbrida</span> y software en Go.',
+        'hero.desc': 'Especialista en infraestructura bare-metal, tuning de hardware y virtualización de bajo consumo. Creador de <strong>WebKVM</strong> (plataforma híbrida KVM/Incus en un binario autónomo Go de ~14 MB). Mi entorno 24/7 en producción opera sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.',
+        'hero.ctaPrimary': 'Explorar WebKVM',
+        'hero.ctaSecondary': 'Explorador Hardware (AOOSTAR)',
+        'metric.idle': 'Consumo Reposo (AOOSTAR 24/7)',
+        'metric.binary': 'Binario Autónomo WebKVM',
+        'metric.cpu': 'AMD Ryzen 7 5825U Zen 3',
+        'metric.net': 'Intel I226-V Ethernet L2',
+        'principles.tag': 'Filosofía de Arquitectura',
+        'principles.title': 'Principios de Ingeniería',
+        'principles.desc': 'Fundamentos técnicos aplicados en cada capa de software e infraestructura: cero dependencias innecesarias, máxima eficiencia por vatio y robustez defensiva.',
+        'principle.1.title': 'Simplicidad de Despliegue',
+        'principle.1.desc': 'Binarios autocontenidos sin bases de datos externas obligatorias ni dependencias de runtime. El software debe arrancar en segundos en cualquier Linux estándar.',
+        'principle.2.title': 'Kernel Directo sobre Polling',
+        'principle.2.desc': 'Lectura directa de interfaces sysfs del kernel Linux en lugar de generar bucles de subprocesos CLI. Rendimiento nativo con consumo mínimo de CPU y memoria.',
+        'principle.3.title': 'Fail-Closed por Defecto',
+        'principle.3.desc': 'Seguridad estricta en las fronteras de red: tickets de un solo uso en RAM para WebSockets, dialers anti-SSRF rigurosos y confirmación con auto-rollback en cortafuegos.',
+        'principle.4.title': 'Eficiencia & Densidad',
+        'principle.4.desc': 'Alineación rigurosa de hardware y software. Operar una nube privada y decenas de servicios 24/7 en un chasis silencioso de 15W TDP sin comprometer fiabilidad.',
+        'webkvm.tag': 'Buque Insignia · Software de Código Abierto',
+        'webkvm.title': 'WebKVM: Nube Privada en Binario Único',
+        'webkvm.desc': 'Convierte cualquier servidor Linux en una plataforma de virtualización híbrida en 1 minuto. Sin secuestrar el sistema operativo, sin bases de datos externas y consumiendo apenas 15 MB de RAM en reposo.',
+        'webkvm.sub': 'Desarrollado en Go 1.26 + Svelte 5 (Runes) + libvirt CGO + API Incus nativa.',
+        'calc.tag': 'Calculadora de Eficiencia Energética',
+        'calc.title': 'AOOSTAR WTR PRO vs Servidor Rack 2U Tradicional',
+        'calc.desc': 'Compara el impacto de consumo de un nodo compacto de 15W frente a un servidor empresarial encendido 24/7/365.',
+        'calc.sliderHead': 'Potencia servidor comparativa:',
+        'calc.rack': 'Consumo Servidor Rack',
+        'calc.aoostar': 'Consumo AOOSTAR (15W)',
+        'calc.savings': 'Ahorro Económico Estimado',
+        'calc.co2': 'Emisiones CO2 Evitadas',
+        'skills.tag': 'Stack Técnico & Herramientas',
+        'skills.title': 'Matriz de Competencias',
+        'skills.desc': 'Tecnologías y herramientas utilizadas en entornos de producción, desde código y desarrollo hasta controladores de hardware y redes.',
+        'filter.all': 'Todas (52)',
+        'terminal.tag': 'Playground Interactivo',
+        'terminal.title': 'Terminal del Sistema',
+        'terminal.desc': 'Interactúa directamente con la consola virtual para consultar especificaciones de hardware, proyectos y datos de infraestructura.',
+        'term.intro': "Escribe 'help' para ver la lista de comandos disponibles o pulsa las opciones abajo.",
+        'contact.tag': 'Conexión Profesional',
+        'contact.title': '¿Hablamos sobre Infraestructura o Software?',
+        'contact.desc': 'Siempre dispuesto a intercambiar conocimientos técnicos sobre administración de sistemas, ingeniería de servidores o desarrollo en Go.',
+        'contact.emailBtn': 'Enviar Correo',
+        'contact.copyBtn': 'Copiar al portapapeles',
+        'contact.githubBtn': 'Perfil en GitHub ↗',
+        'footer.tagline': 'Diseñado con precisión y respeto por los recursos del sistema.',
+        'footer.top': 'Volver arriba ↑'
       },
       en: {
         'nav.webkvm': 'WebKVM',
         'nav.homelab': 'AOOSTAR Homelab',
+        'nav.principles': 'Principles',
         'nav.skills': 'Skills & Stack',
         'nav.terminal': 'Terminal',
         'nav.contact': 'Contact',
         'nav.available': 'Available for hire',
-        'filter.all': 'All (52)'
+        'hero.tag': 'IT Systems Engineer · Go Backend · Virtualization (KVM + Incus/LXC)',
+        'hero.title': 'Linux systems engineering, <span>hybrid virtualization</span> and Go software.',
+        'hero.desc': 'Specialist in bare-metal infrastructure, hardware latency tuning, and low-power high-density systems. Creator of <strong>WebKVM</strong> (hybrid KVM/Incus platform in a ~14 MB single Go executable). My 24/7 production homelab runs on an <strong>AOOSTAR WTR PRO</strong> with 15W idle TDP.',
+        'hero.ctaPrimary': 'Explore WebKVM',
+        'hero.ctaSecondary': 'Hardware Explorer (AOOSTAR)',
+        'metric.idle': 'Idle Power (AOOSTAR 24/7)',
+        'metric.binary': 'Self-Contained WebKVM Binary',
+        'metric.cpu': 'AMD Ryzen 7 5825U Zen 3',
+        'metric.net': 'Intel I226-V Ethernet L2',
+        'principles.tag': 'Architectural Philosophy',
+        'principles.title': 'Engineering Principles',
+        'principles.desc': 'Technical foundations applied across every software and infrastructure layer: zero runtime bloat, maximum performance per watt, and fail-closed security.',
+        'principle.1.title': 'Deployment Simplicity',
+        'principle.1.desc': 'Self-contained binaries with zero mandatory external databases or runtime dependencies. Starts in seconds on any standard Linux distribution.',
+        'principle.2.title': 'Direct Kernel over Polling',
+        'principle.2.desc': 'Direct reading of Linux kernel sysfs interfaces instead of spawning slow CLI subprocesses. Native performance with minimal CPU and memory overhead.',
+        'principle.3.title': 'Fail-Closed by Default',
+        'principle.3.desc': 'Strict security at network boundaries: 30-second single-use RAM tickets for WebSockets, anti-SSRF safe dialers, and 30s auto-rollback on firewall rules.',
+        'principle.4.title': 'Efficiency & Density',
+        'principle.4.desc': 'Rigorous alignment of hardware and software. Running a private cloud and dozens of services 24/7 inside a 15W TDP silent chassis without sacrificing reliability.',
+        'webkvm.tag': 'Flagship Project · Open Source Software',
+        'webkvm.title': 'WebKVM: Private Cloud in a Single Binary',
+        'webkvm.desc': 'Turns any Linux server into a hybrid virtualization platform in 1 minute. Without OS hijacking, without external databases, consuming only 15 MB of idle RAM.',
+        'webkvm.sub': 'Built in Go 1.26 + Svelte 5 (Runes) + libvirt CGO + native Incus REST API.',
+        'calc.tag': 'Energy Efficiency Calculator',
+        'calc.title': 'AOOSTAR WTR PRO vs Traditional 2U Enterprise Rack',
+        'calc.desc': 'Compare the real power impact of a 15W compact node versus an enterprise server running 24/7/365.',
+        'calc.sliderHead': 'Comparative server power draw:',
+        'calc.rack': 'Rack Server Power',
+        'calc.aoostar': 'AOOSTAR (15W) Power',
+        'calc.savings': 'Estimated Annual Savings',
+        'calc.co2': 'Avoided CO2 Emissions',
+        'skills.tag': 'Technical Stack & Tooling',
+        'skills.title': 'Competencies Matrix',
+        'skills.desc': 'Production-grade technologies and tools mastered, from low-level kernel drivers to modern high-performance web software.',
+        'filter.all': 'All (52)',
+        'terminal.tag': 'Interactive Playground',
+        'terminal.title': 'System Terminal',
+        'terminal.desc': 'Directly interact with the virtual console to query hardware specifications, architecture, and live homelab telemetry.',
+        'term.intro': "Type 'help' to list available commands or click the chips below.",
+        'contact.tag': 'Professional Connection',
+        'contact.title': "Let's Talk Infrastructure or Software Engineering",
+        'contact.desc': 'Always open to discussing systems administration, bare-metal server engineering, or Go backend software.',
+        'contact.emailBtn': 'Send Email',
+        'contact.copyBtn': 'Copy to clipboard',
+        'contact.githubBtn': 'GitHub Profile ↗',
+        'footer.tagline': 'Engineered with precision and respect for system resources.',
+        'footer.top': 'Back to top ↑'
       }
     };
 
@@ -2320,7 +2539,7 @@ alvin@debian-prod:~$ htop<br>
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
-          el.textContent = translations[lang][key];
+          el.innerHTML = translations[lang][key];
         }
       });
     }
@@ -2410,16 +2629,16 @@ alvin@debian-prod:~$ htop<br>
           return;
         }
 
-        const badges = card.querySelectorAll('.tech-badge');
+        const badges = card.querySelectorAll('.badge-img');
         let cardHasMatch = false;
 
         badges.forEach(badge => {
-          const text = badge.textContent.toLowerCase();
-          const imgAlt = (badge.querySelector('img')?.getAttribute('alt') || '').toLowerCase();
-          const matchesSearch = (!query || text.includes(query) || imgAlt.includes(query));
+          const alt = (badge.getAttribute('alt') || '').toLowerCase();
+          const src = (badge.getAttribute('src') || '').toLowerCase();
+          const matchesSearch = (!query || alt.includes(query) || src.includes(query));
 
           if (matchesSearch) {
-            badge.style.display = 'inline-flex';
+            badge.style.display = 'block';
             cardHasMatch = true;
           } else {
             badge.style.display = 'none';
@@ -2449,26 +2668,24 @@ alvin@debian-prod:~$ htop<br>
       const target = document.getElementById('hw-' + hwId);
       if (target) target.classList.add('active');
 
-      // Highlight SVG parts
       const cpu = document.getElementById('svg-cpu-rect');
       const bay1 = document.getElementById('svg-bay-1');
       const bay2 = document.getElementById('svg-bay-2');
       const nvme1 = document.getElementById('svg-nvme-1');
       const nvme2 = document.getElementById('svg-nvme-2');
 
-      // Reset
       [cpu, bay1, bay2, nvme1, nvme2].forEach(el => {
         if (el) el.style.filter = '';
       });
 
       if (hwId === 'cpu' && cpu) {
-        cpu.style.filter = 'drop-shadow(0 0 10px #38bdf8)';
+        cpu.style.filter = 'drop-shadow(0 0 12px #38bdf8)';
       } else if (hwId === 'nvme') {
-        if (nvme1) nvme1.style.filter = 'drop-shadow(0 0 10px #10b981)';
-        if (nvme2) nvme2.style.filter = 'drop-shadow(0 0 10px #10b981)';
+        if (nvme1) nvme1.style.filter = 'drop-shadow(0 0 12px #10b981)';
+        if (nvme2) nvme2.style.filter = 'drop-shadow(0 0 12px #10b981)';
       } else if (hwId === 'chassis') {
-        if (bay1) bay1.style.filter = 'drop-shadow(0 0 10px #38bdf8)';
-        if (bay2) bay2.style.filter = 'drop-shadow(0 0 10px #f59e0b)';
+        if (bay1) bay1.style.filter = 'drop-shadow(0 0 12px #38bdf8)';
+        if (bay2) bay2.style.filter = 'drop-shadow(0 0 12px #f59e0b)';
       }
     }
 
@@ -2547,6 +2764,7 @@ alvin@debian-prod:~$ htop<br>
   - webkvm      : Resumen de características del proyecto WebKVM
   - services    : Estado de servicios homelab 24/7
   - calc        : Comparativa de ahorro energético
+  - principles  : Principios de ingeniería y diseño
   - contact     : Información de contacto
   - clear       : Limpia el terminal`,
 
@@ -2589,6 +2807,12 @@ alvin@debian-prod:~$ htop<br>
   • AOOSTAR WTR PRO (15W 24/7)   : 131 kWh / año (~29 € / año)
   • Servidor Rack 2U (350W 24/7) : 3,066 kWh / año (~674 € / año)
   • Ahorro estimado              : ~645 € / año y 733 kg CO2 evitados.`,
+
+      principles: () => `Principios de Arquitectura:
+  1. Simplicidad de Despliegue: binarios únicos y cero bases de datos externas.
+  2. Kernel Directo sobre Polling: telemetría sysfs sin spawn de procesos CLI.
+  3. Fail-Closed por Defecto: límites seguros en red y permisos mínimos.
+  4. Eficiencia & Densidad: máximo rendimiento por vatio en hardware bare-metal.`,
 
       contact: () => `Vías de contacto:
   • Email : alvinpp1908@gmail.com
@@ -2638,12 +2862,11 @@ alvin@debian-prod:~$ htop<br>
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    // Initialize on load
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       setLang(currentLang);
       loadGitHubStats();
     });
   </script>
-
 </body>
 </html>
