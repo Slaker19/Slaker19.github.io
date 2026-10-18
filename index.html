@@ -74,6 +74,256 @@
       background: #000000;
     }
 
+    
+    /* Language Toggle */
+    .lang-switch-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.1rem 0.2rem;
+      transition: color 0.15s ease;
+    }
+    .lang-btn.active {
+      color: var(--sky);
+    }
+
+    /* GitHub Live Stats Bar */
+    .github-live-card {
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+    .gh-stat-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--text-muted);
+    }
+    .gh-stat-item strong {
+      color: var(--text);
+    }
+    .gh-stat-item svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* WebKVM Interactive OS Window / Mockup */
+    .mockup-window {
+      background: #080c14;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .mockup-header {
+      background: #0d1322;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .mockup-body {
+      padding: 1.25rem;
+    }
+    .mockup-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+    }
+    .mockup-tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .mockup-tab-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--sky);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .mockup-content {
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+    .mockup-content.active {
+      display: block;
+    }
+    .mockup-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+    }
+    .mockup-table th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      color: var(--text-dim);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .mockup-table td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+    }
+    .mockup-row:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .status-pill.running {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .status-pill.stopped {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+    .action-btn-sm {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      padding: 0.2rem 0.5rem;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: all 0.15s ease;
+    }
+    .action-btn-sm:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Skills Search & Category Filters */
+    .skills-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .skills-search-input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      outline: none;
+      width: 280px;
+      transition: all 0.2s ease;
+    }
+    .skills-search-input:focus {
+      border-color: var(--sky);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+      width: 320px;
+    }
+    .skills-search-wrapper {
+      position: relative;
+    }
+    .skills-search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+      width: 14px;
+      height: 14px;
+    }
+    .skills-pills-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .skill-filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .skill-filter-btn:hover {
+      background: var(--bg-card-hover);
+      color: var(--text);
+    }
+    .skill-filter-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: var(--sky);
+      font-weight: 600;
+    }
+
+    /* SVG Interactive Chassis Styling */
+    .svg-chassis-svg {
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+    }
+    .svg-bay {
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .svg-bay:hover {
+      filter: brightness(1.2);
+    }
+    .svg-led {
+      animation: blink 2.5s infinite ease-in-out;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 0.3; }
+    }
+
     /* Subtle Luxury Dark Lighting */
     body::before {
       content: "";
@@ -1045,17 +1295,22 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#webkvm">WebKVM</a></li>
-        <li><a href="#homelab">AOOSTAR Homelab</a></li>
-        <li><a href="#stack">Conocimientos</a></li>
-        <li><a href="#terminal">Terminal</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#webkvm" data-i18n="nav.webkvm">WebKVM</a></li>
+        <li><a href="#homelab" data-i18n="nav.homelab">AOOSTAR Homelab</a></li>
+        <li><a href="#stack" data-i18n="nav.skills">Conocimientos</a></li>
+        <li><a href="#terminal" data-i18n="nav.terminal">Terminal</a></li>
+        <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
       </ul>
 
       <div class="nav-actions">
+        <div class="lang-switch-box">
+          <button class="lang-btn active" id="btn-lang-es" onclick="setLang('es')">ES</button>
+          <span style="color:var(--border);">/</span>
+          <button class="lang-btn" id="btn-lang-en" onclick="setLang('en')">EN</button>
+        </div>
         <div class="status-badge" title="Activo y disponible para proyectos de infraestructura">
           <div class="status-pulse"></div>
-          <span>Disponible</span>
+          <span data-i18n="nav.available">Disponible</span>
         </div>
         <a href="https://github.com/Slaker19" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" aria-label="GitHub Profile">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
@@ -1278,6 +1533,167 @@ Digest: sha256:... Size: 108.18 MB
           </div>
         </div>
 
+
+        <!-- Live GitHub Stats Bar -->
+        <div class="github-live-card">
+          <div class="gh-stat-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>GitHub Stars:</span>
+            <strong id="gh-stars">53</strong>
+          </div>
+          <div class="gh-stat-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+            <span>Forks:</span>
+            <strong id="gh-forks">3</strong>
+          </div>
+          <div class="gh-stat-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            <span>Latest Release:</span>
+            <strong id="gh-release" style="color:var(--emerald);">v0.1.8-fix01</strong>
+          </div>
+          <div class="gh-stat-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>CI/CD Workflows:</span>
+            <strong style="color:var(--emerald);">100% Passing</strong>
+          </div>
+          <div class="gh-stat-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+            <span>Vulnerabilidades:</span>
+            <strong style="color:var(--emerald);">0 Alertas</strong>
+          </div>
+        </div>
+
+        <!-- Interactive WebKVM OS Window Mockup -->
+        <div class="mockup-window">
+          <div class="mockup-header">
+            <div class="terminal-dots">
+              <div class="dot red"></div>
+              <div class="dot yellow"></div>
+              <div class="dot green"></div>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted); display:flex; align-items:center; gap:0.5rem;">
+              <span style="color:var(--emerald);">🔒</span>
+              <span>WebKVM Dashboard — https://192.168.1.40:8080</span>
+            </div>
+            <div style="font-size:0.75rem; font-family:var(--font-mono); color:var(--sky); background:rgba(56,189,248,0.1); padding:0.15rem 0.5rem; border-radius:4px;">
+              admin (Operator)
+            </div>
+          </div>
+
+          <div class="mockup-body">
+            <div class="mockup-tabs">
+              <button class="mockup-tab-btn active" onclick="switchMockTab('vms', this)">Instancias & VMs</button>
+              <button class="mockup-tab-btn" onclick="switchMockTab('vnc', this)">Consola noVNC / WebGL</button>
+              <button class="mockup-tab-btn" onclick="switchMockTab('raid', this)">Software RAID (/dev/md0)</button>
+            </div>
+
+            <!-- Mockup Tab 1: VMs -->
+            <div id="mock-vms" class="mockup-content active">
+              <table class="mockup-table">
+                <thead>
+                  <tr>
+                    <th>Instancia</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Recursos</th>
+                    <th>IP Local</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="mockup-row">
+                    <td><strong>debian-prod</strong></td>
+                    <td><span class="badge" style="font-size:0.68rem;">KVM</span></td>
+                    <td><span class="status-pill running" id="pill-vm-1">● RUNNING</span></td>
+                    <td>2 vCPU · 2048 MB</td>
+                    <td>192.168.1.55</td>
+                    <td>
+                      <button class="action-btn-sm" onclick="toggleMockVM(1, this)">Reiniciar</button>
+                    </td>
+                  </tr>
+                  <tr class="mockup-row">
+                    <td><strong>ubuntu-noble</strong></td>
+                    <td><span class="badge" style="font-size:0.68rem;">KVM</span></td>
+                    <td><span class="status-pill running" id="pill-vm-2">● RUNNING</span></td>
+                    <td>4 vCPU · 4096 MB</td>
+                    <td>192.168.1.56</td>
+                    <td>
+                      <button class="action-btn-sm" onclick="toggleMockVM(2, this)">Reiniciar</button>
+                    </td>
+                  </tr>
+                  <tr class="mockup-row">
+                    <td><strong>alpine-gateway</strong></td>
+                    <td><span class="badge sky" style="font-size:0.68rem;">Incus CT</span></td>
+                    <td><span class="status-pill running" id="pill-vm-3">● RUNNING</span></td>
+                    <td>1 vCPU · 512 MB</td>
+                    <td>192.168.1.57</td>
+                    <td>
+                      <button class="action-btn-sm" onclick="toggleMockVM(3, this)">Reiniciar</button>
+                    </td>
+                  </tr>
+                  <tr class="mockup-row">
+                    <td><strong>windows-lab</strong></td>
+                    <td><span class="badge" style="font-size:0.68rem;">KVM</span></td>
+                    <td><span class="status-pill stopped" id="pill-vm-4">○ STOPPED</span></td>
+                    <td>4 vCPU · 8192 MB</td>
+                    <td>—</td>
+                    <td>
+                      <button class="action-btn-sm" onclick="toggleMockVM(4, this)" style="color:var(--emerald);">Iniciar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Mockup Tab 2: VNC Console -->
+            <div id="mock-vnc" class="mockup-content">
+              <div style="background:#000; border-radius:6px; padding:1rem; font-family:var(--font-mono); font-size:0.78rem; line-height:1.5; color:#a6e3a1;">
+alvin@debian-prod:~$ htop<br>
+<span style="color:#38bdf8;">1  [||||||||||||||||||||||                      42.1%]</span>   Tasks: 48, 128 thr; 1 running<br>
+<span style="color:#38bdf8;">2  [|||||||||||                                 21.4%]</span>   Load average: 0.18 0.12 0.08<br>
+<span style="color:#f59e0b;">Mem[|||||||||||||||||||||||||||||       486M/1.95G]</span>   Uptime: 14 days, 08:24:11<br>
+<span style="color:#818cf8;">Swp[                                        0K/512M]</span><br><br>
+<span style="color:#94a3b8;">  PID USER      PRI  NI  VIRT   RES   SHR S CPU% MEM%   TIME+  Command</span><br>
+  712 root       20   0  712M  128M 42800 S  4.2  6.4  12:44.2 webkvm-guest-agent<br>
+  845 root       20   0  1.2G  184M 64100 S  2.1  9.2  08:12.9 caddy run --config<br>
+  912 alvin      20   0  420M   68M 31200 S  0.5  3.4  01:14.2 node /app/server.js<br>
+  988 root       20   0  180M   28M 18400 S  0.0  1.4  00:15.8 /usr/sbin/sshd -D
+              </div>
+            </div>
+
+            <!-- Mockup Tab 3: RAID -->
+            <div id="mock-raid" class="mockup-content">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div style="background:#000; border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:1rem; font-family:var(--font-mono); font-size:0.8rem;">
+                  <span style="color:var(--text-muted); font-size:0.72rem;">ARRAY IDENTIFIER</span>
+                  <div style="font-size:1.1rem; font-weight:700; color:var(--text); margin-top:0.25rem;">/dev/md0 · Linux RAID 0</div>
+                  <div style="color:var(--emerald); font-size:0.78rem; margin-top:0.35rem;">● Estado: Healthy / Optimal</div>
+                  <div style="margin-top:0.75rem; color:var(--text-muted); font-size:0.75rem;">
+                    Chunk Size: 512 KiB · Algoritmo: Striping<br>
+                    Capacidad: 1,885,412 MB (1.8 TB)
+                  </div>
+                </div>
+                <div style="background:#000; border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:1rem; font-family:var(--font-mono); font-size:0.8rem;">
+                  <span style="color:var(--text-muted); font-size:0.72rem;">MIEMBROS ACTIVOS</span>
+                  <div style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.4rem;">
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:0.25rem;">
+                      <span>nvme0n1 (Slot M.2 #1)</span>
+                      <strong style="color:var(--sky);">1,000 GB</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                      <span>nvme1n1 (Slot M.2 #2)</span>
+                      <strong style="color:var(--sky);">1,000 GB</strong>
+                    </div>
+                  </div>
+                  <div style="margin-top:0.85rem; font-size:0.75rem; color:var(--emerald);">
+                    Rendimiento medido: 3,480 MB/s lectura seq
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
           <a href="https://github.com/Slaker19/webkvm" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">
             <span>Repositorio GitHub ↗</span>
@@ -1311,180 +1727,161 @@ Digest: sha256:... Size: 108.18 MB
           <button class="hw-nav-btn" onclick="switchHw('pve', this)">[ 🖥 Proxmox VE 9 ]</button>
         </div>
 
-        <!-- Panel 1: CPU -->
-        <div id="hw-cpu" class="hw-panel active">
+        <div style="display:grid; grid-template-columns:1.05fr 0.95fr; gap:2rem; align-items:start;">
+          <!-- Left: Dynamic Specs Details Panes -->
           <div>
-            <h3 class="hw-detail-title">AMD Ryzen 7 5825U</h3>
-            <span class="hw-detail-sub">Zen 3 Barcelo · 8 Cores / 16 Threads · 15W TDP</span>
-            <p class="hw-detail-desc">
-              El corazón del nodo es un procesador de 8 núcleos y 16 hilos con arquitectura Zen 3 de 7nm. Proporciona una densidad de cálculo excepcional manteniendo el nodo en un consumo en reposo de solo 12W-15W.
-            </p>
-            <ul class="hw-specs-list">
-              <li><span>Frecuencia Base / Boost</span><span>2.0 GHz / 4.5 GHz</span></li>
-              <li><span>Caché L3</span><span>16 MB Unified</span></li>
-              <li><span>Virtualización</span><span>AMD-V con soporte IOMMU/VFIO</span></li>
-              <li><span>Gráficos Integrados</span><span>AMD Radeon Vega 8 (GPGPU/HW Transcoding)</span></li>
-              <li><span>Gobernador CPU</span><span>schedutil (escalado adaptativo)</span></li>
-            </ul>
+            <!-- Panel 1: CPU -->
+            <div id="hw-cpu" class="hw-panel active">
+              <h3 class="hw-detail-title">AMD Ryzen 7 5825U</h3>
+              <span class="hw-detail-sub">Zen 3 Barcelo · 8 Cores / 16 Threads · 15W TDP</span>
+              <p class="hw-detail-desc">
+                El corazón del nodo es un procesador de 8 núcleos y 16 hilos con arquitectura Zen 3 de 7nm. Proporciona una densidad de cálculo excepcional manteniendo el nodo en un consumo en reposo de solo 12W-15W.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Frecuencia Base / Boost</span><span>2.0 GHz / 4.5 GHz</span></li>
+                <li><span>Caché L3</span><span>16 MB Unified</span></li>
+                <li><span>Virtualización</span><span>AMD-V con soporte IOMMU/VFIO</span></li>
+                <li><span>Gráficos Integrados</span><span>AMD Radeon Vega 8 (GPGPU/HW Transcoding)</span></li>
+                <li><span>Gobernador CPU</span><span>schedutil (escalado adaptativo)</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 2: NVMe RAID -->
+            <div id="hw-nvme" class="hw-panel">
+              <h3 class="hw-detail-title">Dual NVMe Linux RAID 0</h3>
+              <span class="hw-detail-sub">Array de Alto Rendimiento `/dev/md0` · 1.8 TB</span>
+              <p class="hw-detail-desc">
+                Dos unidades NVMe M.2 PCIe 3.0 de 1 TB configuradas en striping RAID 0 mediante el kernel Linux (`mdraid`). Ofrece un ancho de banda de más de 3.5 GB/s para operaciones intensivas de I/O de máquinas virtuales.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Dispositivos Miembro</span><span>/dev/nvme0n1 (1TB) + /dev/nvme1n1 (1TB)</span></li>
+                <li><span>Punto de Montaje</span><span>/mnt/raid0 (ext4, discard, noatime)</span></li>
+                <li><span>Chunk Size</span><span>512 KB Striping</span></li>
+                <li><span>Uso Principal</span><span>Discos VM QCOW2, contenedores y scratch</span></li>
+                <li><span>Monitorización</span><span>sysfs en tiempo real (/sys/block/md0/md)</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 3: Network -->
+            <div id="hw-net" class="hw-panel">
+              <h3 class="hw-detail-title">Dual 2.5 GbE Intel I226-V</h3>
+              <span class="hw-detail-sub">Multi-Gigabit L2 Microsegmentation & Bridges</span>
+              <p class="hw-detail-desc">
+                Doble interfaz Ethernet Intel I226-V de 2.5 Gbps que permite separar físicamente el tráfico de administración del uplink de alta velocidad para VMs y almacenamiento en red.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Controladora eth0</span><span>Intel I226-V (2.5 Gbps) · Uplink LAN vmbr0</span></li>
+                <li><span>Controladora eth1</span><span>Intel I226-V (2.5 Gbps) · Direct Storage Link</span></li>
+                <li><span>Topología</span><span>Bridge físico compartido L2 (sin doble NAT)</span></li>
+                <li><span>Cortafuegos</span><span>Filtrado nativo por nftables en el kernel</span></li>
+                <li><span>Aislamiento</span><span>VLAN tagging y subredes seguras</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 4: Chassis -->
+            <div id="hw-chassis" class="hw-panel">
+              <h3 class="hw-detail-title">Chasis Híbrido 4 Bahías SATA</h3>
+              <span class="hw-detail-sub">Factor de Forma NAS Compacto con Bahías Hot-Swap</span>
+              <p class="hw-detail-desc">
+                Chasis de aleación de aluminio con 4 bahías frontales hot-swap SATA de 3.5"/2.5", complementado con ranuras M.2 internas para separación de capas calientes y frías de datos.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Bahía 1 (SO)</span><span>512 GB Btrfs SSD (Host OS & Logs)</span></li>
+                <li><span>Bahía 2 (Backup)</span><span>3 TB SATA Btrfs (Instantáneas y Backups)</span></li>
+                <li><span>Bahías 3 y 4</span><span>Expansión disponible para almacenamiento masivo</span></li>
+                <li><span>Refrigeración</span><span>Ventilador de levitación magnética PWM</span></li>
+                <li><span>Ruido Operativo</span><span>&lt; 22 dB (Silencioso en 24/7)</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 5: Proxmox -->
+            <div id="hw-pve" class="hw-panel">
+              <h3 class="hw-detail-title">Proxmox VE 9.2 (Kernel 7.0)</h3>
+              <span class="hw-detail-sub">Debian 13 Trixie Base · Hardware Passthrough</span>
+              <p class="hw-detail-desc">
+                Hypervisor de tipo 1 optimizado para baja latencia. Ejecuta la plataforma WebKVM nativamente y orquesta máquinas virtuales KVM y contenedores LXC con aislamiento completo.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Versión PVE</span><span>9.2.21 (Debian 13 Trixie)</span></li>
+                <li><span>Kernel</span><span>Linux 7.0.14-24-pve</span></li>
+                <li><span>Aceleración</span><span>VFIO IOMMU Passthrough habilitado</span></li>
+                <li><span>Virtualización KVM</span><span>QEMU 11.0.3 con OVMF/UEFI y swtpm</span></li>
+                <li><span>Uptime</span><span>24/7 ininterrumpido en producción</span></li>
+              </ul>
+            </div>
           </div>
+
+          <!-- Right: Interactive Vector SVG Schematic -->
           <div class="hw-visual-box">
             <div class="hw-status-bar">
-              <span>CORE ALLOCATION</span>
-              <div class="hw-live-pulse"><span>●</span> 16 THREADS ONLINE</div>
+              <span id="svg-diag-title">AOOSTAR WTR PRO · ESQUEMA VIRTUAL</span>
+              <div class="hw-live-pulse"><span>●</span> <span id="svg-diag-status">TELEMETRÍA EN VIVO</span></div>
             </div>
-            <div class="hw-ascii-diagram">
-┌───────────────────────────────────────────────┐
-│           AMD RYZEN 7 5825U (16 VCPUs)         │
-├───────────────┬───────────────┬───────────────┤
-│ Core 0-1 [VM] │ Core 2-3 [VM] │ Core 4-5 [CT] │
-│ Ubuntu Server │ Fedora Cloud  │ AdGuard DNS   │
-├───────────────┼───────────────┼───────────────┤
-│ Core 6-7 [CT] │ Core 8-9 [CT] │ Core 10-15[OS]│
-│ NPM Reverse   │ AI Agent Pod  │ Host & WebKVM │
-└───────────────┴───────────────┴───────────────┘
-Status: 15W TDP Idle · Temp: 38°C · Whisper Quiet
+            
+            <svg class="svg-chassis-svg" viewBox="0 0 480 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="460" height="180" rx="12" fill="#040812" stroke="#1e293b" stroke-width="2"/>
+              <rect x="18" y="18" width="444" height="164" rx="8" fill="#090e1a" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              
+              <!-- 4 Front SATA Hot-Swap Bays -->
+              <g id="svg-part-chassis" class="svg-bay" onclick="switchHw('chassis', document.querySelectorAll('.hw-nav-btn')[3])">
+                <!-- Bay 1 (Btrfs SSD OS) -->
+                <rect id="svg-bay-1" x="30" y="32" width="75" height="136" rx="6" fill="#0b1329" stroke="rgba(56,189,248,0.4)" stroke-width="1.5"/>
+                <line x1="42" y1="45" x2="93" y2="45" stroke="#38bdf8" stroke-width="2"/>
+                <text x="67" y="90" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 1</text>
+                <text x="67" y="105" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">512G SSD</text>
+                <text x="67" y="120" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">BTRFS OS</text>
+                <circle cx="67" cy="150" r="3.5" fill="#10b981" class="svg-led"/>
+
+                <!-- Bay 2 (3TB SATA HDD) -->
+                <rect id="svg-bay-2" x="115" y="32" width="75" height="136" rx="6" fill="#0b1329" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
+                <line x1="127" y1="45" x2="178" y2="45" stroke="#f59e0b" stroke-width="2"/>
+                <text x="152" y="90" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 2</text>
+                <text x="152" y="105" fill="#f59e0b" font-size="8" font-family="JetBrains Mono" text-anchor="middle">3TB HDD</text>
+                <text x="152" y="120" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">BACKUP</text>
+                <circle cx="152" cy="150" r="3.5" fill="#10b981" class="svg-led"/>
+
+                <!-- Bay 3 (Empty) -->
+                <rect x="200" y="32" width="75" height="136" rx="6" fill="#060a12" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="3 3"/>
+                <text x="237" y="95" fill="#475569" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 3</text>
+                <text x="237" y="112" fill="#334155" font-size="8" font-family="JetBrains Mono" text-anchor="middle">EMPTY</text>
+
+                <!-- Bay 4 (Empty) -->
+                <rect x="285" y="32" width="75" height="136" rx="6" fill="#060a12" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="3 3"/>
+                <text x="322" y="95" fill="#475569" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 4</text>
+                <text x="322" y="112" fill="#334155" font-size="8" font-family="JetBrains Mono" text-anchor="middle">EMPTY</text>
+              </g>
+
+              <!-- CPU Zone -->
+              <g id="svg-part-cpu" class="svg-bay" onclick="switchHw('cpu', document.querySelectorAll('.hw-nav-btn')[0])">
+                <rect id="svg-cpu-rect" x="375" y="32" width="75" height="62" rx="6" fill="#081026" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="412" y="55" fill="#f8fafc" font-size="9" font-weight="700" font-family="Space Grotesk" text-anchor="middle">RYZEN 7</text>
+                <text x="412" y="68" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">5825U · 8C</text>
+                <text x="412" y="80" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">15W TDP</text>
+              </g>
+
+              <!-- NVMe RAID Zone -->
+              <g id="svg-part-nvme" class="svg-bay" onclick="switchHw('nvme', document.querySelectorAll('.hw-nav-btn')[1])">
+                <rect id="svg-nvme-1" x="375" y="104" width="34" height="64" rx="4" fill="#061a14" stroke="#10b981" stroke-width="1.5"/>
+                <text x="392" y="128" fill="#10b981" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M.2_1</text>
+                <text x="392" y="142" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">1TB</text>
+
+                <rect id="svg-nvme-2" x="416" y="104" width="34" height="64" rx="4" fill="#061a14" stroke="#10b981" stroke-width="1.5"/>
+                <text x="433" y="128" fill="#10b981" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M.2_2</text>
+                <text x="433" y="142" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">1TB</text>
+
+                <text x="412" y="162" fill="#38bdf8" font-size="7" font-weight="700" font-family="JetBrains Mono" text-anchor="middle">RAID 0</text>
+              </g>
+            </svg>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.75rem; font-size:0.72rem; color:var(--text-dim);">
+              <span>💡 Haz clic en cualquier componente para inspeccionar sus especificaciones</span>
+              <span style="color:var(--sky);">AOOSTAR WTR PRO</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Panel 2: NVMe RAID -->
-        <div id="hw-nvme" class="hw-panel">
-          <div>
-            <h3 class="hw-detail-title">Dual NVMe Linux RAID 0</h3>
-            <span class="hw-detail-sub">Array de Alto Rendimiento `/dev/md0` · 1.8 TB</span>
-            <p class="hw-detail-desc">
-              Dos unidades NVMe M.2 PCIe 3.0 de 1 TB configuradas en striping RAID 0 mediante el kernel Linux (`mdraid`). Ofrece un ancho de banda de más de 3.5 GB/s para operaciones intensivas de I/O de máquinas virtuales.
-            </p>
-            <ul class="hw-specs-list">
-              <li><span>Dispositivos Miembro</span><span>/dev/nvme0n1 (1TB) + /dev/nvme1n1 (1TB)</span></li>
-              <li><span>Punto de Montaje</span><span>/mnt/raid0 (ext4, discard, noatime)</span></li>
-              <li><span>Chunk Size</span><span>512 KB Striping</span></li>
-              <li><span>Uso Principal</span><span>Discos VM QCOW2, contenedores y scratch</span></li>
-              <li><span>Monitorización</span><span>sysfs en tiempo real (/sys/block/md0/md)</span></li>
-            </ul>
-          </div>
-          <div class="hw-visual-box">
-            <div class="hw-status-bar">
-              <span>STORAGE STRIPING</span>
-              <div class="hw-live-pulse"><span>●</span> 3,500 MB/s READ</div>
-            </div>
-            <div class="hw-ascii-diagram">
-┌───────────────────────────────────────────────┐
-│        SOFTWARE RAID 0 ARRAY (/dev/md0)       │
-├───────────────────────┬───────────────────────┤
-│   M.2 NVMe Slot 1     │    M.2 NVMe Slot 2    │
-│  nvme0n1 (1,000 GB)   │   nvme1n1 (1,000 GB)  │
-├───────────────────────┴───────────────────────┤
-│  Capacidad Efectiva: 1.8 TB Montado /mnt/raid0│
-│  I/O Speed: ~3.5 GB/s · Latencia: &lt; 0.05 ms   │
-└───────────────────────────────────────────────┘
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 3: Network -->
-        <div id="hw-net" class="hw-panel">
-          <div>
-            <h3 class="hw-detail-title">Dual 2.5 GbE Intel I226-V</h3>
-            <span class="hw-detail-sub">Multi-Gigabit L2 Microsegmentation & Bridges</span>
-            <p class="hw-detail-desc">
-              Doble interfaz Ethernet Intel I226-V de 2.5 Gbps que permite separar físicamente el tráfico de administración del uplink de alta velocidad para VMs y almacenamiento en red.
-            </p>
-            <ul class="hw-specs-list">
-              <li><span>Controladora eth0</span><span>Intel I226-V (2.5 Gbps) · Uplink LAN vmbr0</span></li>
-              <li><span>Controladora eth1</span><span>Intel I226-V (2.5 Gbps) · Direct Storage Link</span></li>
-              <li><span>Topología</span><span>Bridge físico compartido L2 (sin doble NAT)</span></li>
-              <li><span>Cortafuegos</span><span>Filtrado nativo por nftables en el kernel</span></li>
-              <li><span>Aislamiento</span><span>VLAN tagging y subredes seguras</span></li>
-            </ul>
-          </div>
-          <div class="hw-visual-box">
-            <div class="hw-status-bar">
-              <span>NETWORK INTERFACES</span>
-              <div class="hw-live-pulse"><span>●</span> 2.5 Gbps FULL DUPLEX</div>
-            </div>
-            <div class="hw-ascii-diagram">
-┌───────────────────────────────────────────────┐
-│          DUAL 2.5 GbE NETWORK TOPOLOGY        │
-├───────────────────────┬───────────────────────┤
-│    Port 1 (eth0)      │     Port 2 (eth1)     │
-│   Bridge: vmbr0       │    Direct VLAN Trunk  │
-│   IP: 192.168.1.0/24  │    Storage Sync & NAS │
-├───────────────────────┴───────────────────────┤
-│ VMs & Contenedores obtienen IP de router (L2) │
-│ Latencia intra-host: 0.18 ms (Zero Bridge Hop)│
-└───────────────────────────────────────────────┘
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 4: Chassis -->
-        <div id="hw-chassis" class="hw-panel">
-          <div>
-            <h3 class="hw-detail-title">Chasis Híbrido 4 Bahías SATA</h3>
-            <p class="hw-detail-desc">
-              Factor de forma compacto tipo NAS con 4 bahías frontales hot-swap SATA de 3.5"/2.5", complementado con ranuras M.2 internas para separación de capas calientes y frías de datos.
-            </p>
-            <ul class="hw-specs-list">
-              <li><span>Bahía 1 (SO)</span><span>512 GB Btrfs SSD (Host OS & Logs)</span></li>
-              <li><span>Bahía 2 (Backup)</span><span>3 TB SATA Btrfs (Instantáneas y Backups)</span></li>
-              <li><span>Bahías 3 y 4</span><span>Expansión disponible para almacenamiento masivo</span></li>
-              <li><span>Chasis</span><span>Aleación de aluminio con ventilador de levitación magnética</span></li>
-              <li><span>Ruido Operativo</span><span>&lt; 22 dB (Inaudible en entorno de oficina)</span></li>
-            </ul>
-          </div>
-          <div class="hw-visual-box">
-            <div class="hw-status-bar">
-              <span>SATA BACKPLANE</span>
-              <div class="hw-live-pulse"><span>●</span> ALL CHANNELS HEALTHY</div>
-            </div>
-            <div class="hw-ascii-diagram">
-┌───────────────────────────────────────────────┐
-│        AOOSTAR WTR PRO 4-BAY CHASSIS          │
-├───[Bay 1]───┬───[Bay 2]───┬───[Bay 3]───┬───[Bay 4]───┤
-│ 512GB SSD   │ 3TB SATA    │ [Empty Slot]│ [Empty Slot]│
-│ Btrfs OS    │ Backup Cold │ Disponible  │ Disponible  │
-└─────────────┴─────────────┴─────────────┴─────────────┘
-Hot-swap bays con bandejas antivibración
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 5: Proxmox -->
-        <div id="hw-pve" class="hw-panel">
-          <div>
-            <h3 class="hw-detail-title">Proxmox VE 9.2 (Kernel 7.0)</h3>
-            <span class="hw-detail-sub">Debian 13 Trixie Base · Hardware Passthrough</span>
-            <p class="hw-detail-desc">
-              Hypervisor de tipo 1 optimizado para baja latencia. Ejecuta la plataforma WebKVM nativamente y orquesta máquinas virtuales KVM y contenedores LXC con aislamiento completo.
-            </p>
-            <ul class="hw-specs-list">
-              <li><span>Versión PVE</span><span>9.2.21 (Debian 13 Trixie)</span></li>
-              <li><span>Kernel</span><span>Linux 7.0.14-24-pve</span></li>
-              <li><span>Aceleración</span><span>VFIO IOMMU Passthrough habilitado</span></li>
-              <li><span>Virtualización KVM</span><span>QEMU 11.0.3 con OVMF/UEFI y swtpm</span></li>
-              <li><span>Uptime</span><span>24/7 ininterrumpido en producción</span></li>
-            </ul>
-          </div>
-          <div class="hw-visual-box">
-            <div class="hw-status-bar">
-              <span>HYPERVISOR STATUS</span>
-              <div class="hw-live-pulse"><span>●</span> CLUSTER READY</div>
-            </div>
-            <div class="hw-ascii-diagram">
-┌───────────────────────────────────────────────┐
-│           PROXMOX VE 9.2 ARCHITECTURE         │
-├───────────────────────────────────────────────┤
-│ Kernel 7.0.14-24-pve (Debian 13 base)         │
-│  ├── WebKVM Engine (0.1.8-fix01 native service│
-│  ├── QEMU/KVM Virtual Machines (UEFI, VirtIO) │
-│  └── LXC System Containers (Alpine, Debian)   │
-└───────────────────────────────────────────────┘
-            </div>
-          </div>
-        </div>
-
-        <!-- Live Services Dashboard -->
+      <!-- Live Services Dashboard -->
         <div class="service-grid">
           <div class="service-card">
             <div class="service-info">
@@ -1603,7 +2000,27 @@ Hot-swap bays con bandejas antivibración
         </p>
       </div>
 
-                  <div class="skills-category-group">
+                        <!-- Live Search & Category Filter Bar -->
+      <div class="skills-filter-bar">
+        <div class="skills-search-wrapper">
+          <svg class="skills-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="skills-search-input" id="skillSearch" placeholder="Buscar tecnología (ej: go, zfs, aws)..." oninput="filterSkills()" autocomplete="off">
+        </div>
+
+        <div class="skills-pills-nav">
+          <button class="skill-filter-btn active" onclick="setSkillCategory('all', this)" data-i18n="filter.all">Todas (52)</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('backend', this)">⚡ Backend</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('cloud', this)">☁ Cloud & Virt</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('db', this)">💾 Bases de Datos</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('net', this)">🌐 Redes & Correo</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('sec', this)">🔒 Seguridad</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('enterprise', this)">🏢 Enterprise</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('os', this)">🐧 Linux & SO</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('devops', this)">📊 DevOps & Web</button>
+        </div>
+      </div>
+
+      <div class="skills-category-group">
 
         <!-- 1. Lenguajes & Backend -->
         <div class="skill-category-card">
@@ -1624,7 +2041,7 @@ Hot-swap bays con bandejas antivibración
         </div>
 
         <!-- 2. Cloud Providers & Virtualización -->
-        <div class="skill-category-card">
+        <div class="skill-category-card" data-cat="cloud">
           <div class="skill-category-header">
             <span style="font-size:1.15rem;">☁</span>
             <h3 class="skill-category-title">Cloud Providers & Virtualización</h3>
@@ -1668,7 +2085,7 @@ Hot-swap bays con bandejas antivibración
         </div>
 
         <!-- 4. Protocolos de Red, Correo & Servicios Core -->
-        <div class="skill-category-card">
+        <div class="skill-category-card" data-cat="net">
           <div class="skill-category-header">
             <span style="font-size:1.15rem;">🌐</span>
             <h3 class="skill-category-title">Protocolos de Red, Correo & Servicios Core</h3>
@@ -1688,7 +2105,7 @@ Hot-swap bays con bandejas antivibración
         </div>
 
         <!-- 5. Redes Avanzadas, Cortafuegos & Seguridad -->
-        <div class="skill-category-card">
+        <div class="skill-category-card" data-cat="sec">
           <div class="skill-category-header">
             <span style="font-size:1.15rem;">🔒</span>
             <h3 class="skill-category-title">Redes Avanzadas, Cortafuegos & Seguridad</h3>
@@ -1710,7 +2127,7 @@ Hot-swap bays con bandejas antivibración
         </div>
 
         <!-- 6. Enterprise & Administración Cloud / IT -->
-        <div class="skill-category-card">
+        <div class="skill-category-card" data-cat="enterprise">
           <div class="skill-category-header">
             <span style="font-size:1.15rem;">🏢</span>
             <h3 class="skill-category-title">Enterprise & Administración Cloud / IT</h3>
@@ -1744,7 +2161,7 @@ Hot-swap bays con bandejas antivibración
         </div>
 
         <!-- 8. Observabilidad, DevOps & Herramientas Web -->
-        <div class="skill-category-card">
+        <div class="skill-category-card" data-cat="devops">
           <div class="skill-category-header">
             <span style="font-size:1.15rem;">📊</span>
             <h3 class="skill-category-title">Observabilidad, DevOps & Herramientas Web</h3>
@@ -1870,7 +2287,150 @@ Hot-swap bays con bandejas antivibración
   </div>
 
   <script>
-    // Tab Switching for WebKVM
+    // --- 1. Internationalization (i18n) Dictionary & Switcher ---
+    let currentLang = localStorage.getItem('webkvm_lang') || 'es';
+
+    const translations = {
+      es: {
+        'nav.webkvm': 'WebKVM',
+        'nav.homelab': 'AOOSTAR Homelab',
+        'nav.skills': 'Conocimientos',
+        'nav.terminal': 'Terminal',
+        'nav.contact': 'Contacto',
+        'nav.available': 'Disponible',
+        'filter.all': 'Todas (52)'
+      },
+      en: {
+        'nav.webkvm': 'WebKVM',
+        'nav.homelab': 'AOOSTAR Homelab',
+        'nav.skills': 'Skills & Stack',
+        'nav.terminal': 'Terminal',
+        'nav.contact': 'Contact',
+        'nav.available': 'Available for hire',
+        'filter.all': 'All (52)'
+      }
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('webkvm_lang', lang);
+      document.getElementById('btn-lang-es').classList.toggle('active', lang === 'es');
+      document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    // --- 2. Live GitHub Repository Stats ---
+    async function loadGitHubStats() {
+      try {
+        const repoRes = await fetch('https://api.github.com/repos/Slaker19/webkvm');
+        if (repoRes.ok) {
+          const repo = await repoRes.json();
+          if (repo.stargazers_count !== undefined) {
+            document.getElementById('gh-stars').textContent = repo.stargazers_count;
+          }
+          if (repo.forks_count !== undefined) {
+            document.getElementById('gh-forks').textContent = repo.forks_count;
+          }
+        }
+        const relRes = await fetch('https://api.github.com/repos/Slaker19/webkvm/releases/latest');
+        if (relRes.ok) {
+          const rel = await relRes.json();
+          if (rel.tag_name) {
+            document.getElementById('gh-release').textContent = rel.tag_name;
+          }
+        }
+      } catch (e) {
+        console.warn('GitHub API rate limit or offline, using baked defaults', e);
+      }
+    }
+
+    // --- 3. WebKVM Interactive OS Mockup Controls ---
+    function switchMockTab(tabId, btn) {
+      document.querySelectorAll('.mockup-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.mockup-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById('mock-' + tabId);
+      if (target) target.classList.add('active');
+    }
+
+    function toggleMockVM(vmIndex, btn) {
+      const pill = document.getElementById('pill-vm-' + vmIndex);
+      if (!pill) return;
+
+      if (pill.classList.contains('stopped')) {
+        btn.textContent = 'Iniciando...';
+        btn.disabled = true;
+        setTimeout(() => {
+          pill.className = 'status-pill running';
+          pill.textContent = '● RUNNING';
+          btn.textContent = 'Reiniciar';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 1200);
+      } else {
+        btn.textContent = 'Reiniciando...';
+        btn.disabled = true;
+        pill.className = 'status-pill stopped';
+        pill.textContent = '⟳ REBOOTING';
+        setTimeout(() => {
+          pill.className = 'status-pill running';
+          pill.textContent = '● RUNNING';
+          btn.textContent = 'Reiniciar';
+          btn.disabled = false;
+        }, 1400);
+      }
+    }
+
+    // --- 4. Skills Search & Filter Bar ---
+    let currentSkillCategory = 'all';
+
+    function setSkillCategory(cat, btn) {
+      currentSkillCategory = cat;
+      document.querySelectorAll('.skill-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterSkills();
+    }
+
+    function filterSkills() {
+      const query = (document.getElementById('skillSearch')?.value || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.skill-category-card');
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-cat') || '';
+        const matchesCategory = (currentSkillCategory === 'all' || currentSkillCategory === cat);
+
+        if (!matchesCategory) {
+          card.style.display = 'none';
+          return;
+        }
+
+        const badges = card.querySelectorAll('.tech-badge');
+        let cardHasMatch = false;
+
+        badges.forEach(badge => {
+          const text = badge.textContent.toLowerCase();
+          const imgAlt = (badge.querySelector('img')?.getAttribute('alt') || '').toLowerCase();
+          const matchesSearch = (!query || text.includes(query) || imgAlt.includes(query));
+
+          if (matchesSearch) {
+            badge.style.display = 'inline-flex';
+            cardHasMatch = true;
+          } else {
+            badge.style.display = 'none';
+          }
+        });
+
+        card.style.display = cardHasMatch ? 'block' : 'none';
+      });
+    }
+
+    // --- 5. Tab Switching for WebKVM Architecture ---
     function switchArchTab(tabId, btn) {
       document.querySelectorAll('.arch-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.arch-tab-panel').forEach(p => p.classList.remove('active'));
@@ -1880,7 +2440,7 @@ Hot-swap bays con bandejas antivibración
       if (target) target.classList.add('active');
     }
 
-    // Hardware Explorer Tab Switching
+    // --- 6. Hardware Explorer Tab Switching & SVG Highlighting ---
     function switchHw(hwId, btn) {
       document.querySelectorAll('.hw-nav-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.hw-panel').forEach(p => p.classList.remove('active'));
@@ -1888,9 +2448,31 @@ Hot-swap bays con bandejas antivibración
       btn.classList.add('active');
       const target = document.getElementById('hw-' + hwId);
       if (target) target.classList.add('active');
+
+      // Highlight SVG parts
+      const cpu = document.getElementById('svg-cpu-rect');
+      const bay1 = document.getElementById('svg-bay-1');
+      const bay2 = document.getElementById('svg-bay-2');
+      const nvme1 = document.getElementById('svg-nvme-1');
+      const nvme2 = document.getElementById('svg-nvme-2');
+
+      // Reset
+      [cpu, bay1, bay2, nvme1, nvme2].forEach(el => {
+        if (el) el.style.filter = '';
+      });
+
+      if (hwId === 'cpu' && cpu) {
+        cpu.style.filter = 'drop-shadow(0 0 10px #38bdf8)';
+      } else if (hwId === 'nvme') {
+        if (nvme1) nvme1.style.filter = 'drop-shadow(0 0 10px #10b981)';
+        if (nvme2) nvme2.style.filter = 'drop-shadow(0 0 10px #10b981)';
+      } else if (hwId === 'chassis') {
+        if (bay1) bay1.style.filter = 'drop-shadow(0 0 10px #38bdf8)';
+        if (bay2) bay2.style.filter = 'drop-shadow(0 0 10px #f59e0b)';
+      }
     }
 
-    // Savings Calculator
+    // --- 7. Savings Calculator ---
     function calculateSavings(rackWatts) {
       document.getElementById('sliderLabel').textContent = rackWatts + ' Watts (Rack 2U)';
       
@@ -1912,7 +2494,7 @@ Hot-swap bays con bandejas antivibración
       document.getElementById('resCo2').textContent = '~' + savingsCo2.toLocaleString() + ' kg CO2';
     }
 
-    // Clipboard Copy with Toast
+    // --- 8. Clipboard Copy with Toast ---
     function copyToClipboard(text, msg) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text);
@@ -1954,7 +2536,7 @@ Hot-swap bays con bandejas antivibración
       });
     }, 4000);
 
-    // Terminal logic
+    // --- 9. Terminal Playground Logic ---
     const termOutput = document.getElementById('termOutput');
     const termInput = document.getElementById('termInput');
 
@@ -1968,7 +2550,7 @@ Hot-swap bays con bandejas antivibración
   - contact     : Información de contacto
   - clear       : Limpia el terminal`,
 
-      fastfetch: () => `       /\\_/\\      alvin@aoostar-wtr-pro
+      fastfetch: () => `       /\_/\      alvin@aoostar-wtr-pro
       ( o.o )     ---------------------
        > ^ <      OS: Proxmox VE 9.2 (Debian 13 Trixie x86_64)
                   Host: AOOSTAR WTR PRO (TianBei WTR PRO)
@@ -2055,6 +2637,13 @@ Hot-swap bays con bandejas antivibración
     function escapeHtml(str) {
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      setLang(currentLang);
+      loadGitHubStats();
+    });
   </script>
+
 </body>
 </html>
