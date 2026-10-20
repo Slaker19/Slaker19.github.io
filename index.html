@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Alvin Perez — Systems Architecture, Linux Infrastructure & Go</title>
+  <title>Alvin Perez — Systems Infrastructure & Backend Go Engineer</title>
   <meta name="description" content="Portfolio de Alvin Perez: Ingeniero de Sistemas, Linux SysAdmin, Homelab en AOOSTAR WTR PRO (Ryzen 7 5825U · 15W TDP), virtualización híbrida KVM/Incus y creador de WebKVM." />
   <meta name="theme-color" content="#000000" />
   
   <!-- OpenGraph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Alvin Perez — Systems Architecture & Backend Go" />
+  <meta property="og:title" content="Alvin Perez — Systems Infrastructure & Backend Go" />
   <meta property="og:description" content="Especialista en infraestructura Linux bare-metal, virtualización híbrida KVM/Incus, AOOSTAR WTR PRO (15W TDP) y creador de WebKVM." />
   <meta property="og:url" content="https://slaker19.github.io" />
 
@@ -23,7 +23,7 @@
       --bg: #000000;
       --bg-surface: #040812;
       --bg-card: #080d1a;
-      --bg-card-hover: #0d1527;
+      --bg-card-hover: #0e1629;
       --border: rgba(255, 255, 255, 0.08);
       --border-hover: rgba(56, 189, 248, 0.4);
 
@@ -224,7 +224,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.6rem 1.25rem;
+      padding: 0.65rem 1.3rem;
       border-radius: var(--radius-sm);
       font-size: 0.88rem;
       font-weight: 600;
@@ -239,8 +239,8 @@
     }
     .btn-primary:hover {
       background: #e2e8f0;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
     }
     .btn-secondary {
       background: var(--bg-card);
@@ -250,11 +250,47 @@
     .btn-secondary:hover {
       background: var(--bg-card-hover);
       border-color: var(--border-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
     .btn-sm {
       padding: 0.38rem 0.8rem;
       font-size: 0.82rem;
+    }
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 0.4rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: rgba(4, 8, 18, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mobile-drawer.open {
+      display: flex;
+    }
+    .mobile-drawer a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     /* Hero */
@@ -294,6 +330,7 @@
       font-size: 0.78rem;
       font-family: var(--font-mono);
       font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
     .hero-title {
       font-family: var(--font-heading);
@@ -302,13 +339,27 @@
       font-weight: 800;
       letter-spacing: -0.04em;
       margin-bottom: 1.35rem;
-      max-width: 940px;
+      max-width: 960px;
     }
     .hero-title span {
       background: linear-gradient(135deg, #ffffff 40%, var(--sky) 75%, var(--emerald) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: var(--sky);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink-cursor 0.8s infinite;
+    }
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
     .hero-desc {
       font-size: 1.18rem;
       line-height: 1.75;
@@ -343,11 +394,10 @@
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      position: relative;
     }
     .metric-val {
       font-family: var(--font-heading);
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
@@ -391,53 +441,56 @@
       color: var(--text-muted);
       font-size: 1.05rem;
       margin-top: 0.5rem;
-      max-width: 720px;
+      max-width: 740px;
       line-height: 1.65;
     }
 
-    /* Principles Grid */
-    .principles-grid {
+    /* About Me 3-Pillar Cards */
+    .about-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      margin-bottom: 3.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
     }
-    .principle-box {
-      background: var(--bg-surface);
+    .about-card {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-card) 100%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 1rem;
       transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .principle-box:hover {
+    .about-card:hover {
       border-color: var(--border-hover);
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
     }
-    .principle-icon {
-      font-size: 1.25rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 9px;
+    .about-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.35rem;
     }
-    .principle-title {
+    .about-card-title {
       font-family: var(--font-heading);
-      font-size: 1.05rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text);
+      line-height: 1.3;
     }
-    .principle-desc {
-      font-size: 0.86rem;
+    .about-card-desc {
+      font-size: 0.92rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     /* WebKVM Luxury Spotlight */
@@ -590,6 +643,19 @@
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
+    .terminal-dots {
+      display: flex;
+      gap: 0.45rem;
+    }
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot.red { background: #ef4444; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #10b981; }
+
     .mockup-body {
       padding: 1.25rem;
     }
@@ -1052,17 +1118,17 @@
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      padding: 0.6rem 1rem 0.6rem 2.4rem;
       color: var(--text);
       font-family: var(--font-sans);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       outline: none;
       width: 280px;
       transition: all 0.2s ease;
     }
     .skills-search-input:focus {
       border-color: var(--sky);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
       width: 320px;
     }
     .skills-search-wrapper {
@@ -1081,14 +1147,14 @@
     .skills-pills-nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
     .skill-filter-btn {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 999px;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.78rem;
+      padding: 0.38rem 0.9rem;
+      font-size: 0.8rem;
       font-weight: 500;
       color: var(--text-muted);
       cursor: pointer;
@@ -1114,44 +1180,45 @@
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem 1.75rem;
-      transition: all 0.2s ease;
+      padding: 1.75rem 2rem;
+      transition: all 0.25s ease;
     }
     .skill-category-card:hover {
-      border-color: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.18);
       background: var(--bg-card);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
     .skill-category-header {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.65rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
     .skill-category-title {
       font-family: var(--font-heading);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--text);
     }
     .skill-badges-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 0.65rem;
       align-items: center;
     }
     .badge-img {
       height: 28px;
       display: block;
       border-radius: 4px;
-      transition: transform 0.15s ease, filter 0.15s ease;
+      transition: transform 0.18s ease, filter 0.18s ease;
       cursor: default;
       user-select: none;
     }
     .badge-img:hover {
-      transform: translateY(-2px) scale(1.03);
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6)) brightness(1.1);
+      transform: translateY(-3px) scale(1.03);
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7)) brightness(1.12);
     }
 
     /* Terminal Playground */
@@ -1160,45 +1227,33 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
     }
     .terminal-bar {
       background: #090e1a;
-      padding: 0.65rem 1rem;
+      padding: 0.75rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border);
     }
-    .terminal-dots {
-      display: flex;
-      gap: 0.45rem;
-    }
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-    }
-    .dot.red { background: #ef4444; }
-    .dot.yellow { background: #f59e0b; }
-    .dot.green { background: #10b981; }
     .terminal-title {
       font-family: var(--font-mono);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
     }
     .terminal-body {
-      padding: 1.25rem;
-      min-height: 280px;
-      max-height: 380px;
+      padding: 1.5rem;
+      min-height: 290px;
+      max-height: 400px;
       overflow-y: auto;
       font-family: var(--font-mono);
-      font-size: 0.84rem;
+      font-size: 0.85rem;
       line-height: 1.65;
       color: #cbd5e1;
     }
     .term-line {
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
       white-space: pre-wrap;
       word-break: break-all;
     }
@@ -1213,7 +1268,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.75rem 1.25rem;
+      padding: 0.85rem 1.5rem;
       background: #050811;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -1224,13 +1279,13 @@
       outline: none;
       color: var(--text);
       font-family: var(--font-mono);
-      font-size: 0.84rem;
+      font-size: 0.86rem;
     }
     .term-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
-      padding: 0.75rem 1.25rem;
+      gap: 0.45rem;
+      padding: 0.85rem 1.5rem;
       background: #090e1a;
       border-top: 1px solid var(--border);
     }
@@ -1238,8 +1293,8 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 0.2rem 0.55rem;
-      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.76rem;
       font-family: var(--font-mono);
       color: var(--text-muted);
       cursor: pointer;
@@ -1256,7 +1311,7 @@
       background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 3.5rem 2rem;
+      padding: 3.75rem 2rem;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -1273,7 +1328,7 @@
     /* Footer */
     .footer {
       border-top: 1px solid var(--border);
-      padding: 2.5rem 0;
+      padding: 2.75rem 0;
       margin-top: auto;
       background: #000000;
       font-size: 0.85rem;
@@ -1331,20 +1386,21 @@
     @media (max-width: 960px) {
       .hero-title { font-size: 2.7rem; }
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
-      .principles-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; }
       .calc-results-grid { grid-template-columns: repeat(2, 1fr); }
       .service-grid { grid-template-columns: repeat(2, 1fr); }
       .arch-tab-panel.active { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      .mobile-toggle { display: block; }
       .hero-title { font-size: 2.2rem; }
       .metric-grid { grid-template-columns: 1fr; }
-      .principles-grid { grid-template-columns: 1fr; }
       .calc-results-grid { grid-template-columns: 1fr; }
       .service-grid { grid-template-columns: 1fr; }
       .spotlight-card { padding: 1.5rem; }
       .hw-explorer { padding: 1.5rem; }
+      .about-card { padding: 1.5rem; }
     }
   </style>
 </head>
@@ -1362,10 +1418,10 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#webkvm" data-i18n="nav.webkvm">WebKVM</a></li>
-        <li><a href="#homelab" data-i18n="nav.homelab">AOOSTAR Homelab</a></li>
-        <li><a href="#principios" data-i18n="nav.principles">Principios</a></li>
+        <li><a href="#sobre-mi" data-i18n="nav.about">Sobre Mí</a></li>
         <li><a href="#stack" data-i18n="nav.skills">Conocimientos</a></li>
+        <li><a href="#homelab" data-i18n="nav.homelab">Hardware (15W)</a></li>
+        <li><a href="#webkvm" data-i18n="nav.webkvm">WebKVM</a></li>
         <li><a href="#terminal" data-i18n="nav.terminal">Terminal</a></li>
         <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
       </ul>
@@ -1384,39 +1440,52 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           <span>GitHub</span>
         </a>
+        <button class="mobile-toggle" onclick="toggleMobileDrawer()" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <a href="#sobre-mi" onclick="toggleMobileDrawer()" data-i18n="nav.about">Sobre Mí</a>
+      <a href="#stack" onclick="toggleMobileDrawer()" data-i18n="nav.skills">Conocimientos</a>
+      <a href="#homelab" onclick="toggleMobileDrawer()" data-i18n="nav.homelab">Hardware (15W)</a>
+      <a href="#webkvm" onclick="toggleMobileDrawer()" data-i18n="nav.webkvm">WebKVM</a>
+      <a href="#terminal" onclick="toggleMobileDrawer()" data-i18n="nav.terminal">Terminal</a>
+      <a href="#contacto" onclick="toggleMobileDrawer()" data-i18n="nav.contact">Contacto</a>
     </div>
   </header>
 
   <main class="container" id="top">
 
-    <!-- Hero -->
+    <!-- 1. HERO SECTION: WHO IS ALVIN PEREZ -->
     <section class="hero">
       <div class="hero-tag-bar">
         <div class="hero-tag">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
-          <span data-i18n="hero.tag">Técnico IT · Backend Go · Virtualización (KVM + Incus/LXC)</span>
+          <span data-i18n="hero.tag">Técnico IT · Infraestructura Linux · Backend Go</span>
         </div>
         <div class="titanium-badge">
           <span>ALVIN PEREZ · SYSTEMS ARCHITECT</span>
         </div>
       </div>
 
-      <h1 class="hero-title" data-i18n="hero.title">
-        Ingeniería de sistemas Linux, <span>virtualización híbrida</span> y software en Go.
+      <h1 class="hero-title">
+        Ingeniería de Sistemas Linux, <span id="typewriter">Virtualización Híbrida.</span><span class="typing-cursor"></span>
       </h1>
 
       <p class="hero-desc" data-i18n="hero.desc">
-        Especialista en infraestructura bare-metal, tuning de hardware y virtualización de bajo consumo. Creador de <strong>WebKVM</strong> (plataforma híbrida KVM/Incus en un binario autónomo Go de ~14 MB). Mi entorno 24/7 en producción opera sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.
+        Técnico IT vocacional y desarrollador de software de sistemas. Diseño y mantengo infraestructuras Linux de máxima eficiencia, automatizaciones de red y software en Go de bajo consumo. Creador de <strong>WebKVM</strong> y operador de un nodo 24/7 en producción sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.
       </p>
 
       <div class="hero-actions">
-        <a href="#webkvm" class="btn btn-primary">
-          <span data-i18n="hero.ctaPrimary">Explorar WebKVM</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        <a href="#stack" class="btn btn-primary">
+          <span data-i18n="hero.ctaPrimary">Ver mis Conocimientos ↓</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
         </a>
-        <a href="#homelab" class="btn btn-secondary">
-          <span data-i18n="hero.ctaSecondary">Explorador Hardware (AOOSTAR)</span>
+        <a href="#webkvm" class="btn btn-secondary">
+          <span data-i18n="hero.ctaSecondary">Explorar WebKVM ↗</span>
         </a>
         <button onclick="copyToClipboard('alvinpp1908@gmail.com', 'Email copiado: alvinpp1908@gmail.com')" class="btn btn-secondary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
@@ -1427,7 +1496,7 @@
       <!-- Precision Horology Metrics -->
       <div class="metric-grid">
         <div class="metric-item">
-          <span class="metric-val emerald">15W</span>
+          <span class="metric-val emerald" data-counter="15">15W</span>
           <span class="metric-lbl" data-i18n="metric.idle">Consumo Reposo (AOOSTAR 24/7)</span>
         </div>
         <div class="metric-item">
@@ -1445,58 +1514,528 @@
       </div>
     </section>
 
-    <!-- Engineering Principles -->
-    <section id="principios" class="section">
+    <!-- 2. SECTION: SOBRE MÍ & FILOSOFÍA DE TRABAJO (PERSONAL & SENIOR CRAFT) -->
+    <section id="sobre-mi" class="section">
       <div class="section-head">
-        <span class="section-tag" data-i18n="principles.tag">Filosofía de Arquitectura</span>
-        <h2 class="section-title" data-i18n="principles.title">Principios de Ingeniería</h2>
-        <p class="section-desc" data-i18n="principles.desc">
-          Fundamentos técnicos aplicados en cada capa de software e infraestructura: cero dependencias innecesarias, máxima eficiencia por vatio y robustez defensiva.
+        <span class="section-tag" data-i18n="about.tag">Perfil Profesional & Filosofía</span>
+        <h2 class="section-title" data-i18n="about.title">De la Máquina Física al Código</h2>
+        <p class="section-desc" data-i18n="about.desc">
+          No soy solo un programador ni solo un administrador: uno ambos mundos para construir infraestructura que vuela, consume lo mínimo y está preparada para producción real.
         </p>
       </div>
 
-      <div class="principles-grid">
-        <div class="principle-box">
-          <div class="principle-icon" style="color:var(--sky);">📦</div>
-          <h3 class="principle-title" data-i18n="principle.1.title">Simplicidad de Despliegue</h3>
-          <p class="principle-desc" data-i18n="principle.1.desc">
-            Binarios autocontenidos sin bases de datos externas obligatorias ni dependencias de runtime. El software debe arrancar en segundos en cualquier Linux estándar.
+      <div class="about-grid">
+        <!-- Pillar 1 -->
+        <div class="about-card">
+          <div class="about-card-icon" style="color:var(--emerald);">⚡</div>
+          <h3 class="about-card-title" data-i18n="about.p1.title">Obsesión por el Rendimiento & Bare-Metal</h3>
+          <p class="about-card-desc" data-i18n="about.p1.desc">
+            Desprecio el bloatware. ¿Por qué montar contenedores pesados y demonios lentos cuando el kernel Linux ya ofrece sysfs, namespaces y cgroups v2 nativos? Mis sistemas arrancan en segundos, aprovechan cada ciclo de reloj y tienen cero capas intermedias innecesarias.
           </p>
         </div>
 
-        <div class="principle-box">
-          <div class="principle-icon" style="color:var(--emerald);">⚡</div>
-          <h3 class="principle-title" data-i18n="principle.2.title">Kernel Directo sobre Polling</h3>
-          <p class="principle-desc" data-i18n="principle.2.desc">
-            Lectura directa de interfaces sysfs del kernel Linux en lugar de generar bucles de subprocesos CLI. Rendimiento nativo con consumo mínimo de CPU y memoria.
+        <!-- Pillar 2 -->
+        <div class="about-card">
+          <div class="about-card-icon" style="color:var(--amber);">🔧</div>
+          <h3 class="about-card-title" data-i18n="about.p2.title">Infraestructura como Artesanía Física</h3>
+          <p class="about-card-desc" data-i18n="about.p2.desc">
+            Experiencia práctica real en ensamblaje de servidores, diagnóstico térmico, passthrough directo IOMMU/VFIO para tarjetas gráficas y NICs, enlaces L2 bonding con tolerancia a fallos y almacenamiento redundante en Linux Software RAID y OpenZFS.
           </p>
         </div>
 
-        <div class="principle-box">
-          <div class="principle-icon" style="color:var(--rose);">🛡</div>
-          <h3 class="principle-title" data-i18n="principle.3.title">Fail-Closed por Defecto</h3>
-          <p class="principle-desc" data-i18n="principle.3.desc">
-            Seguridad estricta en las fronteras de red: tickets de un solo uso en RAM para WebSockets, dialers anti-SSRF rigurosos y confirmación con auto-rollback en cortafuegos.
-          </p>
-        </div>
-
-        <div class="principle-box">
-          <div class="principle-icon" style="color:var(--amber);">🌱</div>
-          <h3 class="principle-title" data-i18n="principle.4.title">Eficiencia & Densidad</h3>
-          <p class="principle-desc" data-i18n="principle.4.desc">
-            Alineación rigurosa de hardware y software. Operar una nube privada y decenas de servicios 24/7 en un chasis silencioso de 15W TDP sin comprometer fiabilidad.
+        <!-- Pillar 3 -->
+        <div class="about-card">
+          <div class="about-card-icon" style="color:var(--sky);">🚀</div>
+          <h3 class="about-card-title" data-i18n="about.p3.title">Desarrollo de Software Autónomo en Go</h3>
+          <p class="about-card-desc" data-i18n="about.p3.desc">
+            Cuando las herramientas existentes en el mercado son monolíticas o invasivas (como Proxmox o vSphere que exigen formatear el servidor entero), diseño mis propias soluciones en Go con CGO directo contra libvirt y las empaqueto en un único binario estático.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- WebKVM Section (Flagship Exhibit) -->
+    <!-- 3. SECTION: MATRIZ DE CONOCIMIENTOS (FRONT AND CENTER WITH SEARCH & BADGES) -->
+    <section id="stack" class="section">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="skills.tag">Arsenal Tecnológico en Producción</span>
+        <h2 class="section-title" data-i18n="skills.title">Conocimientos & Herramientas</h2>
+        <p class="section-desc" data-i18n="skills.desc">
+          Herramientas y tecnologías que utilizo en el día a día para administración de sistemas, virtualización, redes y desarrollo backend. Todas probadas en producción.
+        </p>
+      </div>
+
+      <!-- Live Search & Category Filter Bar -->
+      <div class="skills-filter-bar">
+        <div class="skills-search-wrapper">
+          <svg class="skills-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="skills-search-input" id="skillSearch" placeholder="Buscar tecnología (ej: go, zfs, aws, docker, sql)..." oninput="filterSkills()" autocomplete="off">
+        </div>
+
+        <div class="skills-pills-nav">
+          <button class="skill-filter-btn active" onclick="setSkillCategory('all', this)" data-i18n="filter.all">Todas (52)</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('backend', this)">⚡ Backend</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('cloud', this)">☁ Cloud & Virt</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('db', this)">💾 Bases de Datos</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('net', this)">🌐 Redes & Correo</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('sec', this)">🔒 Seguridad</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('enterprise', this)">🏢 Enterprise</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('os', this)">🐧 Linux & SO</button>
+          <button class="skill-filter-btn" onclick="setSkillCategory('devops', this)">📊 DevOps & Web</button>
+        </div>
+      </div>
+
+<div class="skills-category-group">
+
+        <!-- 1. Lenguajes & Backend -->
+        <div class="skill-category-card">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">⚡</span>
+            <h3 class="skill-category-title">Lenguajes & Backend</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/CGO-005C8A?style=flat-square&logo=c&logoColor=white" alt="CGO" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Zsh-F15A24?style=flat-square&logo=zsh&logoColor=white" alt="Zsh" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Bash-4EAA25?style=flat-square&logo=gnubash&logoColor=white" alt="Bash" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white" alt="PowerShell" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 2. Cloud Providers & Virtualización -->
+        <div class="skill-category-card" data-cat="cloud">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">☁</span>
+            <h3 class="skill-category-title">Cloud Providers & Virtualización</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white" alt="AWS" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" alt="Google Cloud" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Oracle_Cloud-F80000?style=flat-square&logo=oracle&logoColor=white" alt="Oracle Cloud" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/KVM%2FQEMU-FF6600?style=flat-square&logo=qemu&logoColor=white" alt="QEMU/KVM" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/libvirt-005C8A?style=flat-square&logo=linux&logoColor=white" alt="libvirt" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Incus%2FLXC-0EA5E9?style=flat-square&logo=linux&logoColor=white" alt="Incus" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Proxmox_VE-E57000?style=flat-square&logo=proxmox&logoColor=white" alt="Proxmox VE" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Podman-892CA0?style=flat-square&logo=podman&logoColor=white" alt="Podman" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/VFIO%2FIOMMU-38BDF8?style=flat-square&logo=intel&logoColor=white" alt="VFIO" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Cloud--Init-10B981?style=flat-square&logo=canonical&logoColor=white" alt="Cloud-Init" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Proxmox_Backup_Server-E57000?style=flat-square&logo=proxmox&logoColor=white" alt="PBS" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 3. Bases de Datos & Motores SQL -->
+        <div class="skill-category-card">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">💾</span>
+            <h3 class="skill-category-title">Bases de Datos & Motores SQL</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Oracle_SQL-F80000?style=flat-square&logo=oracle&logoColor=white" alt="Oracle SQL" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/SQL_Standard-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQL" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb&logoColor=white" alt="MariaDB" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/ZFS-5A6B7C?style=flat-square&logo=linux&logoColor=white" alt="ZFS" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Btrfs-0EA5E9?style=flat-square&logo=linux&logoColor=white" alt="Btrfs" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Linux_Software_RAID-A855F7?style=flat-square&logo=linux&logoColor=white" alt="RAID" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 4. Protocolos de Red, Correo & Servicios Core -->
+        <div class="skill-category-card" data-cat="net">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">🌐</span>
+            <h3 class="skill-category-title">Protocolos de Red, Correo & Servicios Core</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/DNS-10B981?style=flat-square&logo=cloudflare&logoColor=white" alt="DNS" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/DHCP-0284C7?style=flat-square&logo=linux&logoColor=white" alt="DHCP" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/SMTP-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="SMTP" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/IMAP-38BDF8?style=flat-square&logo=postman&logoColor=white" alt="IMAP" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/POP3-F59E0B?style=flat-square&logo=postman&logoColor=white" alt="POP3" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/SFTP-4EAA25?style=flat-square&logo=openssh&logoColor=white" alt="SFTP" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/SMB%20%2F%20CIFS-10B981?style=flat-square&logo=samba&logoColor=white" alt="SMB" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/NFS-333333?style=flat-square&logo=linux&logoColor=white" alt="NFS" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/iSCSI-EC4899?style=flat-square&logo=linux&logoColor=white" alt="iSCSI" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/WebSockets-646CFF?style=flat-square&logo=websocket&logoColor=white" alt="WebSockets" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 5. Redes Avanzadas, Cortafuegos & Seguridad -->
+        <div class="skill-category-card" data-cat="sec">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">🔒</span>
+            <h3 class="skill-category-title">Redes Avanzadas, Cortafuegos & Seguridad</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/nftables-E95420?style=flat-square&logo=linux&logoColor=white" alt="nftables" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/iptables-F97316?style=flat-square&logo=linux&logoColor=white" alt="iptables" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Netplan-77216F?style=flat-square&logo=canonical&logoColor=white" alt="Netplan" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/WireGuard-88171A?style=flat-square&logo=wireguard&logoColor=white" alt="WireGuard" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Tailscale-4B5563?style=flat-square&logo=tailscale&logoColor=white" alt="Tailscale" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Cloudflare_Zero_Trust-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Linux_Bridges_L2-0EA5E9?style=flat-square&logo=linux&logoColor=white" alt="Bridges" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Bonding_802.3ad-10B981?style=flat-square&logo=linux&logoColor=white" alt="Bonding" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/VLAN_802.1Q-8B5CF6?style=flat-square&logo=cisco&logoColor=white" alt="VLAN" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/WebAuthn%20%2F%20FIDO2-38BDF8?style=flat-square&logo=fido&logoColor=white" alt="WebAuthn" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/2FA%20%2F%20TOTP-10B981?style=flat-square&logo=authy&logoColor=white" alt="TOTP" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Let's_Encrypt-003A70?style=flat-square&logo=letsencrypt&logoColor=white" alt="LetsEncrypt" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 6. Enterprise & Administración Cloud / IT -->
+        <div class="skill-category-card" data-cat="enterprise">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">🏢</span>
+            <h3 class="skill-category-title">Enterprise & Administración Cloud / IT</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/Microsoft_365-D83B01?style=flat-square&logo=microsoft&logoColor=white" alt="M365" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Active_Directory-0078D4?style=flat-square&logo=windows&logoColor=white" alt="Active Directory" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/LDAP-005C8A?style=flat-square&logo=linux&logoColor=white" alt="LDAP" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/pfSense-D35400?style=flat-square&logo=pfsense&logoColor=white" alt="pfSense" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Wireshark-1679A7?style=flat-square&logo=wireshark&logoColor=white" alt="Wireshark" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/TrueNAS-0095D5?style=flat-square&logo=truenas&logoColor=white" alt="TrueNAS" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Cockpit-008080?style=flat-square&logo=redhat&logoColor=white" alt="Cockpit" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 7. Sistemas Operativos -->
+        <div class="skill-category-card">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">🐧</span>
+            <h3 class="skill-category-title">Sistemas Operativos</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black" alt="Linux" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Debian-A81D33?style=flat-square&logo=debian&logoColor=white" alt="Debian" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white" alt="Ubuntu" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Fedora-51A2DA?style=flat-square&logo=fedora&logoColor=white" alt="Fedora" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Arch_Linux-1793D1?style=flat-square&logo=archlinux&logoColor=white" alt="Arch Linux" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Alpine_Linux-0D597F?style=flat-square&logo=alpinelinux&logoColor=white" alt="Alpine" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Windows_Server-0078D6?style=flat-square&logo=windows&logoColor=white" alt="Windows Server" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- 8. Observabilidad, DevOps & Herramientas Web -->
+        <div class="skill-category-card" data-cat="devops">
+          <div class="skill-category-header">
+            <span style="font-size:1.15rem;">📊</span>
+            <h3 class="skill-category-title">Observabilidad, DevOps & Herramientas Web</h3>
+          </div>
+          <div class="skill-badges-container">
+            <img class="badge-img" src="https://img.shields.io/badge/Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white" alt="Prometheus" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Grafana-F46800?style=flat-square&logo=grafana&logoColor=white" alt="Grafana" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Zabbix-D40000?style=flat-square&logo=zabbix&logoColor=white" alt="Zabbix" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Ansible-EE0000?style=flat-square&logo=ansible&logoColor=white" alt="Ansible" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white" alt="Terraform" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Nginx_Proxy_Manager-009639?style=flat-square&logo=nginx&logoColor=white" alt="NPM" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Svelte_5-FF3E00?style=flat-square&logo=svelte&logoColor=white" alt="Svelte 5" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" loading="lazy" />
+            <img class="badge-img" src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white" alt="TailwindCSS" loading="lazy" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. SECTION: AOOSTAR HOMELAB EXHIBIT (HARDWARE EN PRODUCCIÓN) -->
+    <section id="homelab" class="section">
+      <div class="section-head">
+        <span class="section-tag" data-i18n="homelab.tag">Infraestructura 24/7 · Hardware Real</span>
+        <h2 class="section-title" data-i18n="homelab.title">AOOSTAR WTR PRO: Nodo Silencioso (15W)</h2>
+        <p class="section-desc" data-i18n="homelab.desc">
+          Mi servidor bare-metal personal de producción corre ininterrumpidamente sobre un chasis compacto NAS de 4 bahías, optimizado para máxima densidad de cálculo y consumo mínimo.
+        </p>
+      </div>
+
+      <div class="hw-explorer">
+        <div class="hw-nav">
+          <button class="hw-nav-btn active" onclick="switchHw('cpu', this)">[ ⚙ CPU Ryzen 7 ]</button>
+          <button class="hw-nav-btn" onclick="switchHw('nvme', this)">[ ⚡ Dual NVMe RAID 0 ]</button>
+          <button class="hw-nav-btn" onclick="switchHw('net', this)">[ 🌐 Dual 2.5 GbE ]</button>
+          <button class="hw-nav-btn" onclick="switchHw('chassis', this)">[ 🗄 4 Bahías SATA ]</button>
+          <button class="hw-nav-btn" onclick="switchHw('pve', this)">[ 🖥 Proxmox VE 9 ]</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.05fr 0.95fr; gap:2rem; align-items:start;">
+          <!-- Left: Dynamic Specs Details Panes -->
+          <div>
+            <!-- Panel 1: CPU -->
+            <div id="hw-cpu" class="hw-panel active">
+              <h3 class="hw-detail-title">AMD Ryzen 7 5825U</h3>
+              <span class="hw-detail-sub">Zen 3 Barcelo · 8 Cores / 16 Threads · 15W TDP</span>
+              <p class="hw-detail-desc">
+                El corazón del nodo es un procesador de 8 núcleos y 16 hilos con arquitectura Zen 3 de 7nm. Proporciona una densidad de cálculo excepcional manteniendo el nodo en un consumo en reposo de solo 12W-15W.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Frecuencia Base / Boost</span><span>2.0 GHz / 4.5 GHz</span></li>
+                <li><span>Caché L3</span><span>16 MB Unified</span></li>
+                <li><span>Virtualización</span><span>AMD-V con soporte IOMMU/VFIO</span></li>
+                <li><span>Gráficos Integrados</span><span>AMD Radeon Vega 8 (GPGPU/HW Transcoding)</span></li>
+                <li><span>Gobernador CPU</span><span>schedutil (escalado adaptativo)</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 2: NVMe RAID -->
+            <div id="hw-nvme" class="hw-panel">
+              <h3 class="hw-detail-title">Dual NVMe Linux RAID 0</h3>
+              <span class="hw-detail-sub">Array de Alto Rendimiento `/dev/md0` · 1.8 TB</span>
+              <p class="hw-detail-desc">
+                Dos unidades NVMe M.2 PCIe 3.0 de 1 TB configuradas en striping RAID 0 mediante el kernel Linux (`mdraid`). Ofrece un ancho de banda de más de 3.5 GB/s para operaciones intensivas de I/O de máquinas virtuales.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Dispositivos Miembro</span><span>/dev/nvme0n1 (1TB) + /dev/nvme1n1 (1TB)</span></li>
+                <li><span>Punto de Montaje</span><span>/mnt/raid0 (ext4, discard, noatime)</span></li>
+                <li><span>Chunk Size</span><span>512 KB Striping</span></li>
+                <li><span>Uso Principal</span><span>Discos VM QCOW2, contenedores y scratch</span></li>
+                <li><span>Monitorización</span><span>sysfs en tiempo real (/sys/block/md0/md)</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 3: Network -->
+            <div id="hw-net" class="hw-panel">
+              <h3 class="hw-detail-title">Dual 2.5 GbE Intel I226-V</h3>
+              <span class="hw-detail-sub">Multi-Gigabit L2 Microsegmentation & Bridges</span>
+              <p class="hw-detail-desc">
+                Doble interfaz Ethernet Intel I226-V de 2.5 Gbps que permite separar físicamente el tráfico de administración del uplink de alta velocidad para VMs y almacenamiento en red.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Controladora eth0</span><span>Intel I226-V (2.5 Gbps) · Uplink LAN vmbr0</span></li>
+                <li><span>Controladora eth1</span><span>Intel I226-V (2.5 Gbps) · Direct Storage Link</span></li>
+                <li><span>Topología</span><span>Bridge físico compartido L2 (sin doble NAT)</span></li>
+                <li><span>Cortafuegos</span><span>Filtrado nativo por nftables en el kernel</span></li>
+                <li><span>Aislamiento</span><span>VLAN tagging y subredes seguras</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 4: Chassis -->
+            <div id="hw-chassis" class="hw-panel">
+              <h3 class="hw-detail-title">Chasis Híbrido 4 Bahías SATA</h3>
+              <span class="hw-detail-sub">Factor de Forma NAS Compacto con Bahías Hot-Swap</span>
+              <p class="hw-detail-desc">
+                Chasis de aleación de aluminio con 4 bahías frontales hot-swap SATA de 3.5"/2.5", complementado con ranuras M.2 internas para separación de capas calientes y frías de datos.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Bahía 1 (SO)</span><span>512 GB Btrfs SSD (Host OS & Logs)</span></li>
+                <li><span>Bahía 2 (Backup)</span><span>3 TB SATA Btrfs (Instantáneas y Backups)</span></li>
+                <li><span>Bahías 3 y 4</span><span>Expansión disponible para almacenamiento masivo</span></li>
+                <li><span>Refrigeración</span><span>Ventilador de levitación magnética PWM</span></li>
+                <li><span>Ruido Operativo</span><span>&lt; 22 dB (Silencioso en 24/7)</span></li>
+              </ul>
+            </div>
+
+            <!-- Panel 5: Proxmox -->
+            <div id="hw-pve" class="hw-panel">
+              <h3 class="hw-detail-title">Proxmox VE 9.2 (Kernel 7.0)</h3>
+              <span class="hw-detail-sub">Debian 13 Trixie Base · Hardware Passthrough</span>
+              <p class="hw-detail-desc">
+                Hypervisor de tipo 1 optimizado para baja latencia. Ejecuta la plataforma WebKVM nativamente y orquesta máquinas virtuales KVM y contenedores LXC con aislamiento completo.
+              </p>
+              <ul class="hw-specs-list">
+                <li><span>Versión PVE</span><span>9.2.21 (Debian 13 Trixie)</span></li>
+                <li><span>Kernel</span><span>Linux 7.0.14-24-pve</span></li>
+                <li><span>Aceleración</span><span>VFIO IOMMU Passthrough habilitado</span></li>
+                <li><span>Virtualización KVM</span><span>QEMU 11.0.3 con OVMF/UEFI y swtpm</span></li>
+                <li><span>Uptime</span><span>24/7 ininterrumpido en producción</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Vector SVG Schematic -->
+          <div class="hw-visual-box">
+            <div class="hw-status-bar">
+              <span id="svg-diag-title">AOOSTAR WTR PRO · ESQUEMA VIRTUAL</span>
+              <div class="hw-live-pulse"><span>●</span> <span id="svg-diag-status">TELEMETRÍA EN VIVO</span></div>
+            </div>
+            
+            <svg class="svg-chassis-svg" viewBox="0 0 480 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="460" height="180" rx="12" fill="#040812" stroke="#1e293b" stroke-width="2"/>
+              <rect x="18" y="18" width="444" height="164" rx="8" fill="#090e1a" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              
+              <!-- 4 Front SATA Hot-Swap Bays -->
+              <g id="svg-part-chassis" class="svg-bay" onclick="switchHw('chassis', document.querySelectorAll('.hw-nav-btn')[3])">
+                <!-- Bay 1 (Btrfs SSD OS) -->
+                <rect id="svg-bay-1" x="30" y="32" width="75" height="136" rx="6" fill="#0b1329" stroke="rgba(56,189,248,0.4)" stroke-width="1.5"/>
+                <line x1="42" y1="45" x2="93" y2="45" stroke="#38bdf8" stroke-width="2"/>
+                <text x="67" y="90" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 1</text>
+                <text x="67" y="105" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">512G SSD</text>
+                <text x="67" y="120" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">BTRFS OS</text>
+                <circle cx="67" cy="150" r="3.5" fill="#10b981" class="svg-led"/>
+
+                <!-- Bay 2 (3TB SATA HDD) -->
+                <rect id="svg-bay-2" x="115" y="32" width="75" height="136" rx="6" fill="#0b1329" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
+                <line x1="127" y1="45" x2="178" y2="45" stroke="#f59e0b" stroke-width="2"/>
+                <text x="152" y="90" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 2</text>
+                <text x="152" y="105" fill="#f59e0b" font-size="8" font-family="JetBrains Mono" text-anchor="middle">3TB HDD</text>
+                <text x="152" y="120" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">BACKUP</text>
+                <circle cx="152" cy="150" r="3.5" fill="#10b981" class="svg-led"/>
+
+                <!-- Bay 3 (Empty) -->
+                <rect x="200" y="32" width="75" height="136" rx="6" fill="#060a12" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="3 3"/>
+                <text x="237" y="95" fill="#475569" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 3</text>
+                <text x="237" y="112" fill="#334155" font-size="8" font-family="JetBrains Mono" text-anchor="middle">EMPTY</text>
+
+                <!-- Bay 4 (Empty) -->
+                <rect x="285" y="32" width="75" height="136" rx="6" fill="#060a12" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="3 3"/>
+                <text x="322" y="95" fill="#475569" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 4</text>
+                <text x="322" y="112" fill="#334155" font-size="8" font-family="JetBrains Mono" text-anchor="middle">EMPTY</text>
+              </g>
+
+              <!-- CPU Zone -->
+              <g id="svg-part-cpu" class="svg-bay" onclick="switchHw('cpu', document.querySelectorAll('.hw-nav-btn')[0])">
+                <rect id="svg-cpu-rect" x="375" y="32" width="75" height="62" rx="6" fill="#081026" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="412" y="55" fill="#f8fafc" font-size="9" font-weight="700" font-family="Space Grotesk" text-anchor="middle">RYZEN 7</text>
+                <text x="412" y="68" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">5825U · 8C</text>
+                <text x="412" y="80" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">15W TDP</text>
+              </g>
+
+              <!-- NVMe RAID Zone -->
+              <g id="svg-part-nvme" class="svg-bay" onclick="switchHw('nvme', document.querySelectorAll('.hw-nav-btn')[1])">
+                <rect id="svg-nvme-1" x="375" y="104" width="34" height="64" rx="4" fill="#061a14" stroke="#10b981" stroke-width="1.5"/>
+                <text x="392" y="128" fill="#10b981" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M.2_1</text>
+                <text x="392" y="142" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">1TB</text>
+
+                <rect id="svg-nvme-2" x="416" y="104" width="34" height="64" rx="4" fill="#061a14" stroke="#10b981" stroke-width="1.5"/>
+                <text x="433" y="128" fill="#10b981" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M.2_2</text>
+                <text x="433" y="142" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">1TB</text>
+
+                <text x="412" y="162" fill="#38bdf8" font-size="7" font-weight="700" font-family="JetBrains Mono" text-anchor="middle">RAID 0</text>
+              </g>
+            </svg>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.75rem; font-size:0.72rem; color:var(--text-dim);">
+              <span>💡 Haz clic en cualquier componente para inspeccionar sus especificaciones</span>
+              <span style="color:var(--sky);">AOOSTAR WTR PRO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Services Dashboard -->
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--sky);">☁</div>
+            <div>
+              <div class="service-name">WebKVM</div>
+              <div class="service-role">Virtualización KVM/LXC</div>
+            </div>
+          </div>
+          <span class="service-latency" id="lat-webkvm">0.18 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--emerald);">🛡</div>
+            <div>
+              <div class="service-name">AdGuard Home</div>
+              <div class="service-role">DNS Sinkhole & DoH</div>
+            </div>
+          </div>
+          <span class="service-latency" id="lat-adguard">0.45 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--amber);">⚡</div>
+            <div>
+              <div class="service-name">NPM Proxy</div>
+              <div class="service-role">TLS Let's Encrypt</div>
+            </div>
+          </div>
+          <span class="service-latency" id="lat-npm">0.82 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--indigo);">🤖</div>
+            <div>
+              <div class="service-name">AI Local Stack</div>
+              <div class="service-role">Modelos & Automatización</div>
+            </div>
+          </div>
+          <span class="service-latency" id="lat-ai">1.12 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--rose);">📷</div>
+            <div>
+              <div class="service-name">Immich</div>
+              <div class="service-role">Backup Fotos Seguro</div>
+            </div>
+          </div>
+          <span class="service-latency" id="lat-immich">1.95 ms</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <div class="service-icon" style="color:var(--sky);">🎵</div>
+            <div>
+              <div class="service-name">Media Stack</div>
+              <div class="service-role">MeTube & Downtify</div>
+            </div>
+          </div>
+          <span class="service-latency" id="lat-media">0.60 ms</span>
+        </div>
+      </div>
+
+      <!-- Energy Efficiency Calculator -->
+      <div class="calc-container">
+        <div class="calc-header">
+          <span class="section-tag" data-i18n="calc.tag">Calculadora de Eficiencia Energética</span>
+          <h3 data-i18n="calc.title">AOOSTAR WTR PRO vs Servidor Rack 2U Tradicional</h3>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;" data-i18n="calc.desc">
+            Compara el impacto de consumo de un nodo compacto de 15W frente a un servidor empresarial encendido 24/7/365.
+          </p>
+        </div>
+
+        <div class="calc-slider-box">
+          <div class="calc-slider-header">
+            <span data-i18n="calc.sliderHead">Potencia servidor comparativa:</span>
+            <strong id="sliderLabel">350 Watts (Rack 2U)</strong>
+          </div>
+          <input type="range" min="80" max="650" value="350" step="10" class="calc-slider" id="calcSlider" oninput="calculateSavings(this.value)">
+        </div>
+
+        <div class="calc-results-grid">
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.rack">Consumo Servidor Rack</span>
+            <span class="calc-res-val" id="resRackKwh" style="color:var(--amber);">3,066 kWh</span>
+          </div>
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.aoostar">Consumo AOOSTAR (15W)</span>
+            <span class="calc-res-val" id="resAoostarKwh" style="color:var(--emerald);">131 kWh</span>
+          </div>
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.savings">Ahorro Económico Estimado</span>
+            <span class="calc-res-val" id="resEur" style="color:var(--sky);">~645 € / año</span>
+          </div>
+          <div class="calc-res-card">
+            <span class="calc-res-label" data-i18n="calc.co2">Emisiones CO2 Evitadas</span>
+            <span class="calc-res-val" id="resCo2" style="color:var(--indigo);">~733 kg CO2</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SECTION: WEBKVM FLAGSHIP (PROYECTO BUQUE INSIGNIA) -->
     <section id="webkvm" class="section">
       <div class="section-head">
         <span class="section-tag" data-i18n="webkvm.tag">Buque Insignia · Software de Código Abierto</span>
         <h2 class="section-title" data-i18n="webkvm.title">WebKVM: Nube Privada en Binario Único</h2>
         <p class="section-desc" data-i18n="webkvm.desc">
-          Convierte cualquier servidor Linux en una plataforma de virtualización híbrida en 1 minuto. Sin secuestrar el sistema operativo, sin bases de datos externas y consumiendo apenas 15 MB de RAM en reposo.
+          Lo que construyo cuando las herramientas de mercado son demasiado pesadas: una plataforma de virtualización híbrida en 1 minuto, en un solo binario Go de ~14 MB, sin secuestrar el sistema operativo y consumiendo apenas 15 MB de RAM en reposo.
         </p>
       </div>
 
@@ -1825,482 +2364,7 @@ Digest: sha256:... Size: 108.18 MB
       </div>
     </section>
 
-    <!-- Interactive Hardware & Software Explorer (AOOSTAR WTR PRO) -->
-    <section id="homelab" class="section">
-      <div class="section-head">
-        <span class="section-tag">Explorador Interactivo de Hardware & Topología</span>
-        <h2 class="section-title">AOOSTAR WTR PRO · 24/7 Production Node</h2>
-        <p class="section-desc">
-          Inspecciona interactivamente la arquitectura física del servidor, la topología de almacenamiento NVMe/SATA y los servicios en ejecución en tiempo real.
-        </p>
-      </div>
-
-      <div class="hw-explorer">
-        <div class="hw-nav">
-          <button class="hw-nav-btn active" onclick="switchHw('cpu', this)">[ ⚙ CPU Ryzen 7 ]</button>
-          <button class="hw-nav-btn" onclick="switchHw('nvme', this)">[ ⚡ Dual NVMe RAID 0 ]</button>
-          <button class="hw-nav-btn" onclick="switchHw('net', this)">[ 🌐 Dual 2.5 GbE ]</button>
-          <button class="hw-nav-btn" onclick="switchHw('chassis', this)">[ 🗄 4 Bahías SATA ]</button>
-          <button class="hw-nav-btn" onclick="switchHw('pve', this)">[ 🖥 Proxmox VE 9 ]</button>
-        </div>
-
-        <div style="display:grid; grid-template-columns:1.05fr 0.95fr; gap:2rem; align-items:start;">
-          <!-- Left: Dynamic Specs Details Panes -->
-          <div>
-            <!-- Panel 1: CPU -->
-            <div id="hw-cpu" class="hw-panel active">
-              <h3 class="hw-detail-title">AMD Ryzen 7 5825U</h3>
-              <span class="hw-detail-sub">Zen 3 Barcelo · 8 Cores / 16 Threads · 15W TDP</span>
-              <p class="hw-detail-desc">
-                El corazón del nodo es un procesador de 8 núcleos y 16 hilos con arquitectura Zen 3 de 7nm. Proporciona una densidad de cálculo excepcional manteniendo el nodo en un consumo en reposo de solo 12W-15W.
-              </p>
-              <ul class="hw-specs-list">
-                <li><span>Frecuencia Base / Boost</span><span>2.0 GHz / 4.5 GHz</span></li>
-                <li><span>Caché L3</span><span>16 MB Unified</span></li>
-                <li><span>Virtualización</span><span>AMD-V con soporte IOMMU/VFIO</span></li>
-                <li><span>Gráficos Integrados</span><span>AMD Radeon Vega 8 (GPGPU/HW Transcoding)</span></li>
-                <li><span>Gobernador CPU</span><span>schedutil (escalado adaptativo)</span></li>
-              </ul>
-            </div>
-
-            <!-- Panel 2: NVMe RAID -->
-            <div id="hw-nvme" class="hw-panel">
-              <h3 class="hw-detail-title">Dual NVMe Linux RAID 0</h3>
-              <span class="hw-detail-sub">Array de Alto Rendimiento `/dev/md0` · 1.8 TB</span>
-              <p class="hw-detail-desc">
-                Dos unidades NVMe M.2 PCIe 3.0 de 1 TB configuradas en striping RAID 0 mediante el kernel Linux (`mdraid`). Ofrece un ancho de banda de más de 3.5 GB/s para operaciones intensivas de I/O de máquinas virtuales.
-              </p>
-              <ul class="hw-specs-list">
-                <li><span>Dispositivos Miembro</span><span>/dev/nvme0n1 (1TB) + /dev/nvme1n1 (1TB)</span></li>
-                <li><span>Punto de Montaje</span><span>/mnt/raid0 (ext4, discard, noatime)</span></li>
-                <li><span>Chunk Size</span><span>512 KB Striping</span></li>
-                <li><span>Uso Principal</span><span>Discos VM QCOW2, contenedores y scratch</span></li>
-                <li><span>Monitorización</span><span>sysfs en tiempo real (/sys/block/md0/md)</span></li>
-              </ul>
-            </div>
-
-            <!-- Panel 3: Network -->
-            <div id="hw-net" class="hw-panel">
-              <h3 class="hw-detail-title">Dual 2.5 GbE Intel I226-V</h3>
-              <span class="hw-detail-sub">Multi-Gigabit L2 Microsegmentation & Bridges</span>
-              <p class="hw-detail-desc">
-                Doble interfaz Ethernet Intel I226-V de 2.5 Gbps que permite separar físicamente el tráfico de administración del uplink de alta velocidad para VMs y almacenamiento en red.
-              </p>
-              <ul class="hw-specs-list">
-                <li><span>Controladora eth0</span><span>Intel I226-V (2.5 Gbps) · Uplink LAN vmbr0</span></li>
-                <li><span>Controladora eth1</span><span>Intel I226-V (2.5 Gbps) · Direct Storage Link</span></li>
-                <li><span>Topología</span><span>Bridge físico compartido L2 (sin doble NAT)</span></li>
-                <li><span>Cortafuegos</span><span>Filtrado nativo por nftables en el kernel</span></li>
-                <li><span>Aislamiento</span><span>VLAN tagging y subredes seguras</span></li>
-              </ul>
-            </div>
-
-            <!-- Panel 4: Chassis -->
-            <div id="hw-chassis" class="hw-panel">
-              <h3 class="hw-detail-title">Chasis Híbrido 4 Bahías SATA</h3>
-              <span class="hw-detail-sub">Factor de Forma NAS Compacto con Bahías Hot-Swap</span>
-              <p class="hw-detail-desc">
-                Chasis de aleación de aluminio con 4 bahías frontales hot-swap SATA de 3.5"/2.5", complementado con ranuras M.2 internas para separación de capas calientes y frías de datos.
-              </p>
-              <ul class="hw-specs-list">
-                <li><span>Bahía 1 (SO)</span><span>512 GB Btrfs SSD (Host OS & Logs)</span></li>
-                <li><span>Bahía 2 (Backup)</span><span>3 TB SATA Btrfs (Instantáneas y Backups)</span></li>
-                <li><span>Bahías 3 y 4</span><span>Expansión disponible para almacenamiento masivo</span></li>
-                <li><span>Refrigeración</span><span>Ventilador de levitación magnética PWM</span></li>
-                <li><span>Ruido Operativo</span><span>&lt; 22 dB (Silencioso en 24/7)</span></li>
-              </ul>
-            </div>
-
-            <!-- Panel 5: Proxmox -->
-            <div id="hw-pve" class="hw-panel">
-              <h3 class="hw-detail-title">Proxmox VE 9.2 (Kernel 7.0)</h3>
-              <span class="hw-detail-sub">Debian 13 Trixie Base · Hardware Passthrough</span>
-              <p class="hw-detail-desc">
-                Hypervisor de tipo 1 optimizado para baja latencia. Ejecuta la plataforma WebKVM nativamente y orquesta máquinas virtuales KVM y contenedores LXC con aislamiento completo.
-              </p>
-              <ul class="hw-specs-list">
-                <li><span>Versión PVE</span><span>9.2.21 (Debian 13 Trixie)</span></li>
-                <li><span>Kernel</span><span>Linux 7.0.14-24-pve</span></li>
-                <li><span>Aceleración</span><span>VFIO IOMMU Passthrough habilitado</span></li>
-                <li><span>Virtualización KVM</span><span>QEMU 11.0.3 con OVMF/UEFI y swtpm</span></li>
-                <li><span>Uptime</span><span>24/7 ininterrumpido en producción</span></li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Right: Interactive Vector SVG Schematic -->
-          <div class="hw-visual-box">
-            <div class="hw-status-bar">
-              <span id="svg-diag-title">AOOSTAR WTR PRO · ESQUEMA VIRTUAL</span>
-              <div class="hw-live-pulse"><span>●</span> <span id="svg-diag-status">TELEMETRÍA EN VIVO</span></div>
-            </div>
-            
-            <svg class="svg-chassis-svg" viewBox="0 0 480 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="10" width="460" height="180" rx="12" fill="#040812" stroke="#1e293b" stroke-width="2"/>
-              <rect x="18" y="18" width="444" height="164" rx="8" fill="#090e1a" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-              
-              <!-- 4 Front SATA Hot-Swap Bays -->
-              <g id="svg-part-chassis" class="svg-bay" onclick="switchHw('chassis', document.querySelectorAll('.hw-nav-btn')[3])">
-                <!-- Bay 1 (Btrfs SSD OS) -->
-                <rect id="svg-bay-1" x="30" y="32" width="75" height="136" rx="6" fill="#0b1329" stroke="rgba(56,189,248,0.4)" stroke-width="1.5"/>
-                <line x1="42" y1="45" x2="93" y2="45" stroke="#38bdf8" stroke-width="2"/>
-                <text x="67" y="90" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 1</text>
-                <text x="67" y="105" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">512G SSD</text>
-                <text x="67" y="120" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">BTRFS OS</text>
-                <circle cx="67" cy="150" r="3.5" fill="#10b981" class="svg-led"/>
-
-                <!-- Bay 2 (3TB SATA HDD) -->
-                <rect id="svg-bay-2" x="115" y="32" width="75" height="136" rx="6" fill="#0b1329" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"/>
-                <line x1="127" y1="45" x2="178" y2="45" stroke="#f59e0b" stroke-width="2"/>
-                <text x="152" y="90" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 2</text>
-                <text x="152" y="105" fill="#f59e0b" font-size="8" font-family="JetBrains Mono" text-anchor="middle">3TB HDD</text>
-                <text x="152" y="120" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">BACKUP</text>
-                <circle cx="152" cy="150" r="3.5" fill="#10b981" class="svg-led"/>
-
-                <!-- Bay 3 (Empty) -->
-                <rect x="200" y="32" width="75" height="136" rx="6" fill="#060a12" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="3 3"/>
-                <text x="237" y="95" fill="#475569" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 3</text>
-                <text x="237" y="112" fill="#334155" font-size="8" font-family="JetBrains Mono" text-anchor="middle">EMPTY</text>
-
-                <!-- Bay 4 (Empty) -->
-                <rect x="285" y="32" width="75" height="136" rx="6" fill="#060a12" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="3 3"/>
-                <text x="322" y="95" fill="#475569" font-size="9" font-family="JetBrains Mono" text-anchor="middle">BAY 4</text>
-                <text x="322" y="112" fill="#334155" font-size="8" font-family="JetBrains Mono" text-anchor="middle">EMPTY</text>
-              </g>
-
-              <!-- CPU Zone -->
-              <g id="svg-part-cpu" class="svg-bay" onclick="switchHw('cpu', document.querySelectorAll('.hw-nav-btn')[0])">
-                <rect id="svg-cpu-rect" x="375" y="32" width="75" height="62" rx="6" fill="#081026" stroke="#38bdf8" stroke-width="1.5"/>
-                <text x="412" y="55" fill="#f8fafc" font-size="9" font-weight="700" font-family="Space Grotesk" text-anchor="middle">RYZEN 7</text>
-                <text x="412" y="68" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">5825U · 8C</text>
-                <text x="412" y="80" fill="#10b981" font-size="7" font-family="JetBrains Mono" text-anchor="middle">15W TDP</text>
-              </g>
-
-              <!-- NVMe RAID Zone -->
-              <g id="svg-part-nvme" class="svg-bay" onclick="switchHw('nvme', document.querySelectorAll('.hw-nav-btn')[1])">
-                <rect id="svg-nvme-1" x="375" y="104" width="34" height="64" rx="4" fill="#061a14" stroke="#10b981" stroke-width="1.5"/>
-                <text x="392" y="128" fill="#10b981" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M.2_1</text>
-                <text x="392" y="142" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">1TB</text>
-
-                <rect id="svg-nvme-2" x="416" y="104" width="34" height="64" rx="4" fill="#061a14" stroke="#10b981" stroke-width="1.5"/>
-                <text x="433" y="128" fill="#10b981" font-size="8" font-family="JetBrains Mono" text-anchor="middle">M.2_2</text>
-                <text x="433" y="142" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">1TB</text>
-
-                <text x="412" y="162" fill="#38bdf8" font-size="7" font-weight="700" font-family="JetBrains Mono" text-anchor="middle">RAID 0</text>
-              </g>
-            </svg>
-            
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.75rem; font-size:0.72rem; color:var(--text-dim);">
-              <span>💡 Haz clic en cualquier componente para inspeccionar sus especificaciones</span>
-              <span style="color:var(--sky);">AOOSTAR WTR PRO</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live Services Dashboard -->
-      <div class="service-grid">
-        <div class="service-card">
-          <div class="service-info">
-            <div class="service-icon" style="color:var(--sky);">☁</div>
-            <div>
-              <div class="service-name">WebKVM</div>
-              <div class="service-role">Virtualización KVM/LXC</div>
-            </div>
-          </div>
-          <span class="service-latency" id="lat-webkvm">0.18 ms</span>
-        </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <div class="service-icon" style="color:var(--emerald);">🛡</div>
-            <div>
-              <div class="service-name">AdGuard Home</div>
-              <div class="service-role">DNS Sinkhole & DoH</div>
-            </div>
-          </div>
-          <span class="service-latency" id="lat-adguard">0.45 ms</span>
-        </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <div class="service-icon" style="color:var(--amber);">⚡</div>
-            <div>
-              <div class="service-name">NPM Proxy</div>
-              <div class="service-role">TLS Let's Encrypt</div>
-            </div>
-          </div>
-          <span class="service-latency" id="lat-npm">0.82 ms</span>
-        </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <div class="service-icon" style="color:var(--indigo);">🤖</div>
-            <div>
-              <div class="service-name">AI Local Stack</div>
-              <div class="service-role">Modelos & Automatización</div>
-            </div>
-          </div>
-          <span class="service-latency" id="lat-ai">1.12 ms</span>
-        </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <div class="service-icon" style="color:var(--rose);">📷</div>
-            <div>
-              <div class="service-name">Immich</div>
-              <div class="service-role">Backup Fotos Seguro</div>
-            </div>
-          </div>
-          <span class="service-latency" id="lat-immich">1.95 ms</span>
-        </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <div class="service-icon" style="color:var(--sky);">🎵</div>
-            <div>
-              <div class="service-name">Media Stack</div>
-              <div class="service-role">MeTube & Downtify</div>
-            </div>
-          </div>
-          <span class="service-latency" id="lat-media">0.60 ms</span>
-        </div>
-      </div>
-
-      <!-- Energy Efficiency Calculator -->
-      <div class="calc-container">
-        <div class="calc-header">
-          <span class="section-tag" data-i18n="calc.tag">Calculadora de Eficiencia Energética</span>
-          <h3 data-i18n="calc.title">AOOSTAR WTR PRO vs Servidor Rack 2U Tradicional</h3>
-          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5;" data-i18n="calc.desc">
-            Compara el impacto de consumo de un nodo compacto de 15W frente a un servidor empresarial encendido 24/7/365.
-          </p>
-        </div>
-
-        <div class="calc-slider-box">
-          <div class="calc-slider-header">
-            <span data-i18n="calc.sliderHead">Potencia servidor comparativa:</span>
-            <strong id="sliderLabel">350 Watts (Rack 2U)</strong>
-          </div>
-          <input type="range" min="80" max="650" value="350" step="10" class="calc-slider" id="calcSlider" oninput="calculateSavings(this.value)">
-        </div>
-
-        <div class="calc-results-grid">
-          <div class="calc-res-card">
-            <span class="calc-res-label" data-i18n="calc.rack">Consumo Servidor Rack</span>
-            <span class="calc-res-val" id="resRackKwh" style="color:var(--amber);">3,066 kWh</span>
-          </div>
-          <div class="calc-res-card">
-            <span class="calc-res-label" data-i18n="calc.aoostar">Consumo AOOSTAR (15W)</span>
-            <span class="calc-res-val" id="resAoostarKwh" style="color:var(--emerald);">131 kWh</span>
-          </div>
-          <div class="calc-res-card">
-            <span class="calc-res-label" data-i18n="calc.savings">Ahorro Económico Estimado</span>
-            <span class="calc-res-val" id="resEur" style="color:var(--sky);">~645 € / año</span>
-          </div>
-          <div class="calc-res-card">
-            <span class="calc-res-label" data-i18n="calc.co2">Emisiones CO2 Evitadas</span>
-            <span class="calc-res-val" id="resCo2" style="color:var(--indigo);">~733 kg CO2</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TECHNICAL SKILLS MATRIX (Official Badges with Interactive Filter & Search) -->
-    <section id="stack" class="section">
-      <div class="section-head">
-        <span class="section-tag" data-i18n="skills.tag">Stack Técnico & Herramientas</span>
-        <h2 class="section-title" data-i18n="skills.title">Matriz de Competencias</h2>
-        <p class="section-desc" data-i18n="skills.desc">
-          Tecnologías y herramientas utilizadas en entornos de producción, desde código y desarrollo hasta controladores de hardware y redes.
-        </p>
-      </div>
-
-      <!-- Live Search & Category Filter Bar -->
-      <div class="skills-filter-bar">
-        <div class="skills-search-wrapper">
-          <svg class="skills-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" class="skills-search-input" id="skillSearch" placeholder="Buscar tecnología (ej: go, zfs, aws)..." oninput="filterSkills()" autocomplete="off">
-        </div>
-
-        <div class="skills-pills-nav">
-          <button class="skill-filter-btn active" onclick="setSkillCategory('all', this)" data-i18n="filter.all">Todas (52)</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('backend', this)">⚡ Backend</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('cloud', this)">☁ Cloud & Virt</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('db', this)">💾 Bases de Datos</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('net', this)">🌐 Redes & Correo</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('sec', this)">🔒 Seguridad</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('enterprise', this)">🏢 Enterprise</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('os', this)">🐧 Linux & SO</button>
-          <button class="skill-filter-btn" onclick="setSkillCategory('devops', this)">📊 DevOps & Web</button>
-        </div>
-      </div>
-
-<div class="skills-category-group">
-
-        <!-- 1. Lenguajes & Backend -->
-        <div class="skill-category-card">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">⚡</span>
-            <h3 class="skill-category-title">Lenguajes & Backend</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/CGO-005C8A?style=flat-square&logo=c&logoColor=white" alt="CGO" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Zsh-F15A24?style=flat-square&logo=zsh&logoColor=white" alt="Zsh" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Bash-4EAA25?style=flat-square&logo=gnubash&logoColor=white" alt="Bash" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white" alt="PowerShell" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 2. Cloud Providers & Virtualización -->
-        <div class="skill-category-card" data-cat="cloud">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">☁</span>
-            <h3 class="skill-category-title">Cloud Providers & Virtualización</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white" alt="AWS" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" alt="Google Cloud" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Oracle_Cloud-F80000?style=flat-square&logo=oracle&logoColor=white" alt="Oracle Cloud" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/KVM%2FQEMU-FF6600?style=flat-square&logo=qemu&logoColor=white" alt="QEMU/KVM" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/libvirt-005C8A?style=flat-square&logo=linux&logoColor=white" alt="libvirt" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Incus%2FLXC-0EA5E9?style=flat-square&logo=linux&logoColor=white" alt="Incus" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Proxmox_VE-E57000?style=flat-square&logo=proxmox&logoColor=white" alt="Proxmox VE" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Podman-892CA0?style=flat-square&logo=podman&logoColor=white" alt="Podman" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/VFIO%2FIOMMU-38BDF8?style=flat-square&logo=intel&logoColor=white" alt="VFIO" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Cloud--Init-10B981?style=flat-square&logo=canonical&logoColor=white" alt="Cloud-Init" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Proxmox_Backup_Server-E57000?style=flat-square&logo=proxmox&logoColor=white" alt="PBS" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 3. Bases de Datos & Motores SQL -->
-        <div class="skill-category-card">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">💾</span>
-            <h3 class="skill-category-title">Bases de Datos & Motores SQL</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Oracle_SQL-F80000?style=flat-square&logo=oracle&logoColor=white" alt="Oracle SQL" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/SQL_Standard-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQL" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariadb&logoColor=white" alt="MariaDB" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/ZFS-5A6B7C?style=flat-square&logo=linux&logoColor=white" alt="ZFS" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Btrfs-0EA5E9?style=flat-square&logo=linux&logoColor=white" alt="Btrfs" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Linux_Software_RAID-A855F7?style=flat-square&logo=linux&logoColor=white" alt="RAID" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 4. Protocolos de Red, Correo & Servicios Core -->
-        <div class="skill-category-card" data-cat="net">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">🌐</span>
-            <h3 class="skill-category-title">Protocolos de Red, Correo & Servicios Core</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/DNS-10B981?style=flat-square&logo=cloudflare&logoColor=white" alt="DNS" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/DHCP-0284C7?style=flat-square&logo=linux&logoColor=white" alt="DHCP" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/SMTP-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="SMTP" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/IMAP-38BDF8?style=flat-square&logo=postman&logoColor=white" alt="IMAP" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/POP3-F59E0B?style=flat-square&logo=postman&logoColor=white" alt="POP3" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/SFTP-4EAA25?style=flat-square&logo=openssh&logoColor=white" alt="SFTP" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/SMB%20%2F%20CIFS-10B981?style=flat-square&logo=samba&logoColor=white" alt="SMB" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/NFS-333333?style=flat-square&logo=linux&logoColor=white" alt="NFS" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/iSCSI-EC4899?style=flat-square&logo=linux&logoColor=white" alt="iSCSI" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/WebSockets-646CFF?style=flat-square&logo=websocket&logoColor=white" alt="WebSockets" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 5. Redes Avanzadas, Cortafuegos & Seguridad -->
-        <div class="skill-category-card" data-cat="sec">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">🔒</span>
-            <h3 class="skill-category-title">Redes Avanzadas, Cortafuegos & Seguridad</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/nftables-E95420?style=flat-square&logo=linux&logoColor=white" alt="nftables" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/iptables-F97316?style=flat-square&logo=linux&logoColor=white" alt="iptables" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Netplan-77216F?style=flat-square&logo=canonical&logoColor=white" alt="Netplan" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/WireGuard-88171A?style=flat-square&logo=wireguard&logoColor=white" alt="WireGuard" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Tailscale-4B5563?style=flat-square&logo=tailscale&logoColor=white" alt="Tailscale" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Cloudflare_Zero_Trust-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Linux_Bridges_L2-0EA5E9?style=flat-square&logo=linux&logoColor=white" alt="Bridges" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Bonding_802.3ad-10B981?style=flat-square&logo=linux&logoColor=white" alt="Bonding" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/VLAN_802.1Q-8B5CF6?style=flat-square&logo=cisco&logoColor=white" alt="VLAN" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/WebAuthn%20%2F%20FIDO2-38BDF8?style=flat-square&logo=fido&logoColor=white" alt="WebAuthn" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/2FA%20%2F%20TOTP-10B981?style=flat-square&logo=authy&logoColor=white" alt="TOTP" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Let's_Encrypt-003A70?style=flat-square&logo=letsencrypt&logoColor=white" alt="LetsEncrypt" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 6. Enterprise & Administración Cloud / IT -->
-        <div class="skill-category-card" data-cat="enterprise">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">🏢</span>
-            <h3 class="skill-category-title">Enterprise & Administración Cloud / IT</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/Microsoft_365-D83B01?style=flat-square&logo=microsoft&logoColor=white" alt="M365" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Active_Directory-0078D4?style=flat-square&logo=windows&logoColor=white" alt="Active Directory" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/LDAP-005C8A?style=flat-square&logo=linux&logoColor=white" alt="LDAP" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/pfSense-D35400?style=flat-square&logo=pfsense&logoColor=white" alt="pfSense" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Wireshark-1679A7?style=flat-square&logo=wireshark&logoColor=white" alt="Wireshark" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/TrueNAS-0095D5?style=flat-square&logo=truenas&logoColor=white" alt="TrueNAS" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Cockpit-008080?style=flat-square&logo=redhat&logoColor=white" alt="Cockpit" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 7. Sistemas Operativos -->
-        <div class="skill-category-card">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">🐧</span>
-            <h3 class="skill-category-title">Sistemas Operativos</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black" alt="Linux" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Debian-A81D33?style=flat-square&logo=debian&logoColor=white" alt="Debian" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white" alt="Ubuntu" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Fedora-51A2DA?style=flat-square&logo=fedora&logoColor=white" alt="Fedora" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Arch_Linux-1793D1?style=flat-square&logo=archlinux&logoColor=white" alt="Arch Linux" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Alpine_Linux-0D597F?style=flat-square&logo=alpinelinux&logoColor=white" alt="Alpine" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Windows_Server-0078D6?style=flat-square&logo=windows&logoColor=white" alt="Windows Server" loading="lazy" />
-          </div>
-        </div>
-
-        <!-- 8. Observabilidad, DevOps & Herramientas Web -->
-        <div class="skill-category-card" data-cat="devops">
-          <div class="skill-category-header">
-            <span style="font-size:1.15rem;">📊</span>
-            <h3 class="skill-category-title">Observabilidad, DevOps & Herramientas Web</h3>
-          </div>
-          <div class="skill-badges-container">
-            <img class="badge-img" src="https://img.shields.io/badge/Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white" alt="Prometheus" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Grafana-F46800?style=flat-square&logo=grafana&logoColor=white" alt="Grafana" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Zabbix-D40000?style=flat-square&logo=zabbix&logoColor=white" alt="Zabbix" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Ansible-EE0000?style=flat-square&logo=ansible&logoColor=white" alt="Ansible" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white" alt="Terraform" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Nginx_Proxy_Manager-009639?style=flat-square&logo=nginx&logoColor=white" alt="NPM" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Svelte_5-FF3E00?style=flat-square&logo=svelte&logoColor=white" alt="Svelte 5" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" loading="lazy" />
-            <img class="badge-img" src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white" alt="TailwindCSS" loading="lazy" />
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Terminal Playground -->
+    <!-- 6. SECTION: INTERACTIVE TERMINAL PLAYGROUND -->
     <section id="terminal" class="section">
       <div class="section-head">
         <span class="section-tag" data-i18n="terminal.tag">Playground Interactivo</span>
@@ -2346,18 +2410,18 @@ Digest: sha256:... Size: 108.18 MB
 
         <div class="term-chips">
           <button class="term-chip" onclick="runCommand('fastfetch')">fastfetch</button>
+          <button class="term-chip" onclick="runCommand('whoami')">whoami</button>
           <button class="term-chip" onclick="runCommand('specs')">specs</button>
           <button class="term-chip" onclick="runCommand('webkvm')">webkvm</button>
           <button class="term-chip" onclick="runCommand('services')">services</button>
           <button class="term-chip" onclick="runCommand('calc')">calc</button>
-          <button class="term-chip" onclick="runCommand('principles')">principles</button>
           <button class="term-chip" onclick="runCommand('contact')">contact</button>
           <button class="term-chip" onclick="runCommand('clear')">clear</button>
         </div>
       </div>
     </section>
 
-    <!-- Contact & Connect -->
+    <!-- 7. SECTION: CONTACT & OPPORTUNITIES -->
     <section id="contacto" class="section">
       <div class="contact-card">
         <span class="section-tag" data-i18n="contact.tag">Conexión Profesional</span>
@@ -2410,42 +2474,84 @@ Digest: sha256:... Size: 108.18 MB
       document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
     });
 
-    // --- 1. Internationalization (i18n) Dictionary & Switcher ---
+    // --- 1. Typewriter Animation ---
+    const typewriterPhrases = [
+      "Virtualización Híbrida.",
+      "Infraestructura Bare-Metal.",
+      "Software de Alto Rendimiento en Go.",
+      "Nube Privada en 15W TDP."
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typewriterEl = document.getElementById('typewriter');
+
+    function typeLoop() {
+      const currentPhrase = typewriterPhrases[phraseIndex];
+      if (isDeleting) {
+        charIndex--;
+        typewriterEl.textContent = currentPhrase.substring(0, charIndex);
+      } else {
+        charIndex++;
+        typewriterEl.textContent = currentPhrase.substring(0, charIndex);
+      }
+
+      let typeSpeed = isDeleting ? 40 : 80;
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        typeSpeed = 2200; // Pause at end of phrase
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
+        typeSpeed = 400; // Pause before typing new phrase
+      }
+
+      setTimeout(typeLoop, typeSpeed);
+    }
+
+    // --- 2. Mobile Drawer Toggle ---
+    function toggleMobileDrawer() {
+      const drawer = document.getElementById('mobileDrawer');
+      drawer.classList.toggle('open');
+    }
+
+    // --- 3. Internationalization (i18n) Dictionary & Switcher ---
     let currentLang = localStorage.getItem('webkvm_lang') || 'es';
 
     const translations = {
       es: {
+        'nav.about': 'Sobre Mí',
         'nav.webkvm': 'WebKVM',
-        'nav.homelab': 'AOOSTAR Homelab',
-        'nav.principles': 'Principios',
+        'nav.homelab': 'Hardware (15W)',
         'nav.skills': 'Conocimientos',
         'nav.terminal': 'Terminal',
         'nav.contact': 'Contacto',
         'nav.available': 'Disponible',
-        'hero.tag': 'Técnico IT · Backend Go · Virtualización (KVM + Incus/LXC)',
-        'hero.title': 'Ingeniería de sistemas Linux, <span>virtualización híbrida</span> y software en Go.',
-        'hero.desc': 'Especialista en infraestructura bare-metal, tuning de hardware y virtualización de bajo consumo. Creador de <strong>WebKVM</strong> (plataforma híbrida KVM/Incus en un binario autónomo Go de ~14 MB). Mi entorno 24/7 en producción opera sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.',
-        'hero.ctaPrimary': 'Explorar WebKVM',
-        'hero.ctaSecondary': 'Explorador Hardware (AOOSTAR)',
+        'hero.tag': 'Técnico IT · Infraestructura Linux · Backend Go',
+        'hero.desc': 'Técnico IT vocacional y desarrollador de software de sistemas. Diseño y mantengo infraestructuras Linux de máxima eficiencia, automatizaciones de red y software en Go de bajo consumo. Creador de <strong>WebKVM</strong> y operador de un nodo 24/7 en producción sobre un <strong>AOOSTAR WTR PRO</strong> con 15W TDP en reposo.',
+        'hero.ctaPrimary': 'Ver mis Conocimientos ↓',
+        'hero.ctaSecondary': 'Explorar WebKVM ↗',
         'metric.idle': 'Consumo Reposo (AOOSTAR 24/7)',
         'metric.binary': 'Binario Autónomo WebKVM',
         'metric.cpu': 'AMD Ryzen 7 5825U Zen 3',
         'metric.net': 'Intel I226-V Ethernet L2',
-        'principles.tag': 'Filosofía de Arquitectura',
-        'principles.title': 'Principios de Ingeniería',
-        'principles.desc': 'Fundamentos técnicos aplicados en cada capa de software e infraestructura: cero dependencias innecesarias, máxima eficiencia por vatio y robustez defensiva.',
-        'principle.1.title': 'Simplicidad de Despliegue',
-        'principle.1.desc': 'Binarios autocontenidos sin bases de datos externas obligatorias ni dependencias de runtime. El software debe arrancar en segundos en cualquier Linux estándar.',
-        'principle.2.title': 'Kernel Directo sobre Polling',
-        'principle.2.desc': 'Lectura directa de interfaces sysfs del kernel Linux en lugar de generar bucles de subprocesos CLI. Rendimiento nativo con consumo mínimo de CPU y memoria.',
-        'principle.3.title': 'Fail-Closed por Defecto',
-        'principle.3.desc': 'Seguridad estricta en las fronteras de red: tickets de un solo uso en RAM para WebSockets, dialers anti-SSRF rigurosos y confirmación con auto-rollback en cortafuegos.',
-        'principle.4.title': 'Eficiencia & Densidad',
-        'principle.4.desc': 'Alineación rigurosa de hardware y software. Operar una nube privada y decenas de servicios 24/7 en un chasis silencioso de 15W TDP sin comprometer fiabilidad.',
+        'about.tag': 'Perfil Profesional & Filosofía',
+        'about.title': 'De la Máquina Física al Código',
+        'about.desc': 'No soy solo un programador ni solo un administrador: uno ambos mundos para construir infraestructura que vuela, consume lo mínimo y está preparada para producción real.',
+        'about.p1.title': 'Obsesión por el Rendimiento & Bare-Metal',
+        'about.p1.desc': 'Desprecio el bloatware. ¿Por qué montar contenedores pesados y demonios lentos cuando el kernel Linux ya ofrece sysfs, namespaces y cgroups v2 nativos? Mis sistemas arrancan en segundos y aprovechan cada ciclo de reloj.',
+        'about.p2.title': 'Infraestructura como Artesanía Física',
+        'about.p2.desc': 'Experiencia práctica real en ensamblaje de servidores, diagnóstico térmico, passthrough directo IOMMU/VFIO para tarjetas gráficas y NICs, enlaces L2 bonding sin pérdida de paquetes y almacenamiento redundante.',
+        'about.p3.title': 'Desarrollo de Software Autónomo en Go',
+        'about.p3.desc': 'Cuando las herramientas existentes en el mercado son monolíticas o invasivas (como Proxmox o vSphere que exigen formatear el servidor entero), diseño mis propias soluciones en Go con CGO directo contra libvirt.',
         'webkvm.tag': 'Buque Insignia · Software de Código Abierto',
         'webkvm.title': 'WebKVM: Nube Privada en Binario Único',
-        'webkvm.desc': 'Convierte cualquier servidor Linux en una plataforma de virtualización híbrida en 1 minuto. Sin secuestrar el sistema operativo, sin bases de datos externas y consumiendo apenas 15 MB de RAM en reposo.',
+        'webkvm.desc': 'Lo que construyo cuando las herramientas de mercado son demasiado pesadas: una plataforma de virtualización híbrida en 1 minuto, en un solo binario Go de ~14 MB, sin secuestrar el sistema operativo y consumiendo apenas 15 MB de RAM en reposo.',
         'webkvm.sub': 'Desarrollado en Go 1.26 + Svelte 5 (Runes) + libvirt CGO + API Incus nativa.',
+        'homelab.tag': 'Infraestructura 24/7 · Hardware Real',
+        'homelab.title': 'AOOSTAR WTR PRO: Nodo Silencioso (15W)',
+        'homelab.desc': 'Mi servidor bare-metal personal de producción corre ininterrumpidamente sobre un chasis compacto NAS de 4 bahías, optimizado para máxima densidad de cálculo y consumo mínimo.',
         'calc.tag': 'Calculadora de Eficiencia Energética',
         'calc.title': 'AOOSTAR WTR PRO vs Servidor Rack 2U Tradicional',
         'calc.desc': 'Compara el impacto de consumo de un nodo compacto de 15W frente a un servidor empresarial encendido 24/7/365.',
@@ -2454,9 +2560,9 @@ Digest: sha256:... Size: 108.18 MB
         'calc.aoostar': 'Consumo AOOSTAR (15W)',
         'calc.savings': 'Ahorro Económico Estimado',
         'calc.co2': 'Emisiones CO2 Evitadas',
-        'skills.tag': 'Stack Técnico & Herramientas',
-        'skills.title': 'Matriz de Competencias',
-        'skills.desc': 'Tecnologías y herramientas utilizadas en entornos de producción, desde código y desarrollo hasta controladores de hardware y redes.',
+        'skills.tag': 'Arsenal Tecnológico en Producción',
+        'skills.title': 'Conocimientos & Herramientas',
+        'skills.desc': 'Herramientas y tecnologías que utilizo en el día a día para administración de sistemas, virtualización, redes y desarrollo backend. Todas probadas en producción.',
         'filter.all': 'Todas (52)',
         'terminal.tag': 'Playground Interactivo',
         'terminal.title': 'Terminal del Sistema',
@@ -2472,37 +2578,37 @@ Digest: sha256:... Size: 108.18 MB
         'footer.top': 'Volver arriba ↑'
       },
       en: {
+        'nav.about': 'About Me',
         'nav.webkvm': 'WebKVM',
-        'nav.homelab': 'AOOSTAR Homelab',
-        'nav.principles': 'Principles',
+        'nav.homelab': 'Hardware (15W)',
         'nav.skills': 'Skills & Stack',
         'nav.terminal': 'Terminal',
         'nav.contact': 'Contact',
         'nav.available': 'Available for hire',
-        'hero.tag': 'IT Systems Engineer · Go Backend · Virtualization (KVM + Incus/LXC)',
-        'hero.title': 'Linux systems engineering, <span>hybrid virtualization</span> and Go software.',
-        'hero.desc': 'Specialist in bare-metal infrastructure, hardware latency tuning, and low-power high-density systems. Creator of <strong>WebKVM</strong> (hybrid KVM/Incus platform in a ~14 MB single Go executable). My 24/7 production homelab runs on an <strong>AOOSTAR WTR PRO</strong> with 15W idle TDP.',
-        'hero.ctaPrimary': 'Explore WebKVM',
-        'hero.ctaSecondary': 'Hardware Explorer (AOOSTAR)',
+        'hero.tag': 'IT Systems Engineer · Linux Infrastructure · Go Backend',
+        'hero.desc': 'Vocational IT Systems Engineer and low-level software developer. I architect and operate ultra-low-power Linux infrastructure, automated networking, and lightweight Go software with zero external bloat. Creator of <strong>WebKVM</strong> and operator of a 24/7 bare-metal node on an <strong>AOOSTAR WTR PRO</strong> (15W idle TDP).',
+        'hero.ctaPrimary': 'Explore my Skills ↓',
+        'hero.ctaSecondary': 'Inspect WebKVM ↗',
         'metric.idle': 'Idle Power (AOOSTAR 24/7)',
         'metric.binary': 'Self-Contained WebKVM Binary',
         'metric.cpu': 'AMD Ryzen 7 5825U Zen 3',
         'metric.net': 'Intel I226-V Ethernet L2',
-        'principles.tag': 'Architectural Philosophy',
-        'principles.title': 'Engineering Principles',
-        'principles.desc': 'Technical foundations applied across every software and infrastructure layer: zero runtime bloat, maximum performance per watt, and fail-closed security.',
-        'principle.1.title': 'Deployment Simplicity',
-        'principle.1.desc': 'Self-contained binaries with zero mandatory external databases or runtime dependencies. Starts in seconds on any standard Linux distribution.',
-        'principle.2.title': 'Direct Kernel over Polling',
-        'principle.2.desc': 'Direct reading of Linux kernel sysfs interfaces instead of spawning slow CLI subprocesses. Native performance with minimal CPU and memory overhead.',
-        'principle.3.title': 'Fail-Closed by Default',
-        'principle.3.desc': 'Strict security at network boundaries: 30-second single-use RAM tickets for WebSockets, anti-SSRF safe dialers, and 30s auto-rollback on firewall rules.',
-        'principle.4.title': 'Efficiency & Density',
-        'principle.4.desc': 'Rigorous alignment of hardware and software. Running a private cloud and dozens of services 24/7 inside a 15W TDP silent chassis without sacrificing reliability.',
+        'about.tag': 'Professional Profile & Philosophy',
+        'about.title': 'From Bare-Metal Hardware to Code',
+        'about.desc': "I'm not just a software developer or just a sysadmin: I bridge both worlds to build infrastructure that flies, draws minimal power, and thrives in production.",
+        'about.p1.title': 'Obsession with Performance & Bare-Metal',
+        'about.p1.desc': 'I reject bloatware. Why run heavy containers and slow daemons when the Linux kernel already provides native sysfs, namespaces, and cgroups v2? My systems boot in seconds and leverage every clock cycle.',
+        'about.p2.title': 'Infrastructure as Physical Craftsmanship',
+        'about.p2.desc': 'Hands-on hardware experience: motherboard assembly, thermal tuning, direct IOMMU/VFIO device passthrough, zero-drop L2 bonding interfaces, and resilient storage in software RAID and ZFS.',
+        'about.p3.title': 'Autonomous Software Engineering in Go',
+        'about.p3.desc': 'When industry solutions are too monolithic or invasive (like Proxmox or vSphere demanding total OS takeover), I engineer my own lightweight software in Go with CGO directly against libvirt.',
         'webkvm.tag': 'Flagship Project · Open Source Software',
         'webkvm.title': 'WebKVM: Private Cloud in a Single Binary',
-        'webkvm.desc': 'Turns any Linux server into a hybrid virtualization platform in 1 minute. Without OS hijacking, without external databases, consuming only 15 MB of idle RAM.',
+        'webkvm.desc': 'What I engineer when market tools are bloated: a hybrid virtualization platform in 1 minute, packed into a ~14 MB single Go executable, requiring zero external databases and using only 15 MB of idle RAM.',
         'webkvm.sub': 'Built in Go 1.26 + Svelte 5 (Runes) + libvirt CGO + native Incus REST API.',
+        'homelab.tag': '24/7 Infrastructure · Real Hardware',
+        'homelab.title': 'AOOSTAR WTR PRO: Silent Node (15W)',
+        'homelab.desc': 'My bare-metal 24/7 production server runs inside a compact 4-bay NAS chassis, engineered for high compute density and ultra-low electricity footprint.',
         'calc.tag': 'Energy Efficiency Calculator',
         'calc.title': 'AOOSTAR WTR PRO vs Traditional 2U Enterprise Rack',
         'calc.desc': 'Compare the real power impact of a 15W compact node versus an enterprise server running 24/7/365.',
@@ -2511,9 +2617,9 @@ Digest: sha256:... Size: 108.18 MB
         'calc.aoostar': 'AOOSTAR (15W) Power',
         'calc.savings': 'Estimated Annual Savings',
         'calc.co2': 'Avoided CO2 Emissions',
-        'skills.tag': 'Technical Stack & Tooling',
-        'skills.title': 'Competencies Matrix',
-        'skills.desc': 'Production-grade technologies and tools mastered, from low-level kernel drivers to modern high-performance web software.',
+        'skills.tag': 'Production Arsenal',
+        'skills.title': 'Competencies & Tools',
+        'skills.desc': 'Production-grade tools and technologies mastered in daily operations across systems administration, virtualization, networking, and backend development.',
         'filter.all': 'All (52)',
         'terminal.tag': 'Interactive Playground',
         'terminal.title': 'System Terminal',
@@ -2544,7 +2650,7 @@ Digest: sha256:... Size: 108.18 MB
       });
     }
 
-    // --- 2. Live GitHub Repository Stats ---
+    // --- 4. Live GitHub Repository Stats ---
     async function loadGitHubStats() {
       try {
         const repoRes = await fetch('https://api.github.com/repos/Slaker19/webkvm');
@@ -2569,7 +2675,7 @@ Digest: sha256:... Size: 108.18 MB
       }
     }
 
-    // --- 3. WebKVM Interactive OS Mockup Controls ---
+    // --- 5. WebKVM Interactive OS Mockup Controls ---
     function switchMockTab(tabId, btn) {
       document.querySelectorAll('.mockup-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.mockup-content').forEach(c => c.classList.remove('active'));
@@ -2606,7 +2712,7 @@ Digest: sha256:... Size: 108.18 MB
       }
     }
 
-    // --- 4. Skills Search & Filter Bar ---
+    // --- 6. Skills Search & Filter Bar ---
     let currentSkillCategory = 'all';
 
     function setSkillCategory(cat, btn) {
@@ -2649,7 +2755,7 @@ Digest: sha256:... Size: 108.18 MB
       });
     }
 
-    // --- 5. Tab Switching for WebKVM Architecture ---
+    // --- 7. Tab Switching for WebKVM Architecture ---
     function switchArchTab(tabId, btn) {
       document.querySelectorAll('.arch-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.arch-tab-panel').forEach(p => p.classList.remove('active'));
@@ -2659,7 +2765,7 @@ Digest: sha256:... Size: 108.18 MB
       if (target) target.classList.add('active');
     }
 
-    // --- 6. Hardware Explorer Tab Switching & SVG Highlighting ---
+    // --- 8. Hardware Explorer Tab Switching & SVG Highlighting ---
     function switchHw(hwId, btn) {
       document.querySelectorAll('.hw-nav-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.hw-panel').forEach(p => p.classList.remove('active'));
@@ -2689,7 +2795,7 @@ Digest: sha256:... Size: 108.18 MB
       }
     }
 
-    // --- 7. Savings Calculator ---
+    // --- 9. Savings Calculator ---
     function calculateSavings(rackWatts) {
       document.getElementById('sliderLabel').textContent = rackWatts + ' Watts (Rack 2U)';
       
@@ -2711,7 +2817,7 @@ Digest: sha256:... Size: 108.18 MB
       document.getElementById('resCo2').textContent = '~' + savingsCo2.toLocaleString() + ' kg CO2';
     }
 
-    // --- 8. Clipboard Copy with Toast ---
+    // --- 10. Clipboard Copy with Toast ---
     function copyToClipboard(text, msg) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text);
@@ -2753,20 +2859,26 @@ Digest: sha256:... Size: 108.18 MB
       });
     }, 4000);
 
-    // --- 9. Terminal Playground Logic ---
+    // --- 11. Terminal Playground Logic ---
     const termOutput = document.getElementById('termOutput');
     const termInput = document.getElementById('termInput');
 
     const commands = {
       help: () => `Comandos disponibles:
+  - whoami      : Identidad y trayectoria de Alvin Perez
   - fastfetch   : Muestra ficha del nodo AOOSTAR WTR PRO
   - specs       : Detalle de CPU, memoria y almacenamiento RAID
   - webkvm      : Resumen de características del proyecto WebKVM
   - services    : Estado de servicios homelab 24/7
   - calc        : Comparativa de ahorro energético
-  - principles  : Principios de ingeniería y diseño
   - contact     : Información de contacto
   - clear       : Limpia el terminal`,
+
+      whoami: () => `Alvin Perez — Systems Infrastructure & Backend Go Engineer
+  • Especialista en infraestructura bare-metal, virtualización de bajo consumo y tuning térmico.
+  • Creador de WebKVM (v0.1.8-fix01): gestor KVM/Incus en un binario Go único (~14 MB).
+  • Operador de homelab en producción 24/7 en AOOSTAR WTR PRO (Ryzen 7 5825U · 15W TDP).
+  • Contacto: alvinpp1908@gmail.com · GitHub: https://github.com/Slaker19`,
 
       fastfetch: () => `       /\_/\      alvin@aoostar-wtr-pro
       ( o.o )     ---------------------
@@ -2807,12 +2919,6 @@ Digest: sha256:... Size: 108.18 MB
   • AOOSTAR WTR PRO (15W 24/7)   : 131 kWh / año (~29 € / año)
   • Servidor Rack 2U (350W 24/7) : 3,066 kWh / año (~674 € / año)
   • Ahorro estimado              : ~645 € / año y 733 kg CO2 evitados.`,
-
-      principles: () => `Principios de Arquitectura:
-  1. Simplicidad de Despliegue: binarios únicos y cero bases de datos externas.
-  2. Kernel Directo sobre Polling: telemetría sysfs sin spawn de procesos CLI.
-  3. Fail-Closed por Defecto: límites seguros en red y permisos mínimos.
-  4. Eficiencia & Densidad: máximo rendimiento por vatio en hardware bare-metal.`,
 
       contact: () => `Vías de contacto:
   • Email : alvinpp1908@gmail.com
@@ -2862,10 +2968,11 @@ Digest: sha256:... Size: 108.18 MB
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    // Initialize
+    // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
       setLang(currentLang);
       loadGitHubStats();
+      typeLoop();
     });
   </script>
 </body>
