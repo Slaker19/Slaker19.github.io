@@ -695,6 +695,16 @@ table.vm td:first-child{color:var(--text)}
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* ── Word reveal ──────────────────────────────────────── */
+.sw{display:inline-block}
+.sw > span{
+  display:inline-block;
+  opacity:0;transform:translateY(.45em);
+  transition:opacity .62s var(--ease-out),transform .62s var(--ease-out);
+  transition-delay:var(--d,0ms);
+}
+.reveal.in .sw > span{opacity:1;transform:none}
+
 /* ── Reveal ───────────────────────────────────────────── */
 .reveal{
   opacity:0;transform:translateY(14px);
@@ -702,6 +712,7 @@ table.vm td:first-child{color:var(--text)}
   transition-delay:calc(var(--i,0) * 55ms);
 }
 .reveal.in{opacity:1;transform:none}
+.reveal[data-split]{opacity:1;transform:none;transition:none}
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width:1024px){
@@ -779,6 +790,7 @@ table.vm td:first-child{color:var(--text)}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .reveal{opacity:1;transform:none}
+  .sw > span{opacity:1;transform:none;transition:none}
   .cursor-glow{display:none}
 }
 </style>
@@ -874,7 +886,7 @@ table.vm td:first-child{color:var(--text)}
       <span class="eyebrow" data-i18n="hero.eyebrow">Ingeniero de sistemas · España</span>
     </div>
 
-    <h1 class="reveal" style="--i:1">
+    <h1 class="reveal" style="--i:1" data-split>
       <span data-i18n-html="hero.title">Infraestructura Linux que no desperdicia <em>un solo vatio.</em></span>
     </h1>
 
@@ -1627,7 +1639,7 @@ docker pull slaker1908/webkvm:latest</pre>
   <section class="contact" id="contacto">
     <div class="container">
       <span class="eyebrow reveal" data-i18n="contact.tag">Contacto</span>
-      <h2 class="reveal" style="--i:1" data-i18n="contact.title">Si tienes un sistema que debería funcionar mejor, hablemos.</h2>
+      <h2 class="reveal" style="--i:1" data-i18n="contact.title" data-split>Si tienes un sistema que debería funcionar mejor, hablemos.</h2>
       <p class="reveal" style="--i:2" data-i18n="contact.lead">
         Abierto a conversaciones sobre infraestructura Linux, virtualización, automatización o backend en Go.
         Respondo siempre.
@@ -2171,6 +2183,36 @@ Web      https://slaker19.github.io`,
     }
   };
 
+  /* ── Split headings into staggered words ────────────── */
+  function splitWords(root) {
+    if (root.querySelector('.sw')) return;
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+
+    let i = 0;
+    texts.forEach((node) => {
+      const parts = node.nodeValue.split(/(\s+)/);
+      if (!parts.some((p) => p.trim())) return;
+
+      const frag = document.createDocumentFragment();
+      parts.forEach((part) => {
+        if (!part) return;
+        if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
+
+        const word = document.createElement('span');
+        word.className = 'sw';
+        const inner = document.createElement('span');
+        inner.style.setProperty('--d', `${i++ * 30}ms`);
+        inner.textContent = part;
+        word.appendChild(inner);
+        frag.appendChild(word);
+      });
+      node.replaceWith(frag);
+    });
+  }
+
   function applyLang(next) {
     lang = next;
     localStorage.setItem('ap-lang', next);
@@ -2190,6 +2232,9 @@ Web      https://slaker19.github.io`,
     document.title = next === 'es'
       ? 'Alvin Perez — Infraestructura Linux & Backend Go'
       : 'Alvin Perez — Linux Infrastructure & Go Backend';
+
+    // i18n replaces the text, so the split has to run again
+    $$('[data-split]').forEach(splitWords);
   }
 
   $$('[data-lang]').forEach((b) => b.addEventListener('click', () => applyLang(b.dataset.lang)));
